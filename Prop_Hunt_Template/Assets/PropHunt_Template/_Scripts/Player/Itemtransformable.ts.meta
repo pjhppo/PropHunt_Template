@@ -19,8 +19,27 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst EventHandler_1 = require(\"../EventHandler\");\r\nclass
     Itemtransformable extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
-    {\r\n    }\r\n}\r\nexports.default = Itemtransformable;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbXRyYW5zZm9ybWFibGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJdGVtdHJhbnNmb3JtYWJsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUVyRCxNQUFxQixpQkFBa0IsU0FBUSxxQ0FBcUI7SUFFaEUsS0FBSztJQUVMLENBQUM7Q0FFSjtBQU5ELG9DQU1DIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.ts","manifest":{"properties":[],"name":"Itemtransformable","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: b73ca9fc8db8fe388cf8a8456317b230
+    {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this.player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.gameObject;\r\n           
+    this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    });\r\n        let action = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.controllerData.inputAsset.FindActionMap(\"UI\").FindAction(\"Click\");\r\n       
+    action.add_performed(() => {\r\n            this.OnClickItem();\r\n        });\r\n   
+    }\r\n    Update() {\r\n    }\r\n    TransformPlayer() {\r\n        console.log(\"Button
+    interaction\");\r\n        this.player.gameObject.SetActive(false);\r\n    }\r\n   
+    OnClickItem() {\r\n        let ray = new UnityEngine_1.Ray(this.mainCamera.transform.position,
+    this.mainCamera.transform.forward);\r\n        let hit = $ref();\r\n        let
+    item = null;\r\n        if (UnityEngine_1.Physics.Raycast(ray, hit, 50)) {\r\n           
+    let hitInfo = $unref(hit);\r\n            if (hitInfo.transform.TryGetComponent($typeof(Itemtransformable),
+    $ref(item)))\r\n                console.log(\"Objeto transformable\");\r\n           
+    console.log(\"Object hit: \" + hitInfo.collider.name);\r\n        }\r\n       
+    else {\r\n            console.log(\"No object hit\");\r\n            console.log(\"Ray
+    origin: \" + ray.origin.x + \" / \" + ray.origin.y + \" / \" + ray.origin.z);\r\n           
+    console.log(\"Ray direction: \" + ray.direction.x + \" / \" + ray.direction.y
+    + \" / \" + ray.direction.z);\r\n        }\r\n    }\r\n}\r\nexports.default =
+    Itemtransformable;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbXRyYW5zZm9ybWFibGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJdGVtdHJhbnNmb3JtYWJsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUE2RjtBQUM3Riw2RUFBNEQ7QUFDNUQsaURBQXFEO0FBQ3JELGtEQUEyQztBQUczQyxNQUFxQixpQkFBa0IsU0FBUSxxQ0FBcUI7SUFVaEUsS0FBSztRQUVELDJDQUFhLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdkQsSUFBSSxDQUFDLE1BQU0sR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsVUFBVSxDQUFDO1lBQzVELElBQUksQ0FBQyxVQUFVLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsWUFBWSxDQUFDLE1BQU0sQ0FBQztRQUNqRSxDQUFDLENBQUMsQ0FBQztRQUVILElBQUksTUFBTSxHQUFnQiwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxjQUFjLENBQUMsVUFBVSxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLENBQUM7UUFDbkgsTUFBTSxDQUFDLGFBQWEsQ0FBQyxHQUFHLEVBQUU7WUFDdEIsSUFBSSxDQUFDLFdBQVcsRUFBRSxDQUFDO1FBQ3ZCLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVELE1BQU07SUFFTixDQUFDO0lBRU0sZUFBZTtRQUNsQixPQUFPLENBQUMsR0FBRyxDQUFDLG9CQUFvQixDQUFDLENBQUM7UUFFbEMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQzVDLENBQUM7SUFDRCxXQUFXO1FBQ1AsSUFBSSxHQUFHLEdBQVEsSUFBSSxpQkFBRyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxPQUFPLENBQUMsQ0FBQztRQUM5RixJQUFJLEdBQUcsR0FBRyxJQUFJLEVBQWMsQ0FBQztRQUM3QixJQUFJLElBQUksR0FBc0IsSUFBSSxDQUFDO1FBQ25DLElBQUkscUJBQU8sQ0FBQyxPQUFPLENBQUMsR0FBRyxFQUFFLEdBQUcsRUFBRSxFQUFFLENBQUMsRUFBRTtZQUMvQixJQUFJLE9BQU8sR0FBRyxNQUFNLENBQUMsR0FBRyxDQUFDLENBQUM7WUFFMUIsSUFBSSxPQUFPLENBQUMsU0FBUyxDQUFDLGVBQWUsU0FBQyxpQkFBaUIsR0FBRSxJQUFJLENBQUMsSUFBSSxDQUFDO2dCQUFHLE9BQU8sQ0FBQyxHQUFHLENBQUMsc0JBQXNCLENBQUMsQ0FBQztZQUUxRyxPQUFPLENBQUMsR0FBRyxDQUFDLGNBQWMsR0FBRyxPQUFPLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxDQUFDO1NBRXZEO2FBQU07WUFDSCxPQUFPLENBQUMsR0FBRyxDQUFDLGVBQWUsQ0FBQyxDQUFDO1lBQzdCLE9BQU8sQ0FBQyxHQUFHLENBQUMsY0FBYyxHQUFHLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQyxHQUFHLEtBQUssR0FBRyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUMsR0FBRyxLQUFLLEdBQUcsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUMsQ0FBQztZQUN6RixPQUFPLENBQUMsR0FBRyxDQUFDLGlCQUFpQixHQUFHLEdBQUcsQ0FBQyxTQUFTLENBQUMsQ0FBQyxHQUFHLEtBQUssR0FBRyxHQUFHLENBQUMsU0FBUyxDQUFDLENBQUMsR0FBRyxLQUFLLEdBQUcsR0FBRyxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsQ0FBQztTQUN4RztJQUVMLENBQUM7Q0FDSjtBQWxERCxvQ0FrREMifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"model","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.PhysicsModule","name":"modelCollider","type":"UnityEngine.Collider","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"Unity.InputSystem","name":"inputActions","type":"UnityEngine.InputSystem.InputActionAsset","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Itemtransformable","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: c7d57e4a013b2b2fc98f1a53ae716ed8
   onlyWriteTrigger: 0

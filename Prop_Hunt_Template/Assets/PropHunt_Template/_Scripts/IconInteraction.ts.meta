@@ -1,0 +1,72 @@
+fileFormatVersion: 2
+guid: 8b10228b93ce03e4dbf7de9d37090c51
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
+    Itemtransformable_1 = require(\"./Player/Itemtransformable\");\r\nconst EventHandler_1
+    = require(\"./EventHandler\");\r\n// This class is responsible for creating a
+    floating icon upon which, when clicked, it will execute the game.\r\nclass IconInteraction
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this._isIconActive = false; // Variable to know
+    if the icon is active or not\r\n        this._isDoneFirstTrig = false; // Flag
+    to control the first trigger\r\n    }\r\n    Start() {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this._canvas.worldCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    });\r\n        // Add a listener to the button''s onClick event\r\n        this._button.onClick.AddListener(()
+    => {\r\n            this.OnClickIcon();\r\n        });\r\n    }\r\n    // Update
+    function called every frame\r\n    Update() {\r\n        // Check if the first
+    trigger is done and the canvas is active\r\n        if (this._isDoneFirstTrig
+    && this._canvas?.gameObject.activeSelf) {\r\n            this.UpdateIconRotation();\r\n       
+    }\r\n    }\r\n    // Function called when a collider enters the trigger\r\n   
+    OnTriggerEnter(coll) {\r\n        // Check if the collider is not the local player''s
+    character collider\r\n        if (coll.gameObject.name != ZEPETO_World_1.WorldService.userId)
+    {\r\n            return;\r\n        }\r\n        this.ShowIcon();\r\n    }\r\n   
+    // Function called when a collider exits the trigger\r\n    OnTriggerExit(coll)
+    {\r\n        // Check if the collider is not the local player''s character collider\r\n       
+    if (coll != (ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer?.zepetoPlayer?.character.GetComponent)($typeof(UnityEngine_1.Collider)))
+    {\r\n            return;\r\n        }\r\n        this.HideIcon();\r\n    }\r\n   
+    // Show the icon\r\n    ShowIcon() {\r\n        // If it''s the first trigger,
+    create the icon; otherwise, show the existing canvas\r\n        if (!this._isDoneFirstTrig)
+    {\r\n            // Call the function to create the icon\r\n            this.CreateIcon();\r\n           
+    // Set the flag on true\r\n            this._isDoneFirstTrig = true;\r\n       
+    }\r\n        else {\r\n            // Active the canvas object\r\n           
+    this._canvas.gameObject.SetActive(true);\r\n        }\r\n        // Set the iconActive
+    on true\r\n        this._isIconActive = true;\r\n    }\r\n    // Hide the icon\r\n   
+    HideIcon() {\r\n        // If the canvas is created then deactivate the canvas\r\n       
+    this._canvas?.gameObject.SetActive(false);\r\n        // Set the iconActive on
+    false\r\n        this._isIconActive = false;\r\n    }\r\n    // Create the icon\r\n   
+    CreateIcon() {\r\n        // Instantiate the prefIconCanvas as a new GameObject\r\n       
+    const canvas = this.prefIconCanvas;\r\n        // Set the canvas on the icon
+    position\r\n        canvas.transform.position = this.iconPosition.position;\r\n       
+    // Get the Canvas component from the instantiated canvas\r\n        this._canvas
+    = canvas.GetComponent($typeof(UnityEngine_1.Canvas));\r\n        // Set the position
+    of the canvas to the specified icon position\r\n        this._canvas.transform.position
+    = this.iconPosition.position;\r\n        // Find the world camera and assign
+    it to the canvas\r\n        this._cachedWorldCamera = UnityEngine_1.Object.FindObjectOfType($typeof(UnityEngine_1.Camera));\r\n       
+    this._canvas.worldCamera = this._cachedWorldCamera;\r\n    }\r\n    // Update
+    the icon rotation to face the camera\r\n    UpdateIconRotation() {\r\n       
+    this._canvas.transform.LookAt(this._cachedWorldCamera.transform);\r\n    }\r\n   
+    // Function called when the icon is clicked\r\n    OnClickIcon() {\r\n       
+    console.log(\"Button test\");\r\n        var itemTransformable = this.GetComponent($typeof(Itemtransformable_1.default));\r\n       
+    if (itemTransformable) {\r\n            itemTransformable.TransformPlayer();\r\n       
+    }\r\n    }\r\n}\r\nexports.default = IconInteraction;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSWNvbkludGVyYWN0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSWNvbkludGVyYWN0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXNEO0FBQ3RELDZDQUErRjtBQUMvRiw2RUFBMEU7QUFDMUUsK0NBQTRDO0FBQzVDLGtFQUEyRDtBQUczRCxpREFBMEM7QUFFMUMsNkdBQTZHO0FBQzdHLE1BQXFCLGVBQWdCLFNBQVEscUNBQXFCO0lBQWxFOztRQVFZLGtCQUFhLEdBQVksS0FBSyxDQUFDLENBQUMsZ0RBQWdEO1FBQ2hGLHFCQUFnQixHQUFZLEtBQUssQ0FBQyxDQUFDLG9DQUFvQztJQW1HbkYsQ0FBQztJQWpHRyxLQUFLO1FBQ0QsMkNBQWEsQ0FBQyxRQUFRLENBQUMsa0JBQWtCLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN2RCxJQUFJLENBQUMsT0FBTyxDQUFDLFdBQVcsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDO1FBQzFFLENBQUMsQ0FBQyxDQUFDO1FBRUgsK0NBQStDO1FBQy9DLElBQUksQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDbEMsSUFBSSxDQUFDLFdBQVcsRUFBRSxDQUFDO1FBQ3ZCLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVELHFDQUFxQztJQUM3QixNQUFNO1FBQ1YsOERBQThEO1FBQzlELElBQUksSUFBSSxDQUFDLGdCQUFnQixJQUFJLElBQUksQ0FBQyxPQUFPLEVBQUUsVUFBVSxDQUFDLFVBQVUsRUFBRTtZQUM5RCxJQUFJLENBQUMsa0JBQWtCLEVBQUUsQ0FBQztTQUM3QjtJQUNMLENBQUM7SUFFRCxxREFBcUQ7SUFDN0MsY0FBYyxDQUFDLElBQWM7UUFDakMscUVBQXFFO1FBQ3JFLElBQUksSUFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLElBQUksMkJBQVksQ0FBQyxNQUFNLEVBQUU7WUFDN0MsT0FBTztTQUNWO1FBQ0QsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO0lBQ3BCLENBQUM7SUFFRCxvREFBb0Q7SUFDNUMsYUFBYSxDQUFDLElBQWM7UUFDaEMscUVBQXFFO1FBQ3JFLElBQUksSUFBSSxJQUFJLENBQUEsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxFQUFFLFlBQVksRUFBRSxTQUFTLENBQUMsWUFBWSxDQUFBLFNBQUMsc0JBQVEsRUFBRyxFQUFFO1lBQzlGLE9BQU87U0FDVjtRQUVELElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztJQUNwQixDQUFDO0lBRUQsZ0JBQWdCO0lBQ1QsUUFBUTtRQUNYLGtGQUFrRjtRQUNsRixJQUFJLENBQUMsSUFBSSxDQUFDLGdCQUFnQixFQUFFO1lBQ3hCLHVDQUF1QztZQUN2QyxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7WUFFbEIsdUJBQXVCO1lBQ3ZCLElBQUksQ0FBQyxnQkFBZ0IsR0FBRyxJQUFJLENBQUM7U0FDaEM7YUFBTTtZQUNILDJCQUEyQjtZQUMzQixJQUFJLENBQUMsT0FBTyxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7U0FDM0M7UUFDRCw2QkFBNkI7UUFDN0IsSUFBSSxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUM7SUFDOUIsQ0FBQztJQUVELGdCQUFnQjtJQUNULFFBQVE7UUFDWCxzREFBc0Q7UUFDdEQsSUFBSSxDQUFDLE9BQU8sRUFBRSxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBRTFDLDhCQUE4QjtRQUM5QixJQUFJLENBQUMsYUFBYSxHQUFHLEtBQUssQ0FBQztJQUMvQixDQUFDO0lBRUQsa0JBQWtCO0lBQ1YsVUFBVTtRQUNkLHFEQUFxRDtRQUNyRCxNQUFNLE1BQU0sR0FBRyxJQUFJLENBQUMsY0FBYyxDQUFDO1FBRW5DLHNDQUFzQztRQUN0QyxNQUFNLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLFFBQVEsQ0FBQztRQUV2RCx3REFBd0Q7UUFDeEQsSUFBSSxDQUFDLE9BQU8sR0FBRyxNQUFNLENBQUMsWUFBWSxTQUFDLG9CQUFNLEVBQUcsQ0FBQztRQUU3QyxnRUFBZ0U7UUFDaEUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsUUFBUSxDQUFDO1FBRTdELG9EQUFvRDtRQUNwRCxJQUFJLENBQUMsa0JBQWtCLEdBQUcsb0JBQU0sQ0FBQyxnQkFBZ0IsU0FBQyxvQkFBTSxFQUFHLENBQUM7UUFDNUQsSUFBSSxDQUFDLE9BQU8sQ0FBQyxXQUFXLEdBQUcsSUFBSSxDQUFDLGtCQUFrQixDQUFDO0lBQ3ZELENBQUM7SUFFRCw4Q0FBOEM7SUFDdEMsa0JBQWtCO1FBQ3RCLElBQUksQ0FBQyxPQUFPLENBQUMsU0FBUyxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsa0JBQWtCLENBQUMsU0FBUyxDQUFDLENBQUM7SUFDckUsQ0FBQztJQUVELDJDQUEyQztJQUNuQyxXQUFXO1FBQ2YsT0FBTyxDQUFDLEdBQUcsQ0FBQyxhQUFhLENBQUMsQ0FBQztRQUUzQixJQUFJLGlCQUFpQixHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsMkJBQWlCLEVBQUcsQ0FBQztRQUMvRCxJQUFJLGlCQUFpQixFQUFFO1lBQ25CLGlCQUFpQixDQUFDLGVBQWUsRUFBRSxDQUFDO1NBQ3ZDO0lBQ0wsQ0FBQztDQUNKO0FBNUdELGtDQTRHQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/IconInteraction.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"prefIconCanvas","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"[Icon]\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"iconPosition","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"_button","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UIModule","name":"_canvas","type":"UnityEngine.Canvas","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"IconInteraction","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8e5b1985770cd6ae691f77da19301632
+  onlyWriteTrigger: 0

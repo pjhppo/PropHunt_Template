@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: e835bb0775f18484a88ffedadc0063ad
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    PlayerController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Awake()
+    {\r\n    }\r\n    Start() {\r\n    }\r\n}\r\nexports.default = PlayerController;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFHckQsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBRS9ELEtBQUs7SUFDTCxDQUFDO0lBRUQsS0FBSztJQUNMLENBQUM7Q0FFSjtBQVJELG1DQVFDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerController.ts","manifest":{"properties":[],"name":"PlayerController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 701782a2cda3614f28f069b2821f83e8
+  onlyWriteTrigger: 0
