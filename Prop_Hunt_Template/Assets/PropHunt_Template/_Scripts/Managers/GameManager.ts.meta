@@ -21,6 +21,6 @@ ScriptedImporter:
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
     GameManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n   
-    }\r\n}\r\nexports.default = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUVyRCxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBRTFELEtBQUs7SUFFTCxDQUFDO0NBRUo7QUFORCw4QkFNQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/GameManager.ts","manifest":{"properties":[],"name":"GameManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 689a1ec5cd9b0e1b8211fa21939faa5b
+    }\r\n}\r\nexports.default = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUVyRCxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBRzFELEtBQUs7SUFFTCxDQUFDO0NBRUo7QUFQRCw4QkFPQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/GameManager.ts","manifest":{"properties":[],"name":"GameManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 10356dc23fa49c51b614a65b5a97f4de
   onlyWriteTrigger: 0
