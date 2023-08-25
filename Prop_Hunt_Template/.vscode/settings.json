@@ -52,5 +52,6 @@
 		"temp/": true,
 		"Temp/": true
 	},
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"dotnet.defaultSolution": "Prop_Hunt_Template.sln"
 }

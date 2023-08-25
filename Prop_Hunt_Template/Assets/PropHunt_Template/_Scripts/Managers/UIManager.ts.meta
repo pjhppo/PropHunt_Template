@@ -19,8 +19,14 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
-    UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n}\r\nexports.default
-    = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBR3JELE1BQXFCLFNBQVUsU0FBUSxxQ0FBcUI7Q0FJM0Q7QUFKRCw0QkFJQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/UIManager.ts","manifest":{"properties":[],"name":"UIManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: eb06e38db0324e674adbe5d0f5c24761
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Awake() {\r\n        if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Inequality(UIManager.instance,
+    null))\r\n            UnityEngine_1.GameObject.Destroy(this.gameObject);\r\n       
+    else\r\n            UIManager.instance = this;\r\n    }\r\n    ShowIconPercentage(show,
+    pointerPos) {\r\n        if (show != this.icon.activeSelf)\r\n            this.icon.SetActive(show);\r\n       
+    this.icon.transform.position = pointerPos;\r\n    }\r\n    UpdateChargeFillAmount(percentage)
+    {\r\n        this.iconCharge.fillAmount = percentage;\r\n    }\r\n}\r\nexports.default
+    = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQWtEO0FBRWxELGlEQUFxRDtBQUVyRCxNQUFxQixTQUFVLFNBQVEscUNBQXFCO0lBUXhELEtBQUs7UUFDRCxJQVhDLHFDQUFxQixDQXVCeXFNLGFBQWMsQ0FaenNNLFNBQVMsQ0FBQyxRQUFRLEVBQUksSUFBSTtZQUFFLHdCQUFVLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQzs7WUFDL0QsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUM7SUFDbkMsQ0FBQztJQUVELGtCQUFrQixDQUFDLElBQVUsRUFBRSxVQUFtQjtRQUM5QyxJQUFJLElBQUksSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLFVBQVU7WUFBRSxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUM1RCxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsVUFBVSxDQUFDO0lBQzlDLENBQUM7SUFFRCxzQkFBc0IsQ0FBQyxVQUFrQjtRQUNyQyxJQUFJLENBQUMsVUFBVSxDQUFDLFVBQVUsR0FBRyxVQUFVLENBQUM7SUFDNUMsQ0FBQztDQUNKO0FBckJELDRCQXFCQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/UIManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"iconImagePrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"icon","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"iconCharge","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UIManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f51c6a0412206f21c698b1c1ed552a52
   onlyWriteTrigger: 0

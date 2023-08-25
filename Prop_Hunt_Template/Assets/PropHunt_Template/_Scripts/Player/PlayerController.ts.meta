@@ -19,50 +19,21 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
-    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
-    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    Itemtransformable_1 = require(\"./Itemtransformable\");\r\nclass PlayerController
-    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
-    => {\r\n            this.playerParent = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n           
-    this.player = this.playerParent.transform.GetChild(0).gameObject;\r\n           
-    this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
-    });\r\n        this.ResetTransformationState();\r\n    }\r\n    Update() {\r\n       
-    if (UnityEngine_1.Input.GetMouseButton(0)) {\r\n            this.isTransforming
-    = this.RaycastToItem(UnityEngine_1.Input.mousePosition);\r\n        }\r\n       
-    if (UnityEngine_1.Input.GetMouseButtonUp(0)) {\r\n            this.ResetTransformationState();\r\n       
-    }\r\n        if (UnityEngine_1.Input.touchCount > 0) {\r\n            let touch
-    = UnityEngine_1.Input.GetTouch(0);\r\n            let touchPos = new UnityEngine_1.Vector3(touch.position.x,
-    touch.position.y, 0);\r\n            this.isTransforming = this.RaycastToItem(touchPos);\r\n       
-    }\r\n        if (UnityEngine_1.Input.touchCount > 0 && UnityEngine_1.Input.GetTouch(0).phase
-    == UnityEngine_1.TouchPhase.Ended) {\r\n            this.ResetTransformationState();\r\n       
-    }\r\n        if (this.timeRemainingToTransform < 0)\r\n            this.RaycastToItem(this.pointerPos,
-    true);\r\n        if (this.isTransforming) {\r\n            this.ShowIconPercentage(true);\r\n           
-    this.UpdateTransformPercentage();\r\n        }\r\n        else {\r\n           
-    this.ResetTransformationState();\r\n        }\r\n    }\r\n    RaycastToItem(position,
-    transformIntoItem = false) {\r\n        this.pointerPos = position;\r\n       
-    let item;\r\n        let ray = this.mainCamera.ScreenPointToRay(position);\r\n       
-    let hit = $ref();\r\n        if (UnityEngine_1.Physics.Raycast(ray, hit, 50))
-    {\r\n            let hitInfo = $unref(hit);\r\n            if (hitInfo.collider.TryGetComponent($typeof(Itemtransformable_1.default),
-    $ref(item))) {\r\n                if (transformIntoItem) {\r\n                   
-    item = hitInfo.collider.GetComponent($typeof(Itemtransformable_1.default));\r\n                   
-    this.TransformIntoItem(item);\r\n                }\r\n                return
-    true;\r\n            }\r\n        }\r\n        return false;\r\n    }\r\n   
-    TransformIntoItem(item) {\r\n        this.player.SetActive(false);\r\n       
-    if (__UnityEngine__.Object.op_Equality(this.objectTransformed, null))\r\n           
-    this.objectTransformed = UnityEngine_1.GameObject.Instantiate(item.modelCollider.gameObject,
-    this.playerParent.transform);\r\n        else {\r\n            this.objectTransformed.GetComponent($typeof(UnityEngine_1.MeshFilter)).mesh
-    = item.model.mesh;\r\n            let coll = this.objectTransformed.GetComponent($typeof(UnityEngine_1.BoxCollider));\r\n           
-    coll.size = item.modelCollider.size;\r\n        }\r\n        let objPos = this.playerParent.transform.transform.position;\r\n       
-    objPos.y += 0.5;\r\n        this.objectTransformed.transform.position = objPos;\r\n       
-    this.ResetTransformationState();\r\n    }\r\n    UpdateTransformPercentage()
-    {\r\n        this.timeRemainingToTransform -= UnityEngine_1.Time.deltaTime;\r\n       
-    let timePercentage = this.timeRemainingToTransform / this.timeToTransform;\r\n       
-    this.iconCharge.fillAmount = timePercentage;\r\n    }\r\n    ResetTransformationState()
-    {\r\n        this.isTransforming = false;\r\n        this.timeRemainingToTransform
-    = this.timeToTransform;\r\n        this.ShowIconPercentage(false);\r\n    }\r\n   
-    ShowIconPercentage(show) {\r\n        if (show != this.icon.activeSelf)\r\n           
-    this.icon.SetActive(show);\r\n        this.icon.transform.position = this.pointerPos;\r\n   
-    }\r\n}\r\nexports.default = PlayerController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQXFLO0FBQ3JLLDZFQUE0RDtBQUM1RCxpREFBcUQ7QUFDckQsMkRBQW9EO0FBSXBELE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQWEvRCxLQUFLO1FBQ0QsMkNBQWEsQ0FBQyxRQUFRLENBQUMsa0JBQWtCLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN2RCxJQUFJLENBQUMsWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQztZQUN6RixJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUM7WUFDakUsSUFBSSxDQUFDLFVBQVUsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDO1FBQ2pFLENBQUMsQ0FBQyxDQUFDO1FBQ0gsSUFBSSxDQUFDLHdCQUF3QixFQUFFLENBQUM7SUFDcEMsQ0FBQztJQUVELE1BQU07UUFDRixJQUFJLG1CQUFLLENBQUMsY0FBYyxDQUFDLENBQUMsQ0FBQyxFQUFFO1lBQ3pCLElBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLGFBQWEsQ0FBQyxtQkFBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDO1NBQ2pFO1FBRUQsSUFBSSxtQkFBSyxDQUFDLGdCQUFnQixDQUFDLENBQUMsQ0FBQyxFQUFFO1lBQzNCLElBQUksQ0FBQyx3QkFBd0IsRUFBRSxDQUFDO1NBQ25DO1FBRUQsSUFBSSxtQkFBSyxDQUFDLFVBQVUsR0FBRyxDQUFDLEVBQUU7WUFDdEIsSUFBSSxLQUFLLEdBQVUsbUJBQUssQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7WUFD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","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerController.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"timeToTransform","type":"System.Single","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"icon","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"iconCharge","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"PlayerController","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: b898ad6f6f4b39186f791eb23566e388
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst HunterController_1 = require(\"./HunterController\");\r\nconst
+    NonHunterController_1 = require(\"./NonHunterController\");\r\nconst UIManager_1
+    = require(\"../Managers/UIManager\");\r\nconst ChargingIconPrefab_1 = require(\"../UI/ChargingIconPrefab\");\r\nclass
+    PlayerController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this.playerGo = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n           
+    // let chargingCanvas: GameObject = GameObject.Instantiate(UIManager.instance.iconImagePrefab)
+    as GameObject;\r\n            // let chargingScript: ChargingIconPrefab = chargingCanvas.GetComponent<ChargingIconPrefab>();\r\n           
+    // UIManager.instance.icon = chargingScript.icon;\r\n            // UIManager.instance.iconCharge
+    = chargingScript.iconCharge;\r\n            this.SelectTeam(true);\r\n       
+    });\r\n    }\r\n    SelectTeam(isHunter) {\r\n        if (isHunter) {\r\n           
+    this.playerGo.AddComponent($typeof(HunterController_1.default));\r\n        }\r\n       
+    else {\r\n            this.playerGo.AddComponent($typeof(NonHunterController_1.default));\r\n       
+    }\r\n    }\r\n}\r\nexports.default = PlayerController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBeUM7QUFDekMsNkVBQTREO0FBQzVELGlEQUFxRDtBQUNyRCx5REFBa0Q7QUFDbEQsK0RBQXdEO0FBQ3hELHFEQUE4QztBQUM5QyxpRUFBMEQ7QUFFMUQsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBSy9ELEtBQUs7UUFDRCwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxrQkFBa0IsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3ZELElBQUksQ0FBQyxRQUFRLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO1lBQ3JGLDZHQUE2RztZQUM3Ryw4RkFBOEY7WUFDOUYsaURBQWlEO1lBQ2pELDZEQUE2RDtZQUM3RCxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQzFCLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVELFVBQVUsQ0FBQyxRQUFjO1FBQ3JCLElBQUksUUFBUSxFQUFFO1lBQ1YsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsMEJBQWdCLEdBQUk7U0FDbEQ7YUFBTTtZQUNILElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLDZCQUFtQixHQUFJO1NBQ3JEO0lBQ0wsQ0FBQztDQUNKO0FBdkJELG1DQXVCQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerController.ts","manifest":{"properties":[],"name":"PlayerController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 40ef682986edd50248ac479a19630703
   onlyWriteTrigger: 0

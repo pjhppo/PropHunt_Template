@@ -1,0 +1,56 @@
+fileFormatVersion: 2
+guid: 6edfbeb444500524485a6b9bd5ca9546
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst NonHunterController_1
+    = require(\"./NonHunterController\");\r\nconst UIManager_1 = require(\"../Managers/UIManager\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    GameManager_1 = require(\"../Managers/GameManager\");\r\nclass HunterController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.flashLightRadius = 0.5;\r\n    }\r\n   
+    Start() {\r\n        this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    this.timeToCatch = GameManager_1.default.instance.timeToCatch;\r\n    }\r\n   
+    Update() {\r\n        let position = this.GetForwardPosition(this.transform);\r\n       
+    this.flashLightDetectionZone = position;\r\n        let colls = UnityEngine_1.Physics.OverlapSphere(this.flashLightDetectionZone,
+    this.flashLightRadius, GameManager_1.default.instance.playerLayer.value);\r\n       
+    if (colls.length > 0) {\r\n            colls.forEach(coll => {\r\n               
+    let nonHunter = coll.GetComponent($typeof(NonHunterController_1.default));\r\n               
+    if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Equality(nonHunter, null))\r\n                   
+    return;\r\n                this.TryCatchNonHunter(nonHunter);\r\n           
+    });\r\n        }\r\n        else {\r\n            this.ResetCatchingState();\r\n       
+    }\r\n    }\r\n    TryCatchNonHunter(nonHunter) {\r\n        console.log(\"Catching\");\r\n       
+    let position = this.mainCamera.WorldToScreenPoint(nonHunter.transform.position);\r\n       
+    UIManager_1.default.instance.ShowIconPercentage(true, position);\r\n        this.UpdateCatchPercentage();\r\n       
+    if (this.remainingTimeToCatch < 0) {\r\n            this.CatchNonHunter(nonHunter);\r\n       
+    }\r\n    }\r\n    CatchNonHunter(nonHunter) {\r\n        nonHunter.gameObject.SetActive(false);\r\n       
+    this.ResetCatchingState();\r\n    }\r\n    UpdateCatchPercentage() {\r\n       
+    this.remainingTimeToCatch -= UnityEngine_1.Time.deltaTime;\r\n        let timePercentage
+    = this.remainingTimeToCatch / this.timeToCatch;\r\n        UIManager_1.default.instance.UpdateChargeFillAmount(timePercentage);\r\n   
+    }\r\n    ResetCatchingState() {\r\n        this.remainingTimeToCatch = this.timeToCatch;\r\n       
+    UIManager_1.default.instance.ShowIconPercentage(false, UnityEngine_1.Vector3.zero);\r\n   
+    }\r\n    OnDrawGizmos() {\r\n        UnityEngine_1.Gizmos.color = UnityEngine_1.Color.red;\r\n       
+    UnityEngine_1.Gizmos.DrawWireSphere(this.flashLightDetectionZone, this.flashLightRadius);\r\n   
+    }\r\n    GetForwardPosition(tfPos) {\r\n        let finalPos = tfPos.position;\r\n       
+    finalPos.x += tfPos.forward.x;\r\n        finalPos.y += tfPos.forward.y;\r\n       
+    finalPos.z += tfPos.forward.z;\r\n        return finalPos;\r\n    }\r\n}\r\nexports.default
+    = HunterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBMkc7QUFDM0csaURBQXFEO0FBQ3JELCtEQUF3RDtBQUN4RCxxREFBOEM7QUFDOUMsNkVBQTREO0FBQzVELHlEQUFrRDtBQUVsRCxNQUFxQixnQkFBaUIsU0FBUSxxQ0FBcUI7SUFBbkU7O1FBT1kscUJBQWdCLEdBQVcsR0FBRyxDQUFDO0lBK0QzQyxDQUFDO0lBM0RHLEtBQUs7UUFDRCxJQUFJLENBQUMsVUFBVSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFlBQVksQ0FBQyxNQUFNLENBQUM7UUFDN0QsSUFBSSxDQUFDLFdBQVcsR0FBRyxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUM7SUFDeEQsQ0FBQztJQUVELE1BQU07UUFDRixJQUFJLFFBQVEsR0FBRyxJQUFJLENBQUMsa0JBQWtCLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ3ZELElBQUksQ0FBQyx1QkFBdUIsR0FBRyxRQUFRLENBQUM7UUFDeEMsSUFBSSxLQUFLLEdBQWUscUJBQU8sQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLHVCQUF1QixFQUFFLElBQUksQ0FBQyxnQkFBZ0IsRUFBRSxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsS0FBSyxDQUFDLENBQUM7UUFFM0ksSUFBSSxLQUFLLENBQUMsTUFBTSxHQUFHLENBQUMsRUFBRTtZQUNsQixLQUFLLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxFQUFFO2dCQUNqQixJQUFJLFNBQVMsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLDZCQUFtQixFQUFHLENBQUM7Z0JBQ3pELElBOUJQLHFDQUFxQixDQTRFc3FJLFdBQVksQ0E5QzVySSxTQUFTLEVBQUksSUFBSTtvQkFBRSxPQUFPO2dCQUM5QixJQUFJLENBQUMsaUJBQWlCLENBQUMsU0FBUyxDQUFDLENBQUM7WUFDdEMsQ0FBQyxDQUFDLENBQUM7U0FDTjthQUFNO1lBQ0gsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7U0FDN0I7SUFDTCxDQUFDO0lBRUQsaUJBQWlCLENBQUMsU0FBOEI7UUFDNUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxVQUFVLENBQUMsQ0FBQztRQUN4QixJQUFJLFFBQVEsR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLGtCQUFrQixDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLENBQUM7UUFDaEYsbUJBQVMsQ0FBQyxRQUFRLENBQUMsa0JBQWtCLENBQUMsSUFBSSxFQUFFLFFBQVEsQ0FBQyxDQUFDO1FBQ3RELElBQUksQ0FBQyxxQkFBcUIsRUFBRSxDQUFDO1FBQzdCLElBQUksSUFBSSxDQUFDLG9CQUFvQixHQUFHLENBQUMsRUFBRTtZQUMvQixJQUFJLENBQUMsY0FBYyxDQUFDLFNBQVMsQ0FBQyxDQUFDO1NBQ2xDO0lBQ0wsQ0FBQztJQUVELGNBQWMsQ0FBQyxTQUE4QjtRQUN6QyxTQUFTLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUN0QyxJQUFJLENBQUMsa0JBQWtCLEVBQUUsQ0FBQztJQUM5QixDQUFDO0lBRUQscUJBQXFCO1FBQ2pCLElBQUksQ0FBQyxvQkFBb0IsSUFBSSxrQkFBSSxDQUFDLFNBQVMsQ0FBQztRQUM1QyxJQUFJLGNBQWMsR0FBRyxJQUFJLENBQUMsb0JBQW9CLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQztRQUNsRSxtQkFBUyxDQUFDLFFBQVEsQ0FBQyxzQkFBc0IsQ0FBQyxjQUFjLENBQUMsQ0FBQztJQUM5RCxDQUFDO0lBRUQsa0JBQWtCO1FBQ2QsSUFBSSxDQUFDLG9CQUFvQixHQUFHLElBQUksQ0FBQyxXQUFXLENBQUM7UUFDN0MsbUJBQVMsQ0FBQyxRQUFRLENBQUMsa0JBQWtCLENBQUMsS0FBSyxFQUFFLHFCQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDL0QsQ0FBQztJQUVELFlBQVk7UUFDUixvQkFBTSxDQUFDLEtBQUssR0FBRyxtQkFBSyxDQUFDLEdBQUcsQ0FBQztRQUN6QixvQkFBTSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsdUJBQXVCLEVBQUUsSUFBSSxDQUFDLGdCQUFnQixDQUFDLENBQUM7SUFDL0UsQ0FBQztJQUVELGtCQUFrQixDQUFDLEtBQWdCO1FBQy9CLElBQUksUUFBUSxHQUFHLEtBQUssQ0FBQyxRQUFRLENBQUM7UUFDOUIsUUFBUSxDQUFDLENBQUMsSUFBSSxLQUFLLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztRQUM5QixRQUFRLENBQUMsQ0FBQyxJQUFJLEtBQUssQ0FBQyxPQUFPLENBQUMsQ0FBQyxDQUFDO1FBQzlCLFFBQVEsQ0FBQyxDQUFDLElBQUksS0FBSyxDQUFDLE9BQU8sQ0FBQyxDQUFDLENBQUM7UUFDOUIsT0FBTyxRQUFRLENBQUM7SUFDcEIsQ0FBQztDQUNKO0FBdEVELG1DQXNFQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Player/HunterController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"playerLayer","type":"UnityEngine.LayerMask","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"HunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 39cb82790ad80837d5c27ca3d5805674
+  onlyWriteTrigger: 0
