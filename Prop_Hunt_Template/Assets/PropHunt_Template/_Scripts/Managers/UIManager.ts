@@ -1,6 +1,7 @@
-import { GameObject, Vector3 } from 'UnityEngine';
+import { GameObject, Vector3, WaitForSeconds } from 'UnityEngine';
 import { Image } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
+import { ZepetoText } from 'ZEPETO.World.Gui';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -9,6 +10,9 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     public icon: GameObject;
     public iconCharge: Image;
+
+    @Header("Hunter")
+    @SerializeField() private catchedText: ZepetoText;
 
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
@@ -22,5 +26,15 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     UpdateChargeFillAmount(percentage: number) {
         this.iconCharge.fillAmount = percentage;
+    }
+
+    ShowCatchedText() {
+        this.StartCoroutine(this.ShowCatchedTextCoroutine());
+    }
+
+    *ShowCatchedTextCoroutine() {
+        this.catchedText.gameObject.SetActive(true);
+        yield new WaitForSeconds(1);
+        this.catchedText.gameObject.SetActive(false);
     }
 }

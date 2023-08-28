@@ -1,8 +1,7 @@
-import { BoxCollider, Camera, GameObject, Input, LayerMask, MeshFilter, Physics, Ray, RaycastHit, Time, Touch, TouchPhase, Vector3 } from 'UnityEngine';
+import { BoxCollider, Camera, GameObject, Input, MeshFilter, Physics, Ray, RaycastHit, Time, Touch, TouchPhase, Vector3 } from 'UnityEngine';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import Itemtransformable from './Itemtransformable';
-import { Image } from 'UnityEngine.UI';
 import GameManager from '../Managers/GameManager';
 import UIManager from '../Managers/UIManager';
 
@@ -18,13 +17,20 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     private objectTransformed: GameObject;
 
     Start() {
-        this.timeToTransform = GameManager.instance.timeToTransform;
-
-        ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
+        if (ZepetoPlayers.instance.LocalPlayer) {
             this.playerParent = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;
             this.player = this.playerParent.transform.GetChild(0).gameObject;
             this.mainCamera = ZepetoPlayers.instance.ZepetoCamera.camera;
-        });
+        } else {
+            ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
+                this.playerParent = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;
+                this.player = this.playerParent.transform.GetChild(0).gameObject;
+                this.mainCamera = ZepetoPlayers.instance.ZepetoCamera.camera;
+            });
+
+        }
+
+        this.timeToTransform = GameManager.instance.timeToTransform;
         this.ResetTransformationState();
     }
 
@@ -61,6 +67,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         this.pointerPos = position;
         let item: Itemtransformable;
 
+        if (this.mainCamera == undefined) this.mainCamera = ZepetoPlayers.instance.ZepetoCamera.camera;
         let ray: Ray = this.mainCamera.ScreenPointToRay(position);
         let hit = $ref<RaycastHit>();
 
@@ -88,7 +95,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         }
 
         let objPos: Vector3 = this.playerParent.transform.transform.position;
-        objPos.y += 0.5;
+        // objPos.y += 0.5;
 
         this.objectTransformed.transform.position = objPos;
         this.ResetTransformationState();

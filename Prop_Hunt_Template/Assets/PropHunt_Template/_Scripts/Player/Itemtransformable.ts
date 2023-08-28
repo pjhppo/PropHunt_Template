@@ -7,6 +7,8 @@ export default class Itemtransformable extends ZepetoScriptBehaviour {
 
     Start() {
         let collider = this.gameObject.AddComponent<BoxCollider>();
-        collider = this.modelCollider;
+        collider.size = this.modelCollider.size;
+        collider.center = this.modelCollider.center;
+        this.modelCollider.enabled = false;
     }
 }
