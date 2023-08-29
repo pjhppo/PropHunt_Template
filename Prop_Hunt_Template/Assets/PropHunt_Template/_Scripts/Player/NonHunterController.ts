@@ -1,4 +1,4 @@
-import { BoxCollider, Camera, GameObject, Input, MeshFilter, Physics, Ray, RaycastHit, Time, Touch, TouchPhase, Vector3 } from 'UnityEngine';
+import { BoxCollider, Camera, GameObject, Input, Material, MeshFilter, MeshRenderer, Physics, Ray, RaycastHit, Time, Touch, TouchPhase, Vector3 } from 'UnityEngine';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import Itemtransformable from './Itemtransformable';
@@ -87,11 +87,12 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
 
     TransformIntoItem(item: Itemtransformable) {
         this.player.SetActive(false);
-        if (this.objectTransformed == null) this.objectTransformed = GameObject.Instantiate(item.modelCollider.gameObject, this.playerParent.transform) as GameObject;
+        if (this.objectTransformed == null) this.objectTransformed = GameObject.Instantiate(item.itemPrefab, this.playerParent.transform) as GameObject;
         else {
-            this.objectTransformed.GetComponent<MeshFilter>().mesh = item.model.mesh;
+            this.objectTransformed.GetComponent<MeshFilter>().mesh = item.GetModel().mesh;
+            this.objectTransformed.GetComponent<MeshRenderer>().material = item.GetModelMaterial();
             let coll = this.objectTransformed.GetComponent<BoxCollider>();
-            coll.size = item.modelCollider.size;
+            coll.size = item.GetModelCollider().size;
         }
 
         let objPos: Vector3 = this.playerParent.transform.transform.position;

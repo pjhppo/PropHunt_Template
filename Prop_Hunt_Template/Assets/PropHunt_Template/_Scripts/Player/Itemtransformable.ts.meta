@@ -20,11 +20,18 @@ ScriptedImporter:
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
-    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass Itemtransformable extends
-    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        let collider
-    = this.gameObject.AddComponent($typeof(UnityEngine_1.BoxCollider));\r\n       
-    collider.size = this.modelCollider.size;\r\n        collider.center = this.modelCollider.center;\r\n       
-    this.modelCollider.enabled = false;\r\n    }\r\n}\r\nexports.default = Itemtransformable;\r\n//#
-    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbXRyYW5zZm9ybWFibGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJdGVtdHJhbnNmb3JtYWJsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUEyRDtBQUMzRCxpREFBcUQ7QUFFckQsTUFBcUIsaUJBQWtCLFNBQVEscUNBQXFCO0lBSWhFLEtBQUs7UUFDRCxJQUFJLFFBQVEsR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyx5QkFBVyxFQUFHLENBQUM7UUFDM0QsUUFBUSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksQ0FBQztRQUN4QyxRQUFRLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxhQUFhLENBQUMsTUFBTSxDQUFDO1FBQzVDLElBQUksQ0FBQyxhQUFhLENBQUMsT0FBTyxHQUFHLEtBQUssQ0FBQztJQUN2QyxDQUFDO0NBQ0o7QUFWRCxvQ0FVQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"model","type":"UnityEngine.MeshFilter","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.PhysicsModule","name":"modelCollider","type":"UnityEngine.BoxCollider","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Itemtransformable","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: abc06b1cd35b146d687547e288855f8d
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    GameManager_1 = require(\"../Managers/GameManager\");\r\nclass Itemtransformable
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        let
+    item = UnityEngine_1.GameObject.Instantiate(this.itemPrefab);\r\n        this.model
+    = item.GetComponent($typeof(UnityEngine_1.MeshFilter));\r\n        this.modelCollider
+    = item.GetComponent($typeof(UnityEngine_1.BoxCollider));\r\n        this.modelMaterial
+    = item.GetComponent($typeof(UnityEngine_1.MeshRenderer)).material;\r\n       
+    item.SetActive(false);\r\n        this.button = this.GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    this.button.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.nonHunterScript.TransformIntoItem(this);\r\n       
+    });\r\n    }\r\n    GetModel() {\r\n        return this.model;\r\n    }\r\n   
+    GetModelCollider() {\r\n        return this.modelCollider;\r\n    }\r\n    GetModelMaterial()
+    {\r\n        return this.modelMaterial;\r\n    }\r\n}\r\nexports.default = Itemtransformable;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbXRyYW5zZm9ybWFibGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJdGVtdHJhbnNmb3JtYWJsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUErRjtBQUMvRixtREFBd0M7QUFDeEMsaURBQXFEO0FBQ3JELHlEQUFrRDtBQUVsRCxNQUFxQixpQkFBa0IsU0FBUSxxQ0FBcUI7SUFTaEUsS0FBSztRQUNELElBQUksSUFBSSxHQUFHLHdCQUFVLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQWUsQ0FBQztRQUVqRSxJQUFJLENBQUMsS0FBSyxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsd0JBQVUsRUFBRyxDQUFDO1FBQzdDLElBQUksQ0FBQyxhQUFhLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyx5QkFBVyxFQUFHLENBQUM7UUFDdEQsSUFBSSxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLDBCQUFZLEdBQUksUUFBUSxDQUFDO1FBRWhFLElBQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFFdEIsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHVCQUFNLEVBQUcsQ0FBQztRQUMxQyxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2pDLHFCQUFXLENBQUMsUUFBUSxDQUFDLGVBQWUsQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUNqRSxDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFFTSxRQUFRO1FBQ1gsT0FBTyxJQUFJLENBQUMsS0FBSyxDQUFDO0lBQ3RCLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsYUFBYSxDQUFDO0lBQzlCLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsYUFBYSxDQUFDO0lBQzlCLENBQUM7Q0FDSjtBQW5DRCxvQ0FtQ0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"itemPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Itemtransformable","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 49e255cd5a531e853edcfd131eb8e437
   onlyWriteTrigger: 0

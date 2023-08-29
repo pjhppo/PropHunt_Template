@@ -1,5 +1,5 @@
 import { GameObject, Vector3, WaitForSeconds } from 'UnityEngine';
-import { Image } from 'UnityEngine.UI';
+import { Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
 
@@ -10,6 +10,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     public icon: GameObject;
     public iconCharge: Image;
+
+
+    @Header("NonHunter")
+    @SerializeField() private sliderRot: Slider;
 
     @Header("Hunter")
     @SerializeField() private catchedText: ZepetoText;

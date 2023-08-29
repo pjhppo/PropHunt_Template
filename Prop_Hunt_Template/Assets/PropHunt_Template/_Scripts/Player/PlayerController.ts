@@ -5,6 +5,7 @@ import HunterController from './HunterController';
 import NonHunterController from './NonHunterController';
 import UIManager from '../Managers/UIManager';
 import ChargingIconPrefab from '../UI/ChargingIconPrefab';
+import GameManager from '../Managers/GameManager';
 
 export default class PlayerController extends ZepetoScriptBehaviour {
 
@@ -18,7 +19,7 @@ export default class PlayerController extends ZepetoScriptBehaviour {
             // let chargingScript: ChargingIconPrefab = chargingCanvas.GetComponent<ChargingIconPrefab>();
             // UIManager.instance.icon = chargingScript.icon;
             // UIManager.instance.iconCharge = chargingScript.iconCharge;
-            this.SelectTeam(true);
+            this.SelectTeam(false);
         });
     }
 
@@ -26,7 +27,8 @@ export default class PlayerController extends ZepetoScriptBehaviour {
         if (isHunter) {
             this.playerGo.AddComponent<HunterController>();
         } else {
-            this.playerGo.AddComponent<NonHunterController>();
+            let nonHunterScript: NonHunterController = this.playerGo.AddComponent<NonHunterController>();
+            GameManager.instance.nonHunterScript = nonHunterScript;
         }
     }
 }
