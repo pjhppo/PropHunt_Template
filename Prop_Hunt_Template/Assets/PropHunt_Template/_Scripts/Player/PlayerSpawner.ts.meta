@@ -21,14 +21,16 @@ ScriptedImporter:
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
     ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
-    ZEPETO_World_1 = require(\"ZEPETO.World\");\r\n// This script spawns a single
-    player\r\nclass PlayerSpawner extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
-    Start() {\r\n        // Grab the user id specified from logging into zepeto through
-    the editor. \r\n        $extension(\"ZEPETO.Character.Controller.ZepetoPlayersExtension\").CreatePlayerWithUserId(ZEPETO_Character_Controller_1.ZepetoPlayers.instance,
-    ZEPETO_World_1.WorldService.userId, new ZEPETO_Character_Controller_1.SpawnInfo(),
-    true);\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId)
+    ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    GameManager_1 = require(\"../Managers/GameManager\");\r\n// This script spawns
+    a single player\r\nclass PlayerSpawner extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        let spawn = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    spawn.position = GameManager_1.default.instance.spawnPoint.position;\r\n       
+    // Grab the user id specified from logging into zepeto through the editor. \r\n       
+    $extension(\"ZEPETO.Character.Controller.ZepetoPlayersExtension\").CreatePlayerWithUserId(ZEPETO_Character_Controller_1.ZepetoPlayers.instance,
+    ZEPETO_World_1.WorldService.userId, spawn, true);\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId)
     => {\r\n            let player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(userId);\r\n           
     player.character.gameObject.name = userId;\r\n        });\r\n    }\r\n}\r\nexports.default
-    = PlayerSpawner;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyU3Bhd25lci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllclNwYXduZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBc0Q7QUFDdEQsNkVBQXlIO0FBQ3pILCtDQUE0QztBQUc1QyxxQ0FBcUM7QUFDckMsTUFBcUIsYUFBYyxTQUFRLHFDQUFxQjtJQUM1RCxLQUFLO1FBQ0QsMkVBQTJFO1FBQzNFLGlFQUF1QixzQkFBc0IsQ0FBN0MsMkNBQWEsQ0FBQyxRQUFRLEVBQXdCLDJCQUFZLENBQUMsTUFBTSxFQUFFLElBQUksdUNBQVMsRUFBRSxFQUFFLElBQUksRUFBRTtRQUUxRiwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxhQUFhLENBQUMsV0FBVyxDQUFDLENBQUMsTUFBTSxFQUFFLEVBQUU7WUFDeEQsSUFBSSxNQUFNLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1lBQ3RELE1BQU0sQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLElBQUksR0FBRyxNQUFNLENBQUM7UUFDOUMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0NBRUo7QUFYRCxnQ0FXQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerSpawner.ts","manifest":{"properties":[],"name":"PlayerSpawner","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 0e718c7c1294e3c69edcd7d19ab01df2
+    = PlayerSpawner;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyU3Bhd25lci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllclNwYXduZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBc0Q7QUFDdEQsNkVBQXlIO0FBQ3pILCtDQUE0QztBQUM1Qyw2Q0FBeUM7QUFDekMseURBQWtEO0FBRWxELHFDQUFxQztBQUNyQyxNQUFxQixhQUFjLFNBQVEscUNBQXFCO0lBQzVELEtBQUs7UUFDRCxJQUFJLEtBQUssR0FBYyxJQUFJLHVDQUFTLEVBQUUsQ0FBQztRQUN2QyxLQUFLLENBQUMsUUFBUSxHQUFHLHFCQUFXLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUM7UUFFMUQsMkVBQTJFO1FBQzNFLGlFQUF1QixzQkFBc0IsQ0FBN0MsMkNBQWEsQ0FBQyxRQUFRLEVBQXdCLDJCQUFZLENBQUMsTUFBTSxFQUFFLEtBQUssRUFBRSxJQUFJLEVBQUU7UUFFaEYsMkNBQWEsQ0FBQyxRQUFRLENBQUMsYUFBYSxDQUFDLFdBQVcsQ0FBQyxDQUFDLE1BQU0sRUFBRSxFQUFFO1lBQ3hELElBQUksTUFBTSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQztZQUN0RCxNQUFNLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQyxJQUFJLEdBQUcsTUFBTSxDQUFDO1FBQzlDLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUVKO0FBZEQsZ0NBY0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerSpawner.ts","manifest":{"properties":[],"name":"PlayerSpawner","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 4b280036f99582cb75a59dcbfc230766
   onlyWriteTrigger: 0

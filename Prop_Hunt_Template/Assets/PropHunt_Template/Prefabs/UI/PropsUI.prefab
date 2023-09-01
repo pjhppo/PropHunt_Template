@@ -120,8 +120,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 358889101101465925}
   m_HandleRect: {fileID: 358889101101465924}
   m_Direction: 2
-  m_Value: 0.99999976
-  m_Size: 0.60647476
+  m_Value: 1
+  m_Size: 0.6064748
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 358889099487427588}
   - component: {fileID: 358889099487427591}
   - component: {fileID: 358889099487427590}
+  - component: {fileID: 1378732171}
   m_Layer: 5
   m_Name: ButtonTemplate (3)
   m_TagString: Untagged
@@ -246,6 +247,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889099487427584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 8645432105917925067, guid: 180175de9eef84619893097b9c2862ae, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0
 --- !u!1 &358889099698676404
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +718,7 @@ GameObject:
   - component: {fileID: 358889100030164826}
   - component: {fileID: 358889100030164821}
   - component: {fileID: 358889100030164820}
+  - component: {fileID: 1378732174}
   m_Layer: 5
   m_Name: ButtonTemplate
   m_TagString: Untagged
@@ -801,6 +827,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889100030164822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 4252904093821003221, guid: d9cd733366ac04ebe913bbf2b4005bc0, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0
 --- !u!1 &358889100043484097
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +1019,7 @@ GameObject:
   - component: {fileID: 358889100274870146}
   - component: {fileID: 358889100274870269}
   - component: {fileID: 358889100274870268}
+  - component: {fileID: 1378732173}
   m_Layer: 5
   m_Name: ButtonTemplate (1)
   m_TagString: Untagged
@@ -1077,6 +1128,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889100274870270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 7080068150178351200, guid: 082fafa385199458780edf57ea9c20b3, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0
 --- !u!1 &358889100615044047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,6 +1243,7 @@ GameObject:
   - component: {fileID: 358889100794520544}
   - component: {fileID: 358889100794520547}
   - component: {fileID: 358889100794520546}
+  - component: {fileID: 1378732170}
   m_Layer: 5
   m_Name: ButtonTemplate (4)
   m_TagString: Untagged
@@ -1276,6 +1352,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889100794520540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 6091708370570237477, guid: 7bf3e7e095b154418b4448abe16a3baf, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0
 --- !u!1 &358889100827551105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,6 +1583,7 @@ GameObject:
   - component: {fileID: 358889101114450493}
   - component: {fileID: 358889101114450492}
   - component: {fileID: 358889101114450495}
+  - component: {fileID: 1378732172}
   m_Layer: 5
   m_Name: ButtonTemplate (2)
   m_TagString: Untagged
@@ -1591,6 +1692,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889101114450489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 4137926045198967603, guid: 145cd2e7cedf649f69c192c0f07c581d, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0
 --- !u!1 &358889101133852304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,6 +1952,7 @@ GameObject:
   - component: {fileID: 358889101251721135}
   - component: {fileID: 358889101251721134}
   - component: {fileID: 358889101251721129}
+  - component: {fileID: 1378732169}
   m_Layer: 5
   m_Name: ButtonTemplate (5)
   m_TagString: Untagged
@@ -1935,6 +2061,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889101251721131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 8145784028713725570, guid: c8973c916020ae944a2d059c20db3452, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0
 --- !u!1 &358889101341656067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,6 +2172,7 @@ GameObject:
   - component: {fileID: 358889101412718444}
   - component: {fileID: 358889101412718447}
   - component: {fileID: 358889101412718446}
+  - component: {fileID: 1378732168}
   m_Layer: 5
   m_Name: ButtonTemplate (6)
   m_TagString: Untagged
@@ -2130,3 +2281,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378732168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358889101412718440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - itemPrefab
+    unityValues:
+    - {fileID: 252575057761866189, guid: 118a530a0fca64d788988313846c6cc9, type: 3}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
+    isExpaned: 0

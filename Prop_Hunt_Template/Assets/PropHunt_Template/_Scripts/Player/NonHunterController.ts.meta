@@ -22,55 +22,28 @@ ScriptedImporter:
     { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
     UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
     = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    Itemtransformable_1 = require(\"./Itemtransformable\");\r\nconst GameManager_1
-    = require(\"../Managers/GameManager\");\r\nconst UIManager_1 = require(\"../Managers/UIManager\");\r\nclass
+    Itemtransformable_1 = require(\"./Itemtransformable\");\r\nconst UIManager_1
+    = require(\"../Managers/UIManager\");\r\nconst GameManager_1 = require(\"../Managers/GameManager\");\r\nclass
     NonHunterController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
     {\r\n        if (ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer)
     {\r\n            this.playerParent = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n           
-    this.player = this.playerParent.transform.GetChild(0).gameObject;\r\n           
-    this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    this.player = this.playerParent.transform.GetChild(0).gameObject;\r\n       
     }\r\n        else {\r\n            ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
     => {\r\n                this.playerParent = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n               
-    this.player = this.playerParent.transform.GetChild(0).gameObject;\r\n               
-    this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n           
-    });\r\n        }\r\n        this.timeToTransform = GameManager_1.default.instance.timeToTransform;\r\n       
-    this.ResetTransformationState();\r\n    }\r\n    // Update() {\r\n    //    
-    if (Input.GetMouseButton(0)) {\r\n    //         this.isTransforming = this.RaycastToItem(Input.mousePosition);\r\n   
-    //     }\r\n    //     if (Input.GetMouseButtonUp(0)) {\r\n    //         this.ResetTransformationState();\r\n   
-    //     }\r\n    //     if (Input.touchCount > 0) {\r\n    //         let touch:
-    Touch = Input.GetTouch(0);\r\n    //         let touchPos: Vector3 = new Vector3(touch.position.x,
-    touch.position.y, 0);\r\n    //         this.isTransforming = this.RaycastToItem(touchPos);\r\n   
-    //     }\r\n    //     if (Input.touchCount > 0 && Input.GetTouch(0).phase ==
-    TouchPhase.Ended) {\r\n    //         this.ResetTransformationState();\r\n   
-    //     }\r\n    //     if (this.timeRemainingToTransform < 0) this.RaycastToItem(this.pointerPos,
-    true);\r\n    //     if (this.isTransforming) {\r\n    //         UIManager.instance.ShowIconPercentage(true,
-    this.pointerPos);\r\n    //         this.UpdateTransformPercentage();\r\n   
-    //     } else {\r\n    //         this.ResetTransformationState();\r\n    //    
-    }\r\n    // }\r\n    RaycastToItem(position, transformIntoItem = false) {\r\n       
-    this.pointerPos = position;\r\n        let item;\r\n        if (this.mainCamera
-    == undefined)\r\n            this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
-    let ray = this.mainCamera.ScreenPointToRay(position);\r\n        let hit = $ref();\r\n       
-    if (UnityEngine_1.Physics.Raycast(ray, hit, 50)) {\r\n            let hitInfo
-    = $unref(hit);\r\n            if (hitInfo.collider.TryGetComponent($typeof(Itemtransformable_1.default),
-    $ref(item))) {\r\n                if (transformIntoItem) {\r\n                   
-    item = hitInfo.collider.GetComponent($typeof(Itemtransformable_1.default));\r\n                   
-    this.TransformIntoItem(item);\r\n                }\r\n                return
-    true;\r\n            }\r\n        }\r\n        return false;\r\n    }\r\n   
-    TransformIntoItem(item) {\r\n        this.player.SetActive(false);\r\n       
-    if (__UnityEngine__.Object.op_Equality(this.objectTransformed, null))\r\n           
-    this.objectTransformed = UnityEngine_1.GameObject.Instantiate(item.itemPrefab,
+    this.player = this.playerParent.transform.GetChild(0).gameObject;\r\n           
+    });\r\n        }\r\n        UIManager_1.default.instance.sliderRot.onValueChanged.AddListener((value)
+    => {\r\n            this.RotateItem(value);\r\n        });\r\n        UIManager_1.default.instance.ShowNonHunterUI();\r\n       
+    GameManager_1.default.instance.AddOneNonHunter();\r\n    }\r\n    TransformIntoItem(item)
+    {\r\n        this.player.SetActive(false);\r\n        if (__UnityEngine__.Object.op_Equality(this.objectTransformed,
+    null))\r\n            this.objectTransformed = UnityEngine_1.GameObject.Instantiate(item.itemPrefab,
     this.playerParent.transform);\r\n        else {\r\n            this.objectTransformed.GetComponent($typeof(UnityEngine_1.MeshFilter)).mesh
     = item.GetModel().mesh;\r\n            this.objectTransformed.GetComponent($typeof(UnityEngine_1.MeshRenderer)).material
     = item.GetModelMaterial();\r\n            let coll = this.objectTransformed.GetComponent($typeof(UnityEngine_1.BoxCollider));\r\n           
     coll.size = item.GetModelCollider().size;\r\n        }\r\n        let objPos
-    = this.playerParent.transform.transform.position;\r\n        // objPos.y += 0.5;\r\n       
-    this.objectTransformed.transform.position = objPos;\r\n        this.ResetTransformationState();\r\n   
-    }\r\n    UpdateTransformPercentage() {\r\n        this.timeRemainingToTransform
-    -= UnityEngine_1.Time.deltaTime;\r\n        let timePercentage = this.timeRemainingToTransform
-    / this.timeToTransform;\r\n        UIManager_1.default.instance.UpdateChargeFillAmount(timePercentage);\r\n   
-    }\r\n    ResetTransformationState() {\r\n        this.isTransforming = false;\r\n       
-    this.timeRemainingToTransform = this.timeToTransform;\r\n        UIManager_1.default.instance.ShowIconPercentage(false,
-    this.pointerPos);\r\n    }\r\n}\r\nexports.default = NonHunterController;\r\n//#
-    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTm9uSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5vbkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQXFLO0FBQ3JLLDZFQUE0RDtBQUM1RCxpREFBcUQ7QUFDckQsMkRBQW9EO0FBQ3BELHlEQUFrRDtBQUNsRCxxREFBOEM7QUFFOUMsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBV2xFLEtBQUs7UUFDRCxJQUFJLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsRUFBRTtZQUNwQyxJQUFJLENBQUMsWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQztZQUN6RixJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUM7WUFDakUsSUFBSSxDQUFDLFVBQVUsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDO1NBQ2hFO2FBQU07WUFDSCwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxrQkFBa0IsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO2dCQUN2RCxJQUFJLENBQUMsWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQztnQkFDekYsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUMsVUFBVSxDQUFDO2dCQUNqRSxJQUFJLENBQUMsVUFBVSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFlBQVksQ0FBQyxNQUFNLENBQUM7WUFDakUsQ0FBQyxDQUFDLENBQUM7U0FFTjtRQUVELElBQUksQ0FBQyxlQUFlLEdBQUcscUJB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","assetPath":"Assets/PropHunt_Template/_Scripts/Player/NonHunterController.ts","manifest":{"properties":[],"name":"NonHunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: a92ddf55ac6a4fba0046c36892e0caa7
+    = this.playerParent.transform.transform.position;\r\n        this.objectTransformed.transform.position
+    = objPos;\r\n    }\r\n    RotateItem(percentage) {\r\n        let rotation =
+    new UnityEngine_1.Vector3(0, UnityEngine_1.Mathf.Lerp(0, 360, percentage), 0);\r\n       
+    this.objectTransformed.transform.rotation = UnityEngine_1.Quaternion.Euler(rotation);\r\n   
+    }\r\n}\r\nexports.default = NonHunterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTm9uSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5vbkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQTRHO0FBQzVHLDZFQUE0RDtBQUM1RCxpREFBcUQ7QUFDckQsMkRBQW9EO0FBQ3BELHFEQUE4QztBQUM5Qyx5REFBa0Q7QUFFbEQsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBS2xFLEtBQUs7UUFDRCxJQUFJLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsRUFBRTtZQUNwQyxJQUFJLENBQUMsWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQztZQUN6RixJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUM7U0FDcEU7YUFBTTtZQUNILDJDQUFhLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7Z0JBQ3ZELElBQUksQ0FBQyxZQUFZLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO2dCQUN6RixJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUM7WUFDckUsQ0FBQyxDQUFDLENBQUM7U0FDTjtRQUVELG1CQUFTLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxjQUFjLENBQUMsV0FBVyxDQUFDLENBQUMsS0FBSyxFQUFFLEVBQUU7WUFDOUQsSUFBSSxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMzQixDQUFDLENBQUMsQ0FBQztRQUVILG1CQUFTLENBQUMsUUFBUSxDQUFDLGVBQWUsRUFBRSxDQUFDO1FBQ3JDLHFCQUFXLENBQUMsUUFBUSxDQUFDLGVBQWUsRUFBRSxDQUFDO0lBQzNDLENBQUM7SUFFRCxpQkFBaUIsQ0FBQyxJQUF1QjtRQUNyQyxJQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUM3QiwyQkFpQjh5UixXQUFZLENBakJ0elIsSUFBSSxDQUFDLGlCQUFpQixFQUFJLElBQUk7WUFBRSxJQUFJLENBQUMsaUJBQWlCLEdBQUcsd0JBQVUsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLFVBQVUsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBZSxDQUFDO2FBQzNJO1lBQ0QsSUFBSSxDQUFDLGlCQUFpQixDQUFDLFlBQVksU0FBQyx3QkFBVSxHQUFJLElBQUksR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUMsSUFBSSxDQUFDO1lBQzlFLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxZQUFZLFNBQUMsMEJBQVksR0FBSSxRQUFRLEdBQUcsSUFBSSxDQUFDLGdCQUFnQixFQUFFLENBQUM7WUFDdkYsSUFBSSxJQUFJLEdBQUcsSUFBSSxDQUFDLGlCQUFpQixDQUFDLFlBQVksU0FBQyx5QkFBVyxFQUFHLENBQUM7WUFDOUQsSUFBSSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsZ0JBQWdCLEVBQUUsQ0FBQyxJQUFJLENBQUM7U0FDNUM7UUFFRCxJQUFJLE1BQU0sR0FBWSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDO1FBRXJFLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxTQUFTLENBQUMsUUFBUSxHQUFHLE1BQU0sQ0FBQztJQUN2RCxDQUFDO0lBRUQsVUFBVSxDQUFDLFVBQWtCO1FBQ3pCLElBQUksUUFBUSxHQUFZLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUUsbUJBQUssQ0FBQyxJQUFJLENBQUMsQ0FBQyxFQUFFLEdBQUcsRUFBRSxVQUFVLENBQUMsRUFBRSxDQUFDLENBQUMsQ0FBQztRQUMxRSxJQUFJLENBQUMsaUJBQWlCLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyx3QkFBVSxDQUFDLEtBQUssQ0FBQyxRQUFRLENBQUMsQ0FBQztJQUMzRSxDQUFDO0NBQ0o7QUEzQ0Qsc0NBMkNDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/Player/NonHunterController.ts","manifest":{"properties":[],"name":"NonHunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8f2bd086b0b9c8f27564946d209a6c2a
   onlyWriteTrigger: 0

@@ -22,6 +22,8 @@ export default class HunterController extends ZepetoScriptBehaviour {
     }
 
     Update() {
+        if (!GameManager.gameStarted) return;
+
         let position = this.GetForwardPosition(this.transform);
         this.flashLightDetectionZone = position;
         let colls: Collider[] = Physics.OverlapSphere(this.flashLightDetectionZone, this.flashLightRadius, GameManager.instance.playerLayer.value);
@@ -35,10 +37,11 @@ export default class HunterController extends ZepetoScriptBehaviour {
         } else {
             this.ResetCatchingState();
         }
+
+        UIManager.instance.ShowHunterUI();
     }
 
     TryCatchNonHunter(nonHunter: NonHunterController) {
-        console.log("Catching");
         let position = this.mainCamera.WorldToScreenPoint(nonHunter.transform.position);
         UIManager.instance.ShowIconPercentage(true, position);
         this.UpdateCatchPercentage();
@@ -50,6 +53,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
     CatchNonHunter(nonHunter: NonHunterController) {
         nonHunter.gameObject.SetActive(false);
         UIManager.instance.ShowCatchedText();
+        GameManager.instance.RestOneNonHunter();
         this.ResetCatchingState();
     }
 

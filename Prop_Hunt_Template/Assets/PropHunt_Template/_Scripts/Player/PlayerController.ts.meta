@@ -22,19 +22,14 @@ ScriptedImporter:
     { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
     ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
     ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst HunterController_1 = require(\"./HunterController\");\r\nconst
-    NonHunterController_1 = require(\"./NonHunterController\");\r\nconst UIManager_1
-    = require(\"../Managers/UIManager\");\r\nconst ChargingIconPrefab_1 = require(\"../UI/ChargingIconPrefab\");\r\nconst
-    GameManager_1 = require(\"../Managers/GameManager\");\r\nclass PlayerController
-    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    NonHunterController_1 = require(\"./NonHunterController\");\r\nconst GameManager_1
+    = require(\"../Managers/GameManager\");\r\nclass PlayerController extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
     => {\r\n            this.playerGo = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n           
-    // let chargingCanvas: GameObject = GameObject.Instantiate(UIManager.instance.iconImagePrefab)
-    as GameObject;\r\n            // let chargingScript: ChargingIconPrefab = chargingCanvas.GetComponent<ChargingIconPrefab>();\r\n           
-    // UIManager.instance.icon = chargingScript.icon;\r\n            // UIManager.instance.iconCharge
-    = chargingScript.iconCharge;\r\n            this.SelectTeam(false);\r\n       
-    });\r\n    }\r\n    SelectTeam(isHunter) {\r\n        if (isHunter) {\r\n           
-    this.playerGo.AddComponent($typeof(HunterController_1.default));\r\n        }\r\n       
-    else {\r\n            let nonHunterScript = this.playerGo.AddComponent($typeof(NonHunterController_1.default));\r\n           
+    this.SelectTeam(false);\r\n        });\r\n    }\r\n    SelectTeam(isHunter) {\r\n       
+    if (isHunter) {\r\n            this.playerGo.AddComponent($typeof(HunterController_1.default));\r\n       
+    }\r\n        else {\r\n            let nonHunterScript = this.playerGo.AddComponent($typeof(NonHunterController_1.default));\r\n           
     GameManager_1.default.instance.nonHunterScript = nonHunterScript;\r\n       
-    }\r\n    }\r\n}\r\nexports.default = PlayerController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBeUM7QUFDekMsNkVBQTREO0FBQzVELGlEQUFxRDtBQUNyRCx5REFBa0Q7QUFDbEQsK0RBQXdEO0FBQ3hELHFEQUE4QztBQUM5QyxpRUFBMEQ7QUFDMUQseURBQWtEO0FBRWxELE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQUsvRCxLQUFLO1FBQ0QsMkNBQWEsQ0FBQyxRQUFRLENBQUMsa0JBQWtCLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN2RCxJQUFJLENBQUMsUUFBUSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQztZQUNyRiw2R0FBNkc7WUFDN0csOEZBQThGO1lBQzlGLGlEQUFpRDtZQUNqRCw2REFBNkQ7WUFDN0QsSUFBSSxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMzQixDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFFRCxVQUFVLENBQUMsUUFBYztRQUNyQixJQUFJLFFBQVEsRUFBRTtZQUNWLElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLDBCQUFnQixHQUFJO1NBQ2xEO2FBQU07WUFDSCxJQUFJLGVBQWUsR0FBd0IsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsNkJBQW1CLEVBQUcsQ0FBQztZQUM3RixxQkFBVyxDQUFDLFFBQVEsQ0FBQyxlQUFlLEdBQUcsZUFBZSxDQUFDO1NBQzFEO0lBQ0wsQ0FBQztDQUNKO0FBeEJELG1DQXdCQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerController.ts","manifest":{"properties":[],"name":"PlayerController","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 51d31c0f56e807eb3dcd38ffd2d8f47c
+    }\r\n    }\r\n}\r\nexports.default = PlayerController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUGxheWVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlBsYXllckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBeUM7QUFDekMsNkVBQTREO0FBQzVELGlEQUFxRDtBQUNyRCx5REFBa0Q7QUFDbEQsK0RBQXdEO0FBQ3hELHlEQUFrRDtBQUVsRCxNQUFxQixnQkFBaUIsU0FBUSxxQ0FBcUI7SUFLL0QsS0FBSztRQUNELDJDQUFhLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdkQsSUFBSSxDQUFDLFFBQVEsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUM7WUFDckYsSUFBSSxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMzQixDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFFRCxVQUFVLENBQUMsUUFBYztRQUNyQixJQUFJLFFBQVEsRUFBRTtZQUNWLElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLDBCQUFnQixHQUFJO1NBQ2xEO2FBQU07WUFDSCxJQUFJLGVBQWUsR0FBd0IsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsNkJBQW1CLEVBQUcsQ0FBQztZQUM3RixxQkFBVyxDQUFDLFFBQVEsQ0FBQyxlQUFlLEdBQUcsZUFBZSxDQUFDO1NBQzFEO0lBQ0wsQ0FBQztDQUNKO0FBcEJELG1DQW9CQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Player/PlayerController.ts","manifest":{"properties":[],"name":"PlayerController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1e6c3f87713344e29d52e497c1c5ffc5
   onlyWriteTrigger: 0
