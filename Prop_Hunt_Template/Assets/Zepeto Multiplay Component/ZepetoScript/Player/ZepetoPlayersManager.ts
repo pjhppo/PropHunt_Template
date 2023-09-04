@@ -6,6 +6,7 @@ import {State, Player} from "ZEPETO.Multiplay.Schema";
 import {GameObject, Object, Quaternion, Vector3, WaitForSeconds} from "UnityEngine";
 import PlayerSync from './PlayerSync';
 import TransformSyncHelper,{PositionExtrapolationType, PositionInterpolationType} from '../Transform/TransformSyncHelper';
+import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManager';
 
 export enum ZepetoPlayerSpawnType {
     NoneSpawn,//Do not create players
@@ -109,7 +110,9 @@ export default class ZepetoPlayersManager extends ZepetoScriptBehaviour {
 
         if(this.ZepetoPlayerSpawnType == ZepetoPlayerSpawnType.MultiplayerSpawnOnJoinRoom) {
             const spawnInfo = new SpawnInfo();
-            spawnInfo.position = this.transform.position;
+
+            // Set spawn position from GameManager reference
+            spawnInfo.position = GameManager.instance.spawnPoint.position;
             spawnInfo.rotation = this.transform.rotation;
             const isLocal = this._room.SessionId === player.sessionId;
             ZepetoPlayers.instance.CreatePlayerWithUserId(sessionId, player.zepetoUserId, spawnInfo, isLocal);

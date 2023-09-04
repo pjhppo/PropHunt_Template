@@ -1,8 +1,9 @@
-import { GameObject, LayerMask, Transform } from 'UnityEngine';
+import { Debug, GameObject, Input, KeyCode, LayerMask, Transform } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import NonHunterController from '../Player/NonHunterController';
 import { Time } from 'UnityEngine';
 import UIManager from './UIManager';
+import MultiplayManager from '../../../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
 
 export default class GameManager extends ZepetoScriptBehaviour {
     public static instance: GameManager;
@@ -34,6 +35,11 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     Update() {
+        if(Input.GetKeyDown(KeyCode.T)){
+            Debug.LogError("PRESS T");
+            MultiplayManager.instance.SendTestPing();
+        }
+        
         if (!GameManager.gameStarted) return;
 
         this.CheckRemainingTime();

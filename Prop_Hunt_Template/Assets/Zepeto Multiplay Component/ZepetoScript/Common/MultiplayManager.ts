@@ -1,5 +1,5 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources} from 'UnityEngine';
+import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources, Debug} from 'UnityEngine';
 import {ZepetoWorldMultiplay} from "ZEPETO.World";
 import {Room, RoomData} from "ZEPETO.Multiplay";
 import TransformSyncHelper, { UpdateOwner } from '../Transform/TransformSyncHelper';
@@ -54,9 +54,25 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
             this.StartCoroutine(this.SendPing());
             this.CheckMaster();
             this.GetInstantiate();
+
+            // We add the message handlers
+            this.AddMessagesHandlers();
         }
         this._dtHelpers = Object.FindObjectsOfType<DOTWeenSyncHelper>();
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
+    }
+
+    private AddMessagesHandlers()
+    {
+        this.room.AddMessageHandler(GAME_MESSAGE.ON_TEST, (test: string) =>
+        {
+            Debug.LogError("ON_TEST: " + test);
+        });
+    }
+
+    public SendTestPing()
+    {
+        this.room.Send(GAME_MESSAGE.SEND_TEST, "TEST");
     }
 
     /**Util**/
@@ -272,4 +288,9 @@ enum MESSAGE {
     PauseUser = "PauseUser",
     UnPauseUser = "UnPauseUser",
     SyncTransformStatus = "SyncTransformStatus"
+}
+
+enum GAME_MESSAGE {
+    SEND_TEST = "SEND_TEST",
+    ON_TEST = "ON_TEST",
 }

@@ -2,6 +2,7 @@ import {Sandbox, SandboxOptions, SandboxPlayer} from "ZEPETO.Multiplay";
 import { Player } from "ZEPETO.Multiplay.Schema";
 import { IModule } from "./ServerModule/IModule";
 import SyncComponentModule from "./ServerModule/Modules/SyncComponentModule";
+import SyncPropHuntComponentModule from "./ServerModule/Modules/SyncPropHuntComponentModule";
 
 export default class extends Sandbox {
 
@@ -10,6 +11,8 @@ export default class extends Sandbox {
     
     async onCreate(options: SandboxOptions) {
         this._modules.push(new SyncComponentModule(this));
+        this._modules.push(new SyncPropHuntComponentModule(this));
+        
         for (const module of this._modules) {
             await module.OnCreate();
         }
