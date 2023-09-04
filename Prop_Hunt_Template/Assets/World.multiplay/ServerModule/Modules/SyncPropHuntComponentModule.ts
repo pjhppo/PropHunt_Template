@@ -12,6 +12,11 @@ export default class SyncPropHuntComponentModule extends IModule {
             console.log("PONG DEL SERVIDOR");
         });
 
+        this.server.onMessage<PlayerDataModel>(GAME_MESSAGE.SEND_PLAYERDATAMODEL, (client, playerData: PlayerDataModel) =>
+        {
+            console.log("ON DATA MODEL ARRIVE: " + playerData.itemId);
+        });
+
     }
 
     async OnJoin(client: SandboxPlayer) {}
@@ -25,4 +30,9 @@ export default class SyncPropHuntComponentModule extends IModule {
 enum GAME_MESSAGE {
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
+    SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
+}
+
+interface PlayerDataModel {
+    itemId: string;
 }

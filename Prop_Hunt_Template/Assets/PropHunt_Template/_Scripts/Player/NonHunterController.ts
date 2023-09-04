@@ -4,6 +4,8 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import Itemtransformable from './Itemtransformable';
 import UIManager from '../Managers/UIManager';
 import GameManager from '../Managers/GameManager';
+import PlayerModel from '../Multiplayer/PlayerModel';
+import MultiplayManager from '../../../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
 
 export default class NonHunterController extends ZepetoScriptBehaviour {
     private player: GameObject;
@@ -42,6 +44,8 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         let objPos: Vector3 = this.playerParent.transform.transform.position;
 
         this.objectTransformed.transform.position = objPos;
+
+        MultiplayManager.instance.SetThisPlayerItemId(item.itemId);
     }
 
     RotateItem(percentage: number) {

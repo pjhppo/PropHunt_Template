@@ -4,6 +4,9 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import GameManager from '../Managers/GameManager';
 
 export default class Itemtransformable extends ZepetoScriptBehaviour {
+    
+    public itemId: string;
+    
     public itemPrefab: GameObject;
 
     private model: MeshFilter;

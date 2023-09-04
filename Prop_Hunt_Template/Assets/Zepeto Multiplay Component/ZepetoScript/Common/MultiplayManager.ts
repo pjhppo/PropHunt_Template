@@ -5,23 +5,26 @@ import {Room, RoomData} from "ZEPETO.Multiplay";
 import TransformSyncHelper, { UpdateOwner } from '../Transform/TransformSyncHelper';
 import DOTWeenSyncHelper from '../DOTween/DOTWeenSyncHelper';
 import AnimatorSyncHelper from '../Transform/AnimatorSyncHelper';
+import PlayerModel from '../../../PropHunt_Template/_Scripts/Multiplayer/PlayerModel';
 
 export default class MultiplayManager extends ZepetoScriptBehaviour {
     public multiplay: ZepetoWorldMultiplay;
     public room: Room;
-
+    
     @Header("Server connection status (View Only)")
     @SerializeField() private _pingCheckCount:number = 0;
     @SerializeField() private _latency:number = 0;
     @SerializeField() private _diffServerTime:number = 0;
-
+    
     private _masterSessionId:string;
     private _tfHelpers: TransformSyncHelper[] = [];
     private _dtHelpers: DOTWeenSyncHelper[] = [];
     private _animHelper: AnimatorSyncHelper[] = [];
     
     private readonly pingInterval:number = 1;
-    
+
+    private playerModel : PlayerModel;
+
     get pingCheckCount(){ return this._pingCheckCount; }
     get latency(){ return this._latency; }
     /* Singleton */
@@ -43,24 +46,27 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
             MultiplayManager.m_instance = this;
             GameObject.DontDestroyOnLoad(this.gameObject);
         }
+        this.playerModel = new PlayerModel();
     }
-
+    
     private Start() {
         if(!this.multiplay)
             this.multiplay = this.GetComponent<ZepetoWorldMultiplay>();
         if(!this.multiplay) console.warn("Add ZepetoWorldMultiplay First");
-        this.multiplay.RoomJoined += (room: Room) => {
+            this.multiplay.RoomJoined += (room: Room) => {
             this.room = room;
             this.StartCoroutine(this.SendPing());
             this.CheckMaster();
             this.GetInstantiate();
-
+            
             // We add the message handlers
             this.AddMessagesHandlers();
         }
         this._dtHelpers = Object.FindObjectsOfType<DOTWeenSyncHelper>();
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
     }
+
+    // CAPTIVATAR STAR - - - - - - 
 
     private AddMessagesHandlers()
     {
@@ -70,11 +76,25 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
         });
     }
 
+    SetThisPlayerItemId(itemId: string) {
+        this.playerModel.itemId = itemId;
+        this.SendPlayerDataModel(this.playerModel);
+    }
+
     public SendTestPing()
     {
         this.room.Send(GAME_MESSAGE.SEND_TEST, "TEST");
     }
 
+    public SendPlayerDataModel(PlayerModel : PlayerModel)
+    {
+        const data = new RoomData();
+        data.Add("itemId", PlayerModel.itemId);
+        this.room.Send(GAME_MESSAGE.SEND_PLAYERDATAMODEL, data.GetObject());   
+    }
+        
+    // CAPTIVATAR END - - - - - - 
+    
     /**Util**/
     private CheckMaster(){
         this.StartCoroutine(this.WaitPingCheck());
@@ -293,4 +313,5 @@ enum MESSAGE {
 enum GAME_MESSAGE {
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
+    SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
 }
