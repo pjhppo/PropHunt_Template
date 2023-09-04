@@ -40,6 +40,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
     StartGame() {
         this.timeRemaining = this.timePerGame;
         GameManager.gameStarted = true;
+
+        // FOR TEST
+        UIManager.instance.teamSelectorObj.SetActive(false);
     }
 
     StopGame() {

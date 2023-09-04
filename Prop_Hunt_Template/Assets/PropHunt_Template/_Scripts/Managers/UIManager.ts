@@ -1,7 +1,8 @@
-import { GameObject, Mathf, Vector3, WaitForSeconds } from 'UnityEngine';
+import { GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
 import { Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
+import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -12,6 +13,13 @@ export default class UIManager extends ZepetoScriptBehaviour {
     public iconCharge: Image;
 
     public txtTime: ZepetoText;
+    public teamSelectorObj: GameObject;
+    public uiTeamLayoutPrefab: GameObject;
+    private _hunterTeamList: UIPlayerListTemplate[];
+    private _propTeamList: UIPlayerListTemplate[];
+
+    @SerializeField() huntersParent: Transform;
+    @SerializeField() nonHuntersParent: Transform;
 
     @Header("NonHunter")
     @SerializeField() private nonHunterCanvas: GameObject;
@@ -24,6 +32,29 @@ export default class UIManager extends ZepetoScriptBehaviour {
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
         else UIManager.instance = this;
+
+        this._hunterTeamList = [];
+        this._propTeamList = [];
+    }
+
+    CreateTeamMember(isHunter: bool, user: string) {
+        if (isHunter) {
+            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.huntersParent) as UIPlayerListTemplate;
+            uiPlayerList.SetText(user);
+            this._hunterTeamList.push(uiPlayerList);
+        } else {
+            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
+            uiPlayerList.SetText(user);
+            this._propTeamList.push(uiPlayerList);
+        }
+    }
+
+    ChangeTeam(userId: string, isHunter: bool) {
+        if (isHunter) {
+            // userId.transform.parent = this.huntersParent;
+        } else {
+            // userId.transform.parent = this.nonHuntersParent;
+        }
     }
 
     // This method controls the visual of the timer, normalizing the time to mins and secs

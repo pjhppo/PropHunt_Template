@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 67e18129cea5d064d8202d7ca0f0e100
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    UIPlayerListTemplate extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    GetUser()
+    {\r\n        return this._user;\r\n    }\r\n    SetUser(user) {\r\n        this._user
+    = user;\r\n    }\r\n    SetText(text) {\r\n        this.txtName.text = text;\r\n   
+    }\r\n    SetColor() {\r\n    }\r\n}\r\nexports.default = UIPlayerListTemplate;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlQbGF5ZXJMaXN0VGVtcGxhdGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJVSVBsYXllckxpc3RUZW1wbGF0ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUdyRCxNQUFxQixvQkFBcUIsU0FBUSxxQ0FBcUI7SUFNbkUsT0FBTztRQUNILE9BQU8sSUFBSSxDQUFDLEtBQUssQ0FBQztJQUN0QixDQUFDO0lBRUQsT0FBTyxDQUFDLElBQVk7UUFDaEIsSUFBSSxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUM7SUFDdEIsQ0FBQztJQUVELE9BQU8sQ0FBQyxJQUFZO1FBQ2hCLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQztJQUM3QixDQUFDO0lBRUQsUUFBUTtJQUVSLENBQUM7Q0FDSjtBQXJCRCx1Q0FxQkMifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UIPlayerListTemplate.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"txtName","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIPlayerListTemplate","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 526ca448c19820f975e9dc23f3850497
+  onlyWriteTrigger: 0
