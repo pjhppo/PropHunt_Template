@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   script:
     keys:
     - additionalRunSpeed
@@ -1207,11 +1208,11 @@ MonoBehaviour:
     eventSystem: {fileID: 7328100774219155841, guid: 67971ba158b48401988f9aad07940d6f, type: 3}
     useDefaultVirtualController: 1
     useDefaultInputController: 1
-    controlMode: 0
     verticalController: {fileID: 8523051459139762370, guid: 33446b9369e354b00a7ab43885afbe88, type: 3}
     horizontalController: {fileID: 2787167779785370926, guid: 9b7a03709461140b4b3fc85aa8c5d741, type: 3}
     verticalDefaultController: {fileID: 8523051459139762370, guid: 33446b9369e354b00a7ab43885afbe88, type: 3}
     horizontalDefaultController: {fileID: 2787167779785370926, guid: 9b7a03709461140b4b3fc85aa8c5d741, type: 3}
+    controlMode: 0
   floatingUIData:
     showNickNameLocalPlayer: 0
     showNickNameOtherPlayers: 1
@@ -1291,6 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   script:
     keys:
     - ZepetoPlayerSpawnType
@@ -1526,6 +1528,7 @@ MonoBehaviour:
   m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   script:
     keys:
     - spawnPositon
@@ -1829,6 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   script:
     keys:
     - additionalRunSpeed
@@ -2672,8 +2676,8 @@ MonoBehaviour:
   isSecure: 0
   matchMakeHost: 
   authToken: 
-  detectWeakSignalTerm: 5
   uniqueId: 
+  useReconnect: 0
 --- !u!4 &1414532582
 Transform:
   m_ObjectHideFlags: 0
@@ -2695,20 +2699,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414532580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   script:
     keys:
     - multiplay
     - room
-    - m_pingCheckCount
-    - m_latency
-    - m_diffServerTime
+    - _pingCheckCount
+    - _latency
+    - _diffServerTime
     unityValues:
-    - {fileID: 0}
+    - {fileID: 1414532581}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -3155,6 +3160,7 @@ MonoBehaviour:
   m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   script:
     keys:
     - m_exGestures
