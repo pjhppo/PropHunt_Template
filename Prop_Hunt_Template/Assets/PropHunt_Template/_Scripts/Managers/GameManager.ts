@@ -27,8 +27,10 @@ export default class GameManager extends ZepetoScriptBehaviour {
     Awake() {
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
         else GameManager.instance = this;
+    }
 
-        this.StartGame();
+    Start() {
+        /*this.StartGame();*/
     }
 
     Update() {

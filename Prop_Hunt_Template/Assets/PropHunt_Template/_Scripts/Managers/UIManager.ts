@@ -1,4 +1,5 @@
-import { GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
+import { forEachChild } from 'typescript';
+import { Debug, GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
 import { Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
@@ -37,22 +38,32 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this._propTeamList = [];
     }
 
-    CreateTeamMember(isHunter: bool, user: string) {
-        if (isHunter) {
-            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.huntersParent) as UIPlayerListTemplate;
-            uiPlayerList.SetText(user);
-            this._hunterTeamList.push(uiPlayerList);
-        } else {
+    CreateTeamMember(isHunter: bool, user: string)
+    {
+        if (isHunter)
+        {
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
-            uiPlayerList.SetText(user);
+
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
+            this._hunterTeamList.push(uiPlayerList);
+        }
+        else
+        {
+            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.huntersParent) as UIPlayerListTemplate;
+
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
             this._propTeamList.push(uiPlayerList);
         }
     }
 
-    ChangeTeam(userId: string, isHunter: bool) {
-        if (isHunter) {
+    ChangeTeam(userId: string, isHunter: bool)
+    {
+        if (isHunter)
+        {
             // userId.transform.parent = this.huntersParent;
-        } else {
+        }
+        else
+        {
             // userId.transform.parent = this.nonHuntersParent;
         }
     }

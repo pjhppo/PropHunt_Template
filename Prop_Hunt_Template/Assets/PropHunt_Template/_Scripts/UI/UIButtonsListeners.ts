@@ -10,11 +10,11 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private switchToHunterButton: Button;
 
     private localPlayer: LocalPlayer;
+
     Start() {
         ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
             this.localPlayer = ZepetoPlayers.instance.LocalPlayer;
         });
-
 
         this.switchToHunterButton.onClick.AddListener(() => {
             UIManager.instance.ChangeTeam(this.localPlayer.zepetoPlayer.userId, true);
@@ -24,8 +24,9 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
             UIManager.instance.ChangeTeam(this.localPlayer.zepetoPlayer.userId, false);
         });
 
+        //Esto va segun jugador(ID - Multiplayer)
         this.readyButton.onClick.AddListener(() => {
-            
+            GameManager.instance.StartGame();
         });
     }
 }
