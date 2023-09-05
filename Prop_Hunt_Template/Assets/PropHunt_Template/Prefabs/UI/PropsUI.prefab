@@ -263,10 +263,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 8645432105917925067, guid: 180175de9eef84619893097b9c2862ae, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"3"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
@@ -510,7 +513,7 @@ RectTransform:
   - {fileID: 358889099698676405}
   - {fileID: 358889099481992524}
   m_Father: {fileID: 358889100615044044}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -617,7 +620,7 @@ RectTransform:
   m_Children:
   - {fileID: 358889099788350796}
   m_Father: {fileID: 358889100615044044}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0.952}
   m_AnchorMax: {x: 0, y: 0.952}
@@ -843,10 +846,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 4252904093821003221, guid: d9cd733366ac04ebe913bbf2b4005bc0, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"0"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
@@ -1144,10 +1150,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 7080068150178351200, guid: 082fafa385199458780edf57ea9c20b3, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"1"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
@@ -1183,8 +1192,8 @@ RectTransform:
   m_Children:
   - {fileID: 358889100043484102}
   - {fileID: 358889101133852305}
-  - {fileID: 358889099801604669}
   - {fileID: 358889100021928491}
+  - {fileID: 358889099801604669}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1368,10 +1377,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 6091708370570237477, guid: 7bf3e7e095b154418b4448abe16a3baf, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"4"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
@@ -1708,10 +1720,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 4137926045198967603, guid: 145cd2e7cedf649f69c192c0f07c581d, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"2"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
@@ -2077,10 +2092,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 8145784028713725570, guid: c8973c916020ae944a2d059c20db3452, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"5"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}
@@ -2297,10 +2315,13 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
     unityValues:
     - {fileID: 252575057761866189, guid: 118a530a0fca64d788988313846c6cc9, type: 3}
+    - {fileID: 0}
     values:
     - 
+    - '{"type":"System.String, mscorlib","value":"6"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: c3487311dc9cbf3489ca6d93c1891a76, type: 3}

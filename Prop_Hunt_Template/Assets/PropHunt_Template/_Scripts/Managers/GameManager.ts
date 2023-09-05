@@ -35,11 +35,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     Update() {
-        if(Input.GetKeyDown(KeyCode.T)){
-            Debug.LogError("PRESS T");
-            MultiplayManager.instance.SendTestPing();
-        }
-        
         if (!GameManager.gameStarted) return;
 
         this.CheckRemainingTime();

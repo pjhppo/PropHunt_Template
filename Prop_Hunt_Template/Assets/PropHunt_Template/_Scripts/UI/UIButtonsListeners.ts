@@ -3,30 +3,29 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import UIManager from '../Managers/UIManager';
 import GameManager from '../Managers/GameManager';
 import { LocalPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import MultiplayManager from '../../../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
 
 export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private readyButton: Button;
     @SerializeField() private switchToPropButton: Button;
     @SerializeField() private switchToHunterButton: Button;
 
-    private localPlayer: LocalPlayer;
+    private isHunter: boolean;
 
     Start() {
-        ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
-            this.localPlayer = ZepetoPlayers.instance.LocalPlayer;
-        });
-
         this.switchToHunterButton.onClick.AddListener(() => {
-            UIManager.instance.ChangeTeam(this.localPlayer.zepetoPlayer.userId, true);
+            this.isHunter = true;
+            MultiplayManager.instance.ChangeTeam(this.isHunter);
         });
 
         this.switchToPropButton.onClick.AddListener(() => {
-            UIManager.instance.ChangeTeam(this.localPlayer.zepetoPlayer.userId, false);
+            this.isHunter = false;
+            MultiplayManager.instance.ChangeTeam(this.isHunter);
         });
 
         //Esto va segun jugador(ID - Multiplayer)
         this.readyButton.onClick.AddListener(() => {
-            GameManager.instance.StartGame();
+            MultiplayManager.instance.SetReady(true);
         });
     }
 }

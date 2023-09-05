@@ -45,7 +45,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
 
         this.objectTransformed.transform.position = objPos;
 
-        MultiplayManager.instance.SetThisPlayerItemId(item.itemId);
+        //MultiplayManager.instance.SetThisPlayerModel();
     }
 
     RotateItem(percentage: number) {

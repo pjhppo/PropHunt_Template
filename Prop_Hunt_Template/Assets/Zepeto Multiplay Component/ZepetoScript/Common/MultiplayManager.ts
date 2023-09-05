@@ -5,6 +5,7 @@ import {Room, RoomData} from "ZEPETO.Multiplay";
 import TransformSyncHelper, { UpdateOwner } from '../Transform/TransformSyncHelper';
 import DOTWeenSyncHelper from '../DOTween/DOTWeenSyncHelper';
 import AnimatorSyncHelper from '../Transform/AnimatorSyncHelper';
+import UIManager from '../../../PropHunt_Template/_Scripts/Managers/UIManager';
 import PlayerModel from '../../../PropHunt_Template/_Scripts/Multiplayer/PlayerModel';
 
 export default class MultiplayManager extends ZepetoScriptBehaviour {
@@ -23,7 +24,7 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
     
     private readonly pingInterval:number = 1;
 
-    private playerModel : PlayerModel;
+    private localPlayerModel : PlayerModel = new PlayerModel();
 
     get pingCheckCount(){ return this._pingCheckCount; }
     get latency(){ return this._latency; }
@@ -46,7 +47,6 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
             MultiplayManager.m_instance = this;
             GameObject.DontDestroyOnLoad(this.gameObject);
         }
-        this.playerModel = new PlayerModel();
     }
     
     private Start() {
@@ -70,27 +70,56 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
 
     private AddMessagesHandlers()
     {
-        this.room.AddMessageHandler(GAME_MESSAGE.ON_TEST, (test: string) =>
-        {
-            Debug.LogError("ON_TEST: " + test);
+        const newObjId = MultiplayManager.instance.GetServerTime().toString();;
+
+        this.localPlayerModel.id = newObjId;
+
+        const data = new RoomData();
+        data.Add("id", newObjId);
+        data.Add("isHunter", false);
+        data.Add("isReady", false);
+
+        this.room.Send(GAME_MESSAGE.AddPlayer, data.GetObject());
+
+        this.room.Send(GAME_MESSAGE.Request_AddPlayer);
+        this.room.AddMessageHandler(GAME_MESSAGE.AddPlayer, (message: PlayerDataModel) => {
+            UIManager.instance.CreateTeamMember(true, message.id);
         });
     }
 
-    SetThisPlayerItemId(itemId: string) {
-        this.playerModel.itemId = itemId;
-        this.SendPlayerDataModel(this.playerModel);
+    public ChangeTeam(isHunter: boolean)
+    {
+        this.localPlayerModel.isHunter = isHunter;
+        UIManager.instance.ChangeTeam(this.localPlayerModel.id, isHunter);
+        this.SetPlayerDataModel();
+    }   
+
+    public SetReady(isReady: boolean)
+    {
+        this.localPlayerModel.isReady = isReady;
+        UIManager.instance.SetReady( this.localPlayerModel.id,  this.localPlayerModel.isHunter);
+        this.SetPlayerDataModel();
+    }
+
+    SetPlayerDataModel() 
+    {
+        const data = new RoomData();
+        data.Add("id", this.localPlayerModel.id);
+        data.Add("isHunter", this.localPlayerModel.isHunter);
+        data.Add("isReady", this.localPlayerModel.isReady);
+
+        this.room.Send(GAME_MESSAGE.EditDataModel, data.GetObject());
+
+        this.room.Send(GAME_MESSAGE.Request_EditDataModel);
+        this.room.AddMessageHandler(GAME_MESSAGE.EditDataModel, (message: PlayerDataModel) => 
+        {
+            
+        });
     }
 
     public SendTestPing()
     {
         this.room.Send(GAME_MESSAGE.SEND_TEST, "TEST");
-    }
-
-    public SendPlayerDataModel(PlayerModel : PlayerModel)
-    {
-        const data = new RoomData();
-        data.Add("itemId", PlayerModel.itemId);
-        this.room.Send(GAME_MESSAGE.SEND_PLAYERDATAMODEL, data.GetObject());   
     }
         
     // CAPTIVATAR END - - - - - - 
@@ -311,7 +340,18 @@ enum MESSAGE {
 }
 
 enum GAME_MESSAGE {
+    AddPlayer = "AddPlayer",
+    EditDataModel = "EditDataModel",
+    Request_AddPlayer = "Request_AddPlayer",
+    Request_EditDataModel = "Request_EditDataModel",
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
     SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
+}
+
+//CAPTIVATAR
+interface PlayerDataModel {
+    id: string;
+    isHunter: boolean;
+    isReady: boolean;
 }

@@ -30,20 +30,36 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @SerializeField() private hunterCanvas: GameObject;
     @SerializeField() private catchedText: ZepetoText;
 
+    private allPlayers: string[];
+
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
         else UIManager.instance = this;
 
         this._hunterTeamList = [];
         this._propTeamList = [];
+        this.allPlayers = [];
     }
 
     CreateTeamMember(isHunter: bool, user: string)
     {
+        if(this.allPlayers.includes(user) == false)
+        {
+            this.allPlayers.push(user);
+
+            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
+    
+            uiPlayerList.name = user;
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
+            this._propTeamList.push(uiPlayerList);
+        }
+
+
+        /*
         if (isHunter)
         {
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
-
+            uiPlayerList.name = user;
             uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
             this._hunterTeamList.push(uiPlayerList);
         }
@@ -53,19 +69,36 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
             uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
             this._propTeamList.push(uiPlayerList);
-        }
+        }*/
     }
 
     ChangeTeam(userId: string, isHunter: bool)
     {
+        /*
         if (isHunter)
         {
-            // userId.transform.parent = this.huntersParent;
+            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
+            playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
         }
         else
         {
-            // userId.transform.parent = this.nonHuntersParent;
+            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
+            playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.nonHuntersParent);
         }
+        */
+    } 
+
+    SetReady(userId: string, isHunter: boolean)
+    {
+        if(isHunter){
+            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
+            playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady();
+        }
+        else{
+            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
+            playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady();
+        }
+
     }
 
     // This method controls the visual of the timer, normalizing the time to mins and secs

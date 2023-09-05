@@ -2,6 +2,8 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 
 export default class PlayerModel extends ZepetoScriptBehaviour {
 
-    public itemId: string;
+    public id: string;
+    public isHunter: boolean;
+    public isReady: boolean;
 
 }
