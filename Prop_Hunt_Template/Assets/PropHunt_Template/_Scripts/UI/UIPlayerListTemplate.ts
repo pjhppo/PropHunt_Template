@@ -31,6 +31,6 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
     }
 
     public ChangeParent(newParent: Transform){
-        this.transform.parent = newParent;
+        this.transform.SetParent(newParent);
     }
 }

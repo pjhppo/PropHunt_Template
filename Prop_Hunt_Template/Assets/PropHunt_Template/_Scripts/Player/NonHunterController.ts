@@ -49,7 +49,10 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     }
 
     RotateItem(percentage: number) {
-        let rotation: Vector3 = new Vector3(0, Mathf.Lerp(0, 360, percentage), 0);
-        this.objectTransformed.transform.rotation = Quaternion.Euler(rotation);
+        if(this.objectTransformed != null){
+            let rotation: Vector3 = new Vector3(0, Mathf.Lerp(0, 360, percentage), 0);
+            this.objectTransformed.transform.rotation = Quaternion.Euler(rotation);
+        }
+
     }
 }

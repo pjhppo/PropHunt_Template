@@ -4,6 +4,7 @@ import { Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
 import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
+import GameManager from './GameManager';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -74,30 +75,63 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     ChangeTeam(userId: string, isHunter: bool)
     {
-        /*
+        
         if (isHunter)
         {
-            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
-            playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
+            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
+            if(playerListTemplate) 
+            {
+                playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
+
+                let playerInHunters : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
+                if(!playerInHunters) 
+                {
+                    this._hunterTeamList.push(playerListTemplate);
+                    let index = this._propTeamList.indexOf(playerListTemplate);
+
+                    this._propTeamList.splice(index, this._propTeamList.length);
+                }
+            }
+
+            this.ShowHunterUI();
         }
         else
         {
-            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
-            playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.nonHuntersParent);
+            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
+            if(playerListTemplate) 
+            {
+
+                playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.nonHuntersParent);
+
+                let playerInProps : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
+                if(!playerInProps)
+                {
+                    this._propTeamList.push(playerListTemplate);
+                    let index = this._hunterTeamList.indexOf(playerListTemplate);
+
+                    this._hunterTeamList.splice(index, this._hunterTeamList.length);
+                }
+            }
+
+            this.ShowNonHunterUI();
         }
-        */
+        
+        
     } 
 
     SetReady(userId: string, isHunter: boolean)
     {
         if(isHunter){
             let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
-            playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady();
+            if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
         }
-        else{
+        else
+        {
             let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
-            playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady();
+            if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
         }
+
+        GameManager.instance.StartGame();
 
     }
 
@@ -139,10 +173,12 @@ export default class UIManager extends ZepetoScriptBehaviour {
     }
 
     ShowNonHunterUI(show: bool = true) {
+        this.hunterCanvas.SetActive(!show);
         this.nonHunterCanvas.SetActive(show);
     }
 
     ShowHunterUI(show: bool = true) {
+        this.nonHunterCanvas.SetActive(!show);
         this.hunterCanvas.SetActive(show);
     }
 

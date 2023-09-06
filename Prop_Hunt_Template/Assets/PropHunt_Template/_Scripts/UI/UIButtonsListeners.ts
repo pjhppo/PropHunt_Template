@@ -13,14 +13,24 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     private isHunter: boolean;
 
     Start() {
-        this.switchToHunterButton.onClick.AddListener(() => {
+        this.switchToPropButton.interactable = false;
+
+        this.switchToHunterButton.onClick.AddListener(() => 
+        {
             this.isHunter = true;
             MultiplayManager.instance.ChangeTeam(this.isHunter);
+
+            this.switchToHunterButton.interactable = false;
+            this.switchToPropButton.interactable = true;
         });
 
-        this.switchToPropButton.onClick.AddListener(() => {
+        this.switchToPropButton.onClick.AddListener(() => 
+        {
             this.isHunter = false;
             MultiplayManager.instance.ChangeTeam(this.isHunter);
+
+            this.switchToPropButton.interactable = false;
+            this.switchToHunterButton.interactable = true;
         });
 
         //Esto va segun jugador(ID - Multiplayer)
