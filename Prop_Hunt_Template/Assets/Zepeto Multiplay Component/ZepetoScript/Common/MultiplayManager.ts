@@ -73,6 +73,7 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
         const newObjId = MultiplayManager.instance.GetServerTime().toString();;
 
         this.localPlayerModel.id = newObjId;
+        this.localPlayerModel.isReady = false;
 
         const data = new RoomData();
         data.Add("id", newObjId);
@@ -90,14 +91,13 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
     public ChangeTeam(isHunter: boolean)
     {
         this.localPlayerModel.isHunter = isHunter;
-        UIManager.instance.ChangeTeam(this.localPlayerModel.id, isHunter);
+        //UIManager.instance.ChangeTeam(this.localPlayerModel.id, isHunter);
         this.SetPlayerDataModel();
     }   
 
     public SetReady(isReady: boolean)
     {
         this.localPlayerModel.isReady = isReady;
-        UIManager.instance.SetReady( this.localPlayerModel.id,  this.localPlayerModel.isHunter);
         this.SetPlayerDataModel();
     }
 
@@ -113,7 +113,9 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
         this.room.Send(GAME_MESSAGE.Request_EditDataModel);
         this.room.AddMessageHandler(GAME_MESSAGE.EditDataModel, (message: PlayerDataModel) => 
         {
-            
+            UIManager.instance.SetReady( message.id, message.isHunter, message.isReady);
+            UIManager.instance.ChangeTeam( message.id, message.isHunter);
+            console.log("Recibo: " + message.isReady); 
         });
     }
 

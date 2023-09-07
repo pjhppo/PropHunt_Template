@@ -26,13 +26,15 @@ export default class SyncPropHuntComponentModule extends IModule {
 
         this.server.onMessage(GAME_MESSAGE.EditDataModel, (client, message: PlayerDataModel) =>{
             
-            /*
             for (const player of this.playerDataModelCaches) 
             {   
-                player = message;
+                if(player.id == message.id)
+                {
+                    player.isHunter = message.isHunter;
+                    player.isReady = message.isReady;
+                }
             }
-            console.log("Edito: " + player.isReady); 
-            */
+            console.log("Edito: " + message.isReady); 
         });
 
         this.server.onMessage(GAME_MESSAGE.Request_AddPlayer, (client)=>{

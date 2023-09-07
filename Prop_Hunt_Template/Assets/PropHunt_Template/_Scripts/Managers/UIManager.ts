@@ -82,7 +82,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
             if(playerListTemplate) 
             {
                 playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
-
+                console.log("Cambio de team: " + userId); 
                 let playerInHunters : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
                 if(!playerInHunters) 
                 {
@@ -102,7 +102,8 @@ export default class UIManager extends ZepetoScriptBehaviour {
             {
 
                 playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.nonHuntersParent);
-
+                console.log("Cambio de team: " + userId);
+                
                 let playerInProps : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
                 if(!playerInProps)
                 {
@@ -119,8 +120,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
         
     } 
 
-    SetReady(userId: string, isHunter: boolean)
+    SetReady(userId: string, isHunter: boolean, isReady : boolean)
     {
+        if(!isReady) return;
+
         if(isHunter){
             let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
             if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
@@ -131,7 +134,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
             if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
         }
 
-        GameManager.instance.StartGame();
+        //GameManager.instance.StartGame();
 
     }
 
