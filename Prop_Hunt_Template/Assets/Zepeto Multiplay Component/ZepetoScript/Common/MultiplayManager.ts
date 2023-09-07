@@ -58,9 +58,11 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
             this.StartCoroutine(this.SendPing());
             this.CheckMaster();
             this.GetInstantiate();
-            
+
             // We add the message handlers
             this.AddMessagesHandlers();
+
+            this.AddPlayers();
         }
         this._dtHelpers = Object.FindObjectsOfType<DOTWeenSyncHelper>();
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
@@ -70,6 +72,19 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
 
     private AddMessagesHandlers()
     {
+        this.room.AddMessageHandler(GAME_MESSAGE.AddPlayer, (message: PlayerDataModel) => {
+            UIManager.instance.CreateTeamMember(false, message.id);
+        });
+
+        this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (message: PlayerDataModel) => 
+        {
+            UIManager.instance.SetReady( message.id, message.isHunter, message.isReady);
+            UIManager.instance.ChangeTeam( message.id, message.isHunter);
+        });
+    }
+
+    private AddPlayers()
+    {        
         const newObjId = MultiplayManager.instance.GetServerTime().toString();;
 
         this.localPlayerModel.id = newObjId;
@@ -81,17 +96,12 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
         data.Add("isReady", false);
 
         this.room.Send(GAME_MESSAGE.AddPlayer, data.GetObject());
-
         this.room.Send(GAME_MESSAGE.Request_AddPlayer);
-        this.room.AddMessageHandler(GAME_MESSAGE.AddPlayer, (message: PlayerDataModel) => {
-            UIManager.instance.CreateTeamMember(true, message.id);
-        });
     }
 
     public ChangeTeam(isHunter: boolean)
     {
         this.localPlayerModel.isHunter = isHunter;
-        //UIManager.instance.ChangeTeam(this.localPlayerModel.id, isHunter);
         this.SetPlayerDataModel();
     }   
 
@@ -111,12 +121,6 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
         this.room.Send(GAME_MESSAGE.EditDataModel, data.GetObject());
 
         this.room.Send(GAME_MESSAGE.Request_EditDataModel);
-        this.room.AddMessageHandler(GAME_MESSAGE.EditDataModel, (message: PlayerDataModel) => 
-        {
-            UIManager.instance.SetReady( message.id, message.isHunter, message.isReady);
-            UIManager.instance.ChangeTeam( message.id, message.isHunter);
-            console.log("Recibo: " + message.isReady); 
-        });
     }
 
     public SendTestPing()
@@ -346,6 +350,7 @@ enum GAME_MESSAGE {
     EditDataModel = "EditDataModel",
     Request_AddPlayer = "Request_AddPlayer",
     Request_EditDataModel = "Request_EditDataModel",
+    OnDataModelArrived = "OnDataModelArrived",
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
     SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
