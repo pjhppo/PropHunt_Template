@@ -7,6 +7,7 @@ import DOTWeenSyncHelper from '../DOTween/DOTWeenSyncHelper';
 import AnimatorSyncHelper from '../Transform/AnimatorSyncHelper';
 import UIManager from '../../../PropHunt_Template/_Scripts/Managers/UIManager';
 import PlayerModel from '../../../PropHunt_Template/_Scripts/Multiplayer/PlayerModel';
+import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManager';
 
 export default class MultiplayManager extends ZepetoScriptBehaviour {
     public multiplay: ZepetoWorldMultiplay;
@@ -72,36 +73,40 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
 
     private AddMessagesHandlers()
     {
-        this.room.AddMessageHandler(GAME_MESSAGE.AddPlayer, (message: PlayerDataModel) => {
-            UIManager.instance.CreateTeamMember(false, message.id);
+        this.room.AddMessageHandler(GAME_MESSAGE.OnAddPlayerArrived, (message: PlayerDataModel) => {
+            this.FillLocalPlayerModel(message);
+
+            UIManager.instance.CreateTeamMember(false, message.playerName);
         });
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (message: PlayerDataModel) => 
         {
-            UIManager.instance.SetReady( message.id, message.isHunter, message.isReady);
-            UIManager.instance.ChangeTeam( message.id, message.isHunter);
+            UIManager.instance.SetReady( message.playerName, message.isHunter, message.isReady);
+            UIManager.instance.ChangeTeam( message.playerName, message.isHunter);
+        });
+
+        this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {
+            GameManager.instance.StartGame();
         });
     }
 
+    private FillLocalPlayerModel(playerModel: PlayerDataModel)
+    {
+        this.localPlayerModel.sessionId = playerModel.sessionId;
+        this.localPlayerModel.playerName = playerModel.playerName;
+        this.localPlayerModel.isHunter = playerModel.isHunter;
+        this.localPlayerModel.isReady = playerModel.isReady;
+    }
+
     private AddPlayers()
-    {        
-        const newObjId = MultiplayManager.instance.GetServerTime().toString();;
-
-        this.localPlayerModel.id = newObjId;
-        this.localPlayerModel.isReady = false;
-
-        const data = new RoomData();
-        data.Add("id", newObjId);
-        data.Add("isHunter", false);
-        data.Add("isReady", false);
-
-        this.room.Send(GAME_MESSAGE.AddPlayer, data.GetObject());
-        this.room.Send(GAME_MESSAGE.Request_AddPlayer);
+    {
+        this.room.Send(GAME_MESSAGE.AddPlayer, "");
     }
 
     public ChangeTeam(isHunter: boolean)
     {
         this.localPlayerModel.isHunter = isHunter;
+        UIManager.instance.SwitchGameUI(isHunter);
         this.SetPlayerDataModel();
     }   
 
@@ -109,18 +114,18 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
     {
         this.localPlayerModel.isReady = isReady;
         this.SetPlayerDataModel();
+        this.room.Send(GAME_MESSAGE.Request_StartGame);
     }
 
     SetPlayerDataModel() 
     {
         const data = new RoomData();
-        data.Add("id", this.localPlayerModel.id);
+        data.Add("sessionId",  this.localPlayerModel.sessionId);
+        data.Add("playerName",  this.localPlayerModel.playerName);
         data.Add("isHunter", this.localPlayerModel.isHunter);
         data.Add("isReady", this.localPlayerModel.isReady);
 
         this.room.Send(GAME_MESSAGE.EditDataModel, data.GetObject());
-
-        this.room.Send(GAME_MESSAGE.Request_EditDataModel);
     }
 
     public SendTestPing()
@@ -348,9 +353,11 @@ enum MESSAGE {
 enum GAME_MESSAGE {
     AddPlayer = "AddPlayer",
     EditDataModel = "EditDataModel",
-    Request_AddPlayer = "Request_AddPlayer",
     Request_EditDataModel = "Request_EditDataModel",
+    Request_StartGame = "Request_StartGame",
+    OnAddPlayerArrived = "OnAddPlayerArrived",
     OnDataModelArrived = "OnDataModelArrived",
+    OnStartGameArrived = "OnStartGameArrived",
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
     SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
@@ -358,7 +365,8 @@ enum GAME_MESSAGE {
 
 //CAPTIVATAR
 interface PlayerDataModel {
-    id: string;
+    sessionId: string;
+    playerName: string;
     isHunter: boolean;
     isReady: boolean;
 }

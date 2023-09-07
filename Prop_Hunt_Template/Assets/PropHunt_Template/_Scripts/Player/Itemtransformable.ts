@@ -1,4 +1,4 @@
-import { BoxCollider, GameObject, Material, Mesh, MeshFilter, MeshRenderer } from 'UnityEngine'
+import { BoxCollider, GameObject, Material, Mesh, MeshFilter, MeshRenderer, Sprite } from 'UnityEngine'
 import { Button } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import GameManager from '../Managers/GameManager';
@@ -8,6 +8,7 @@ export default class Itemtransformable extends ZepetoScriptBehaviour {
     public itemId: string;
     
     public itemPrefab: GameObject;
+    public iconSprite: Sprite;
 
     private model: MeshFilter;
     private modelCollider: BoxCollider;
@@ -15,6 +16,7 @@ export default class Itemtransformable extends ZepetoScriptBehaviour {
 
     private button: Button;
 
+    /*
     Start() {
         let item = GameObject.Instantiate(this.itemPrefab) as GameObject;
 
@@ -29,7 +31,7 @@ export default class Itemtransformable extends ZepetoScriptBehaviour {
             GameManager.instance.nonHunterScript.TransformIntoItem(this);
         });
     }
-
+*/
     public GetModel(): MeshFilter {
         return this.model;
     }

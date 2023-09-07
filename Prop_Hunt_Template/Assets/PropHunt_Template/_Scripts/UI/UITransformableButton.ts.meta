@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 32769940dc642e84ab38c8f1ed1c2648
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst TransformableItemsManager_1
+    = require(\"../Managers/TransformableItemsManager\");\r\nconst Itemtransformable_1
+    = require(\"../Player/Itemtransformable\");\r\nclass UITransformableButton extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Awake() {\r\n        this.button
+    = this.GetComponent($typeof(UnityEngine_UI_1.Button));\r\n    }\r\n    SetButton(itemTransformable)
+    {\r\n        this._myItemTransformable = itemTransformable;\r\n        this.icon.sprite
+    = this._myItemTransformable.iconSprite;\r\n        this.button.onClick.AddListener(()
+    => {\r\n            TransformableItemsManager_1.default.instance.TransformPlayer(this._myItemTransformable.itemId);\r\n       
+    });\r\n    }\r\n}\r\nexports.default = UITransformableButton;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlUcmFuc2Zvcm1hYmxlQnV0dG9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlUcmFuc2Zvcm1hYmxlQnV0dG9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsbURBQStDO0FBQy9DLGlEQUFxRDtBQUNyRCxxRkFBOEU7QUFDOUUsbUVBQTREO0FBRTVELE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQU9wRSxLQUFLO1FBQ0QsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHVCQUFNLEVBQUcsQ0FBQztJQUM5QyxDQUFDO0lBR00sU0FBUyxDQUFDLGlCQUFxQztRQUNsRCxJQUFJLENBQUMsb0JBQW9CLEdBQUcsaUJBQWlCLENBQUM7UUFFOUMsSUFBSSxDQUFDLElBQUksQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFVBQVUsQ0FBQztRQUV4RCxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO1lBQ2hDLG1DQUF5QixDQUFDLFFBQVEsQ0FBQyxlQUFlLENBQUMsSUFBSSxDQUFDLG9CQUFvQixDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBQ3pGLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUNKO0FBckJELHdDQXFCQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UITransformableButton.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"icon","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UITransformableButton","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 949cfea111b1a7a645a41d678c982014
+  onlyWriteTrigger: 0

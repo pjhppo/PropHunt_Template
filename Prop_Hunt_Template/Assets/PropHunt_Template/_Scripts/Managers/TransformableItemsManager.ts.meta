@@ -1,0 +1,37 @@
+fileFormatVersion: 2
+guid: 0c7fb49010cfda543861e7ae602ce6ca
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst Itemtransformable_1 = require(\"../Player/Itemtransformable\");\r\nconst
+    UITransformableButton_1 = require(\"../UI/UITransformableButton\");\r\nclass
+    TransformableItemsManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    constructor() {\r\n        super(...arguments);\r\n        this.itemsTransformables
+    = [];\r\n    }\r\n    Awake() {\r\n        if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Inequality(TransformableItemsManager.instance,
+    null))\r\n            UnityEngine_1.GameObject.Destroy(this.gameObject);\r\n       
+    else\r\n            TransformableItemsManager.instance = this;\r\n    }\r\n   
+    Start() {\r\n        this.InstantiateButtons();\r\n    }\r\n    InstantiateButtons()
+    {\r\n        this.itemsTransformables.forEach(element => {\r\n            let
+    newUITransformableButton = UnityEngine_1.GameObject.Instantiate(this.uiTransformableButtonTemplate,
+    this.transformableButtonsParent);\r\n            newUITransformableButton.GetComponent($typeof(UITransformableButton_1.default)).SetButton(element.targetObject);\r\n       
+    });\r\n    }\r\n    TransformPlayer(itemId) {\r\n    }\r\n}\r\nexports.default
+    = TransformableItemsManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVHJhbnNmb3JtYWJsZUl0ZW1zTWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlRyYW5zZm9ybWFibGVJdGVtc01hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBNkU7QUFDN0UsNkNBQW9EO0FBQ3BELG1FQUEyRDtBQUMzRCx1RUFBZ0U7QUFFaEUsTUFBcUIseUJBQTBCLFNBQVEscUNBQXFCO0lBQTVFOztRQUtXLHdCQUFtQixHQUFpRCxFQUFFLENBQUM7SUF3QmxGLENBQUM7SUF0QkcsS0FBSztRQUNELElBYkMscUNBQXFCLENBa0NtdEwsYUFBYyxDQXJCbnZMLHlCQUF5QixDQUFDLFFBQVEsRUFBSSxJQUFJO1lBQUUsd0JBQVUsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDOztZQUMvRSx5QkFBeUIsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDO0lBQ25ELENBQUM7SUFFRCxLQUFLO1FBQ0QsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7SUFDOUIsQ0FBQztJQUVNLGtCQUFrQjtRQUVyQixJQUFJLENBQUMsbUJBQW1CLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxFQUFFO1lBQ3ZDLElBQUksd0JBQXdCLEdBQTJCLHdCQUFVLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyw2QkFBNkIsRUFBRSxJQUFJLENBQUMsMEJBQTBCLENBQTBCLENBQUM7WUFDNUssd0JBQXdCLENBQUMsWUFBWSxTQUFDLCtCQUFxQixHQUFJLFNBQVMsQ0FBQyxPQUFPLENBQUMsWUFBWSxDQUFDLENBQUM7UUFDbkcsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRU0sZUFBZSxDQUFDLE1BQWU7SUFHdEMsQ0FBQztDQUVKO0FBN0JELDRDQTZCQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/TransformableItemsManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"uiTransformableButtonTemplate","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"transformableButtonsParent","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"ZEPETO.Script","name":"itemsTransformables","type":"ZEPETO.Script.ZepetoScriptableObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"TransformableItemsManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: a938c129680c20c7d6cde1d6db6c1a34
+  onlyWriteTrigger: 0

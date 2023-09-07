@@ -27,7 +27,6 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
             this.RotateItem(value);
         });
 
-        UIManager.instance.ShowNonHunterUI();
         GameManager.instance.AddOneNonHunter();
     }
 

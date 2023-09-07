@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -590562033, guid: 921f0445823004a16a499d629dd566a6, type: 3}
-  m_Name: Item
+  m_Name: Item01
   m_EditorClassIdentifier: 
   keys:
   - itemId
   - itemPrefab
+  - iconSprite
   unityValues:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4252904093821003221, guid: d9cd733366ac04ebe913bbf2b4005bc0, type: 3}
+  - {fileID: 21300000, guid: 39ff133221932534f902affb21fbb554, type: 3}
   values:
-  - '{"type":"System.String, mscorlib","value":"24"}'
+  - '{"type":"System.String, mscorlib","value":"01"}'
+  - 
   - 
   unityArrayValues: []
   arrayValues: []

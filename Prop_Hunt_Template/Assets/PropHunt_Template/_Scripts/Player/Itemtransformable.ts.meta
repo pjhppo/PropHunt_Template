@@ -20,18 +20,16 @@ ScriptedImporter:
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
-    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    GameManager_1 = require(\"../Managers/GameManager\");\r\nclass Itemtransformable
-    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        let
-    item = UnityEngine_1.GameObject.Instantiate(this.itemPrefab);\r\n        this.model
-    = item.GetComponent($typeof(UnityEngine_1.MeshFilter));\r\n        this.modelCollider
-    = item.GetComponent($typeof(UnityEngine_1.BoxCollider));\r\n        this.modelMaterial
-    = item.GetComponent($typeof(UnityEngine_1.MeshRenderer)).material;\r\n       
-    item.SetActive(false);\r\n        this.button = this.GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
-    this.button.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.nonHunterScript.TransformIntoItem(this);\r\n       
-    });\r\n    }\r\n    GetModel() {\r\n        return this.model;\r\n    }\r\n   
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst GameManager_1 = require(\"../Managers/GameManager\");\r\nclass
+    Itemtransformable extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    /*\r\n   
+    Start() {\r\n        let item = GameObject.Instantiate(this.itemPrefab) as GameObject;\r\n\r\n       
+    this.model = item.GetComponent<MeshFilter>();\r\n        this.modelCollider =
+    item.GetComponent<BoxCollider>();\r\n        this.modelMaterial = item.GetComponent<MeshRenderer>().material;\r\n\r\n       
+    item.SetActive(false);\r\n\r\n        this.button = this.GetComponent<Button>();\r\n       
+    this.button.onClick.AddListener(() => {\r\n            GameManager.instance.nonHunterScript.TransformIntoItem(this);\r\n       
+    });\r\n    }\r\n*/\r\n    GetModel() {\r\n        return this.model;\r\n    }\r\n   
     GetModelCollider() {\r\n        return this.modelCollider;\r\n    }\r\n    GetModelMaterial()
     {\r\n        return this.modelMaterial;\r\n    }\r\n}\r\nexports.default = Itemtransformable;\r\n//#
-    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbXRyYW5zZm9ybWFibGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJdGVtdHJhbnNmb3JtYWJsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUErRjtBQUMvRixtREFBd0M7QUFDeEMsaURBQXFEO0FBQ3JELHlEQUFrRDtBQUVsRCxNQUFxQixpQkFBa0IsU0FBUSxxQ0FBcUI7SUFZaEUsS0FBSztRQUNELElBQUksSUFBSSxHQUFHLHdCQUFVLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQWUsQ0FBQztRQUVqRSxJQUFJLENBQUMsS0FBSyxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsd0JBQVUsRUFBRyxDQUFDO1FBQzdDLElBQUksQ0FBQyxhQUFhLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyx5QkFBVyxFQUFHLENBQUM7UUFDdEQsSUFBSSxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLDBCQUFZLEdBQUksUUFBUSxDQUFDO1FBRWhFLElBQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFFdEIsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHVCQUFNLEVBQUcsQ0FBQztRQUMxQyxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2pDLHFCQUFXLENBQUMsUUFBUSxDQUFDLGVBQWUsQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUNqRSxDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFFTSxRQUFRO1FBQ1gsT0FBTyxJQUFJLENBQUMsS0FBSyxDQUFDO0lBQ3RCLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsYUFBYSxDQUFDO0lBQzlCLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsYUFBYSxDQUFDO0lBQzlCLENBQUM7Q0FDSjtBQXRDRCxvQ0FzQ0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"itemId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"itemPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Itemtransformable","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 64359c3217e1a99b79ca311797596bd1
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbXRyYW5zZm9ybWFibGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJdGVtdHJhbnNmb3JtYWJsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUF1RztBQUV2RyxpREFBcUQ7QUFDckQseURBQWtEO0FBRWxELE1BQXFCLGlCQUFrQixTQUFRLHFDQUFxQjtJQWFoRTs7Ozs7Ozs7Ozs7Ozs7O0VBZUY7SUFDUyxRQUFRO1FBQ1gsT0FBTyxJQUFJLENBQUMsS0FBSyxDQUFDO0lBQ3RCLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsYUFBYSxDQUFDO0lBQzlCLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsYUFBYSxDQUFDO0lBQzlCLENBQUM7Q0FDSjtBQXhDRCxvQ0F3Q0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"itemId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"itemPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"iconSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Itemtransformable","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: b343b400880f01b295a2a25ed27c7d36
   onlyWriteTrigger: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1031109293853610848}
   - component: {fileID: 1031109293853610849}
   - component: {fileID: 1031109293853610850}
+  - component: {fileID: 4609111011690425463}
   m_Layer: 5
   m_Name: PropButtonTemplate
   m_TagString: Untagged
@@ -120,3 +121,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4609111011690425463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031109293853610852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyRootMotion: 0
+  script:
+    keys:
+    - icon
+    unityValues:
+    - {fileID: 1031109293853610849}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: 32769940dc642e84ab38c8f1ed1c2648, type: 3}
+    isExpaned: 0
