@@ -16736,8 +16736,10 @@ MonoBehaviour:
     - _pingCheckCount
     - _latency
     - _diffServerTime
+    - playersData
     unityValues:
     - {fileID: 1307963040}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -16748,9 +16750,10 @@ MonoBehaviour:
     - '{"type":"System.Single, mscorlib","value":"0"}'
     - '{"type":"System.Single, mscorlib","value":"0"}'
     - '{"type":"System.Single, mscorlib","value":"0"}'
+    - 
     unityArrayValues: []
     arrayValues: []
-    script: {fileID: 4458252877524076426, guid: daa5246585831481aabbf61fcc5114da, type: 3}
+    script: {fileID: 4458252877524076426, guid: 2723845ad4cc2ef43bf5ae50510a4532, type: 3}
     isExpaned: 0
 --- !u!1 &1309674804
 GameObject:
@@ -20207,7 +20210,7 @@ MonoBehaviour:
     - '{"type":"System.Boolean, mscorlib","value":"False"}'
     unityArrayValues: []
     arrayValues: []
-    script: {fileID: 4458252877524076426, guid: 6d846a38c15014273bd5ba91998e261d, type: 3}
+    script: {fileID: 4458252877524076426, guid: 89015fc775ca7d24b9456d106388a5d6, type: 3}
     isExpaned: 0
 --- !u!1001 &1571683618
 PrefabInstance:
@@ -22717,7 +22720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773857127}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.49, y: 0.25, z: 13.04}
+  m_LocalPosition: {x: 4.49, y: 0.5, z: 13.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -25134,16 +25137,16 @@ MonoBehaviour:
   applyRootMotion: 0
   script:
     keys:
-    - itemsTransformables
-    - uiTransformableButtonTemplate
+    - itemsTransformablesSO
     - transformableButtonsParent
+    - uiTransformableButtonTemplate
     unityValues:
     - {fileID: 0}
-    - {fileID: 1031109293853610852, guid: e97e54275e317454fa27ddc5cb5d212f, type: 3}
     - {fileID: 1963956940}
+    - {fileID: 1031109293853610852, guid: e97e54275e317454fa27ddc5cb5d212f, type: 3}
     values:
-    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":1,\"type\":\"UnityEngine.Object,
-      UnityEngine.CoreModule\",\"isUnity\":true}"}'
+    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":1,\"type\":\"ZEPETO.Script.ZepetoScriptableObject,
+      ZEPETO.Script\",\"isUnity\":true}"}'
     - 
     - 
     unityArrayValues:

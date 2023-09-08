@@ -37,8 +37,6 @@ export default class HunterController extends ZepetoScriptBehaviour {
         } else {
             this.ResetCatchingState();
         }
-
-        UIManager.instance.ShowHunterUI();
     }
 
     TryCatchNonHunter(nonHunter: NonHunterController) {

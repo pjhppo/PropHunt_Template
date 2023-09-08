@@ -1,9 +1,6 @@
 import { Button } from 'UnityEngine.UI'
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import UIManager from '../Managers/UIManager';
-import GameManager from '../Managers/GameManager';
-import { LocalPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
-import MultiplayManager from '../../../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
+import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
 
 export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private readyButton: Button;
@@ -18,7 +15,7 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
         this.switchToHunterButton.onClick.AddListener(() => 
         {
             this.isHunter = true;
-            MultiplayManager.instance.ChangeTeam(this.isHunter);
+            MultiplayerPropHuntManager.instance.ChangeTeam(this.isHunter);
 
             this.switchToHunterButton.interactable = false;
             this.switchToPropButton.interactable = true;
@@ -27,7 +24,7 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
         this.switchToPropButton.onClick.AddListener(() => 
         {
             this.isHunter = false;
-            MultiplayManager.instance.ChangeTeam(this.isHunter);
+            MultiplayerPropHuntManager.instance.ChangeTeam(this.isHunter);
 
             this.switchToPropButton.interactable = false;
             this.switchToHunterButton.interactable = true;
@@ -35,7 +32,10 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
 
         //Esto va segun jugador(ID - Multiplayer)
         this.readyButton.onClick.AddListener(() => {
-            MultiplayManager.instance.SetReady(true);
+            MultiplayerPropHuntManager.instance.SetReady(true);
+            
+            this.switchToHunterButton.interactable = false;
+            this.switchToPropButton.interactable = false;
         });
     }
 }

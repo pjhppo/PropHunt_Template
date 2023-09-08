@@ -16,31 +16,20 @@ export default class Itemtransformable extends ZepetoScriptBehaviour {
 
     private button: Button;
 
-    /*
-    Start() {
-        let item = GameObject.Instantiate(this.itemPrefab) as GameObject;
-
-        this.model = item.GetComponent<MeshFilter>();
-        this.modelCollider = item.GetComponent<BoxCollider>();
-        this.modelMaterial = item.GetComponent<MeshRenderer>().material;
-
-        item.SetActive(false);
-
-        this.button = this.GetComponent<Button>();
-        this.button.onClick.AddListener(() => {
-            GameManager.instance.nonHunterScript.TransformIntoItem(this);
-        });
-    }
-*/
     public GetModel(): MeshFilter {
+        this.model = this.itemPrefab.GetComponent<MeshFilter>();
         return this.model;
     }
 
     public GetModelCollider(): BoxCollider {
+        this.modelCollider = this.itemPrefab.GetComponent<BoxCollider>();
         return this.modelCollider;
     }
 
     public GetModelMaterial(): Material {
+        this.modelMaterial = this.itemPrefab.GetComponent<MeshRenderer>().material;
         return this.modelMaterial;
     }
+
+
 }

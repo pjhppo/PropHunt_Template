@@ -6,5 +6,6 @@ export default class PlayerModel extends ZepetoScriptBehaviour {
     public playerName: string;
     public isHunter: boolean;
     public isReady: boolean;
+    public itemId: string;
 
 }

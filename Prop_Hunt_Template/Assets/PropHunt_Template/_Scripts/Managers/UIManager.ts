@@ -3,8 +3,9 @@ import { Debug, GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'Un
 import { Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
-import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import GameManager from './GameManager';
+import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
+import { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -31,64 +32,41 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @SerializeField() private hunterCanvas: GameObject;
     @SerializeField() private catchedText: ZepetoText;
 
-    private allPlayers: string[];
-
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
         else UIManager.instance = this;
 
         this._hunterTeamList = [];
         this._propTeamList = [];
-        this.allPlayers = [];
     }
 
-    CreateTeamMember(isHunter: bool, user: string)
+    CreateTeamMember(playerDataModel: PlayerDataModel) 
     {
-        if(this.allPlayers.includes(user) == false)
+        if(GameManager.instance.GetPlayer(playerDataModel.sessionId) == null)
         {
-            this.allPlayers.push(user);
+            GameManager.instance.AddPlayer(playerDataModel.sessionId, playerDataModel);
 
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
     
-            uiPlayerList.name = user;
-            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
+            uiPlayerList.name = playerDataModel.sessionId;
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(playerDataModel.playerName);
             this._propTeamList.push(uiPlayerList);
         }
-
-
-        /*
-        if (isHunter)
-        {
-            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
-            uiPlayerList.name = user;
-            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
-            this._hunterTeamList.push(uiPlayerList);
-        }
-        else
-        {
-            let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.huntersParent) as UIPlayerListTemplate;
-
-            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(user);
-            this._propTeamList.push(uiPlayerList);
-        }*/
     }
 
-    ChangeTeam(userId: string, isHunter: bool)
+    ChangeTeam(sessionId: string, isHunter: bool)
     {
         let playerListSelected : UIPlayerListTemplate[] = isHunter ? this._propTeamList : this._hunterTeamList;
 
         if(playerListSelected)
         {
-            console.log(playerListSelected.length);
-
-            let playerListTemplate : UIPlayerListTemplate = playerListSelected.find((element) => element.name == userId);
+            let playerListTemplate : UIPlayerListTemplate = playerListSelected.find((element) => element.name == sessionId);
 
             if(playerListTemplate) 
             {
-
                 if(isHunter)
                 {
-                    let playerInHunters : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
+                    let playerInHunters : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
 
                     if(!playerInHunters)
                     {
@@ -102,7 +80,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
                 }
                 else
                 {
-                    let playerInProps : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
+                    let playerInProps : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
                     if(!playerInProps)
                     {
                         this._propTeamList.push(playerListTemplate);
@@ -118,22 +96,19 @@ export default class UIManager extends ZepetoScriptBehaviour {
         }
     }
 
-    SetReady(userId: string, isHunter: boolean, isReady : boolean)
+    SetReady(sessionId: string, isReady : boolean, isHunter: boolean)
     {
         if(!isReady) return;
 
         if(isHunter){
-            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == userId);
+            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
             if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
         }
         else
         {
-            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == userId);
+            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
             if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
         }
-
-        //GameManager.instance.StartGame();
-
     }
 
     // This method controls the visual of the timer, normalizing the time to mins and secs

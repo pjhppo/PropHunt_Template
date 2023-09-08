@@ -11,9 +11,10 @@ export default class SyncPropHuntComponentModule extends IModule {
             const playerDataModelTemp: PlayerDataModel = 
             {
                 sessionId: client.sessionId,
-                playerName: client.sessionId,
+                playerName: message,
                 isHunter: false,
                 isReady: false,
+                itemId: "",
             };
             this.playerDataModelCaches.push(playerDataModelTemp);
             console.log("Llego: " + playerDataModelTemp.sessionId);
@@ -30,32 +31,21 @@ export default class SyncPropHuntComponentModule extends IModule {
                 {
                     player.isHunter = message.isHunter;
                     player.isReady = message.isReady;
-
-                    console.log("Edito: " + player.sessionId + " IsReady: " + player.isReady); 
+                    player.itemId = message.itemId;
                 }
                 this.server.broadcast(GAME_MESSAGE.OnDataModelArrived, player);
             });
 
-            console.log("First element: " + this.playerDataModelCaches[0].isReady);
-
-            //Broadcast a todos los clientes con el nuevo cache.
-            /*
-            this.server.broadcast(MESSAGE.OnResetPlayerDataCache, "True");
-
-            this.playersDataCache.forEach((pd) => {
-                this.server.broadcast(MESSAGE.OnPlayersDataCacheArrive, pd);
-            });
-            */
-
+            console.log("Edito: " + message.sessionId + " ItemID: " + message.itemId); 
         });
 
         this.server.onMessage(GAME_MESSAGE.Request_StartGame, (client)=>{
             let allPlayersReady : boolean;
             allPlayersReady = this.playerDataModelCaches.every((playerCache) => playerCache.isReady == true);
 
-            console.log("ALL Ready: " + allPlayersReady);
             if(allPlayersReady)
             {
+                console.log("StartGame: " + allPlayersReady);
                 this.server.broadcast(GAME_MESSAGE.OnStartGameArrived, "");
             }
          });
@@ -87,4 +77,5 @@ interface PlayerDataModel {
     playerName: string;
     isHunter: boolean;
     isReady: boolean;
+    itemId: string;
 }

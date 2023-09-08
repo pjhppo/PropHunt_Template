@@ -5,7 +5,7 @@ import {Transform, Vector3, WaitForSeconds, Quaternion, Time, Object, Coroutine,
 import * as UnityEngine from "UnityEngine";
 import {State, SyncTransform} from "ZEPETO.Multiplay.Schema";
 import SyncIndexManager from "../Common/SyncIndexManager";
-import MultiplayManager, { GameObjectStatus } from '../Common/MultiplayManager';
+import MultiplayerPropHuntManager, {GameObjectStatus} from "../../../PropHunt_Template/_Scripts/Multiplayer/MultiplayerPropHuntManager";
 
 export default class TransformSyncHelper extends ZepetoScriptBehaviour {
     public UpdateOwnerType: UpdateOwner = UpdateOwner.Undefine;
@@ -93,7 +93,7 @@ export default class TransformSyncHelper extends ZepetoScriptBehaviour {
 
     private SyncTransform() {
         this._multiplay = Object.FindObjectOfType<ZepetoWorldMultiplay>();
-        this._room = MultiplayManager.instance?.room;
+        this._room = MultiplayerPropHuntManager.instance?.room;
 
         if (this._room != null) {
             this.StartCoroutine(this.BindingState());
@@ -108,7 +108,7 @@ export default class TransformSyncHelper extends ZepetoScriptBehaviour {
     // Access the entire server schema at first startup and connect the sync Id schema.
     private *BindingState() {
         if (null == this._syncTransform) {
-            this._syncTransform = MultiplayManager.instance?.room?.State?.SyncTransforms?.get_Item(this._Id)
+            this._syncTransform = MultiplayerPropHuntManager.instance?.room?.State?.SyncTransforms?.get_Item(this._Id)
             if (this._syncTransform) {
                 this.OnChangeTransform();
                 this.ForceTarget();
@@ -124,7 +124,7 @@ export default class TransformSyncHelper extends ZepetoScriptBehaviour {
                 this.SendTransform();
                 this.SendStatus();
 
-                yield new WaitUntil(()=>MultiplayManager.instance?.room?.State?.SyncTransforms?.get_Item(this._Id) !== null);
+                yield new WaitUntil(()=>MultiplayerPropHuntManager.instance?.room?.State?.SyncTransforms?.get_Item(this._Id) !== null);
                 this.StartCoroutine(this.BindingState());
             }
         }
@@ -134,7 +134,7 @@ export default class TransformSyncHelper extends ZepetoScriptBehaviour {
     public ChangeOwner(ownerSessionId: string) {
         this._ownerSessionId = ownerSessionId;
         if(null == this._room)
-            this._room = MultiplayManager.instance.room;
+            this._room = MultiplayerPropHuntManager.instance.room;
         if(this._room.SessionId == ownerSessionId && !this._isOwner) {
             this._isOwner = true;
             this._sendCoroutine = this.StartCoroutine(this.CheckChangeTransform(this._tick));
@@ -300,7 +300,7 @@ export default class TransformSyncHelper extends ZepetoScriptBehaviour {
         }
 
         const moveDirection: UnityEngine.Vector3 = Vector3.Normalize(this.newGet().position - this.prevGet().position);
-        const latency = (MultiplayManager.instance.GetServerTime() - this.newGet().timestamp)/1000;
+        const latency = (MultiplayerPropHuntManager.instance.GetServerTime() - this.newGet().timestamp)/1000;
 
         let extraPolationOffSet: Vector3 = Vector3.zero;
         switch (+this.ExtrapolationType) {
@@ -394,7 +394,7 @@ export default class TransformSyncHelper extends ZepetoScriptBehaviour {
         scale.Add("z", this.transform.localScale.z);
         data.Add("scale", scale.GetObject());
 
-        data.Add("sendTime", MultiplayManager.instance.GetServerTime());
+        data.Add("sendTime", MultiplayerPropHuntManager.instance.GetServerTime());
 
         // Send data to server
         this._room.Send(MESSAGE.SyncTransform, data.GetObject());

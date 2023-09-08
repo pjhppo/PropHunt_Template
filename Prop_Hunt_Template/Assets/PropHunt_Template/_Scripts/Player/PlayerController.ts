@@ -9,11 +9,11 @@ export default class PlayerController extends ZepetoScriptBehaviour {
 
     private playerGo: GameObject;
 
+    /*
 
     Start() {
         ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
             this.playerGo = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;
-            this.SelectTeam(false);
         });
     }
 
@@ -25,4 +25,5 @@ export default class PlayerController extends ZepetoScriptBehaviour {
             GameManager.instance.nonHunterScript = nonHunterScript;
         }
     }
+    */
 }

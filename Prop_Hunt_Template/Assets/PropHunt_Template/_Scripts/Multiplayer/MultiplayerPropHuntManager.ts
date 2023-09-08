@@ -2,14 +2,15 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources, Debug} from 'UnityEngine';
 import {ZepetoWorldMultiplay} from "ZEPETO.World";
 import {Room, RoomData} from "ZEPETO.Multiplay";
-import TransformSyncHelper, { UpdateOwner } from '../Transform/TransformSyncHelper';
-import DOTWeenSyncHelper from '../DOTween/DOTWeenSyncHelper';
-import AnimatorSyncHelper from '../Transform/AnimatorSyncHelper';
+import TransformSyncHelper, { UpdateOwner }  from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper';
+import DOTWeenSyncHelper from '../../../Zepeto Multiplay Component/ZepetoScript/DOTween/DOTWeenSyncHelper';
+import AnimatorSyncHelper from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/AnimatorSyncHelper';
 import UIManager from '../../../PropHunt_Template/_Scripts/Managers/UIManager';
 import PlayerModel from '../../../PropHunt_Template/_Scripts/Multiplayer/PlayerModel';
 import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManager';
+import TransformableItemsManager from '../Managers/TransformableItemsManager';
 
-export default class MultiplayManager extends ZepetoScriptBehaviour {
+export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     public multiplay: ZepetoWorldMultiplay;
     public room: Room;
     
@@ -35,22 +36,22 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
     get pingCheckCount(){ return this._pingCheckCount; }
     get latency(){ return this._latency; }
     /* Singleton */
-    private static m_instance: MultiplayManager = null;
-    public static get instance(): MultiplayManager {
+    private static m_instance: MultiplayerPropHuntManager = null;
+    public static get instance(): MultiplayerPropHuntManager {
         if (this.m_instance === null) {
-            this.m_instance = GameObject.FindObjectOfType<MultiplayManager>();
+            this.m_instance = GameObject.FindObjectOfType<MultiplayerPropHuntManager>();
             if (this.m_instance === null) {
-                this.m_instance = new GameObject(MultiplayManager.name).AddComponent<MultiplayManager>();
+                this.m_instance = new GameObject(MultiplayerPropHuntManager.name).AddComponent<MultiplayerPropHuntManager>();
             }
         }
         return this.m_instance;
     }
     
     private Awake() {
-        if (MultiplayManager.m_instance !== null && MultiplayManager.m_instance !== this) {
+        if (MultiplayerPropHuntManager.m_instance !== null && MultiplayerPropHuntManager.m_instance !== this) {
             GameObject.Destroy(this.gameObject);
         } else {
-            MultiplayManager.m_instance = this;
+            MultiplayerPropHuntManager.m_instance = this;
             GameObject.DontDestroyOnLoad(this.gameObject);
         }
     }
@@ -64,10 +65,108 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
             this.StartCoroutine(this.SendPing());
             this.CheckMaster();
             this.GetInstantiate();
+
+            // We add the message handlers
+            this.AddMessagesHandlers();
         }
         this._dtHelpers = Object.FindObjectsOfType<DOTWeenSyncHelper>();
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
     }
+
+    // CAPTIVATAR STAR - - - - - - 
+
+    private AddMessagesHandlers()
+    {
+        this.room.AddMessageHandler(GAME_MESSAGE.OnAddPlayerArrived, (message: PlayerDataModel) => {
+            this.FillLocalPlayerModel(message);
+
+            UIManager.instance.CreateTeamMember(message);
+        });
+
+        this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (message: PlayerDataModel) => 
+        {
+            UIManager.instance.SetReady( message.sessionId, message.isReady, message.isHunter);
+            UIManager.instance.ChangeTeam( message.sessionId, message.isHunter);
+            TransformableItemsManager.instance.TransformPlayer(message.itemId, message.sessionId);
+        });
+
+
+        this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {
+            GameManager.instance.StartGame();
+        });
+    }
+
+    private FillLocalPlayerModel(playerModel: PlayerDataModel)
+    {
+        this.localPlayerModel.sessionId = playerModel.sessionId;
+        this.localPlayerModel.playerName = playerModel.playerName;
+        this.localPlayerModel.isHunter = playerModel.isHunter;
+        this.localPlayerModel.isReady = playerModel.isReady;
+        this.localPlayerModel.itemId = playerModel.itemId;
+    }
+
+    public AddPlayer(playerName: string)
+    {
+        this.room.Send(GAME_MESSAGE.AddPlayer, playerName);
+    }
+
+    public ChangeTeam(isHunter: boolean)
+    {
+        this.localPlayerModel.isHunter = isHunter;
+        UIManager.instance.SwitchGameUI(isHunter);
+        this.SetPlayerDataModel();
+    }   
+
+    public ChangeItem(itemId: string){
+        this.localPlayerModel.itemId = itemId;
+        this.SetPlayerDataModel();
+    }
+
+    public SetReady(isReady: boolean)
+    {
+        this.localPlayerModel.isReady = isReady;
+        this.SetPlayerDataModel();
+        this.room.Send(GAME_MESSAGE.Request_StartGame);
+    }
+
+    SetPlayerDataModel() 
+    {
+        const data = new RoomData();
+        data.Add("sessionId",  this.localPlayerModel.sessionId);
+        data.Add("playerName",  this.localPlayerModel.playerName);
+        data.Add("isHunter", this.localPlayerModel.isHunter);
+        data.Add("isReady", this.localPlayerModel.isReady);
+        data.Add("itemId", this.localPlayerModel.itemId);
+
+        this.room.Send(GAME_MESSAGE.EditDataModel, data.GetObject());
+    }
+
+    public SendTestPing()
+    {
+        this.room.Send(GAME_MESSAGE.SEND_TEST, "TEST");
+    }
+
+    public GetLocalSessionId(): string{
+        return this.localPlayerModel.sessionId;
+    }
+
+    public GetPlayerData(sessionId: string) : PlayerDataModel
+    {
+        let result = this.playersData[0];
+        this.playersData.forEach((pd) => {
+            if (pd.sessionId == sessionId) {
+                result = pd;
+            }
+        });
+        return result;
+    }
+
+    public GetRoom() : Room
+    {
+        return this.room;
+    }
+        
+    // CAPTIVATAR END - - - - - - 
     
     /**Util**/
     private CheckMaster(){
@@ -140,7 +239,7 @@ export default class MultiplayManager extends ZepetoScriptBehaviour {
      @param ownerSessionId Inject owner into objects whose transform sync type is Undefine
      */
     public Instantiate(prefabName: string, ownerSessionId? : string, spawnPosition?: Vector3, spawnRotation?: Quaternion){
-        const newObjId = MultiplayManager.instance.GetServerTime().toString();
+        const newObjId = MultiplayerPropHuntManager.instance.GetServerTime().toString();
 
         const data = new RoomData();
         data.Add("Id", newObjId);
@@ -303,4 +402,5 @@ export interface PlayerDataModel {
     playerName: string;
     isHunter: boolean;
     isReady: boolean;
+    itemId: string;
 }
