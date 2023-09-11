@@ -6,6 +6,7 @@ import { ZepetoText } from 'ZEPETO.World.Gui';
 import GameManager from './GameManager';
 import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
+import WinnerScreen from '../UI/WinnerScreen';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -32,6 +33,9 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @SerializeField() private hunterCanvas: GameObject;
     @SerializeField() private huntersBlackoutScreen: GameObject;
     @SerializeField() private catchedText: ZepetoText;
+
+    @Header("General")
+    @SerializeField() private winnerScreen: GameObject;
 
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
@@ -154,6 +158,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     ShowBlackoutScreen(value: boolean){
         this.huntersBlackoutScreen.SetActive(value);
+    }
+    
+    ShowWinScreen(huntersWins: boolean){
+        this.winnerScreen.GetComponent<WinnerScreen>().SetWinner(huntersWins);
     }
 
 }
