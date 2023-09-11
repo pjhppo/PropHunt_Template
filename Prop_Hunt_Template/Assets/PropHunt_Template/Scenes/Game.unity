@@ -5440,11 +5440,15 @@ MonoBehaviour:
     - spawnPoint
     - timePerGame
     - nonHunterScript
+    - timeToHide
+    - gameState
     unityValues:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 1773857128}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     values:
@@ -5453,6 +5457,8 @@ MonoBehaviour:
     - '{"type":"System.Single, mscorlib","value":"2"}'
     - 
     - '{"type":"System.Single, mscorlib","value":"65"}'
+    - 
+    - '{"type":"System.Single, mscorlib","value":"15"}'
     - 
     unityArrayValues: []
     arrayValues: []
@@ -9960,6 +9966,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5866915090779349615, guid: 91bc8ce7894104a018fcb139564ee3fd, type: 3}
   m_PrefabInstance: {fileID: 745827047}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &747223219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747223220}
+  - component: {fileID: 747223222}
+  - component: {fileID: 747223221}
+  m_Layer: 5
+  m_Name: BlackoutScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &747223220
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747223219}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1420583022}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &747223221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747223219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &747223222
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747223219}
+  m_CullTransparentMesh: 1
 --- !u!1 &751989301
 GameObject:
   m_ObjectHideFlags: 0
@@ -14005,6 +14086,7 @@ MonoBehaviour:
     - huntersParent
     - nonHuntersParent
     - teamSelectorObj
+    - huntersBlackoutScreen
     unityValues:
     - {fileID: 2049761932}
     - {fileID: 650671203406439571, guid: ba7f76c206ab2b949a0ecddd99353377, type: 3}
@@ -14018,7 +14100,9 @@ MonoBehaviour:
     - {fileID: 1916710695}
     - {fileID: 226633841}
     - {fileID: 862811697}
+    - {fileID: 747223219}
     values:
+    - 
     - 
     - 
     - 
@@ -15956,7 +16040,7 @@ Transform:
   - {fileID: 1923234678}
   - {fileID: 137106719}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1237628914
 PrefabInstance:
@@ -18338,6 +18422,7 @@ RectTransform:
   m_Children:
   - {fileID: 2062864135}
   - {fileID: 2049761933}
+  - {fileID: 747223220}
   m_Father: {fileID: 1776978013}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22719,12 +22804,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773857127}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.49, y: 0.5, z: 13.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1776978012
 GameObject:
@@ -25145,8 +25230,8 @@ MonoBehaviour:
     - {fileID: 1963956940}
     - {fileID: 1031109293853610852, guid: e97e54275e317454fa27ddc5cb5d212f, type: 3}
     values:
-    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":1,\"type\":\"ZEPETO.Script.ZepetoScriptableObject,
-      ZEPETO.Script\",\"isUnity\":true}"}'
+    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":1,\"type\":\"UnityEngine.Object,
+      UnityEngine.CoreModule\",\"isUnity\":true}"}'
     - 
     - 
     unityArrayValues:
@@ -25881,7 +25966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2049761933
 RectTransform:
   m_ObjectHideFlags: 0

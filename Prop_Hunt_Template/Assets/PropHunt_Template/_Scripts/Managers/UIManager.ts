@@ -30,6 +30,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     @Header("Hunter")
     @SerializeField() private hunterCanvas: GameObject;
+    @SerializeField() private huntersBlackoutScreen: GameObject;
     @SerializeField() private catchedText: ZepetoText;
 
     Awake() {
@@ -149,6 +150,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
     SwitchGameUI(isHunter: boolean = false){
         this.nonHunterCanvas.SetActive(!isHunter);
         this.hunterCanvas.SetActive(isHunter);
+    }
+
+    ShowBlackoutScreen(value: boolean){
+        this.huntersBlackoutScreen.SetActive(value);
     }
 
 }
