@@ -23,11 +23,14 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         GameManager.instance.AddOneNonHunter();
     }
 
-    TransformIntoItem(itemObj: GameObject, item?: Itemtransformable) {
+    TransformIntoItem(itemObj: GameObject) {
         for (let index = 0; index < this.playerChild.childCount; index++) {
             this.playerChild.GetChild(index).gameObject.SetActive(false);
         }
-        
+        for (let index = 0; index < this.playerParent.transform.childCount; index++) {
+            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);
+        }
+
         if (itemObj) {
             itemObj.transform.SetParent(this.playerParent.transform);
 
@@ -43,7 +46,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     }
 
     RotateItem(percentage: number) {
-        if(this.objectTransformed != null){
+        if (this.objectTransformed != null) {
             let rotation: Vector3 = new Vector3(0, Mathf.Lerp(0, 360, percentage), 0);
             this.playerParent.transform.rotation = Quaternion.Euler(rotation);
         }

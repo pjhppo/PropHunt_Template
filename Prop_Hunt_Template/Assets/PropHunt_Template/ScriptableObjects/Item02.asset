@@ -18,7 +18,7 @@ MonoBehaviour:
   - iconSprite
   unityValues:
   - {fileID: 0}
-  - {fileID: 2823117221140447395, guid: 3c36cc35a869642b3b346c0bebc05549, type: 3}
+  - {fileID: 8145784028713725570, guid: c8973c916020ae944a2d059c20db3452, type: 3}
   - {fileID: 21300000, guid: 778d5f76f12cf4042becd573be0b8854, type: 3}
   values:
   - '{"type":"System.String, mscorlib","value":"02"}'
