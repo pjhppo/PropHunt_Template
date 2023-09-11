@@ -18,6 +18,36 @@ ScriptedImporter:
   wrapperTypes: []
   WrapperFilters: []
   wrapperOutputDirectory: Generated
-  compiledResult: '{"source":"","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/TransformableItemsManager.ts","manifest":{"properties":[],"name":"","description":"","hasAnimatorMove":false},"isCompiled":false}'
-  typescriptHash: d771bf2d15573ae3944161717ea63791
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst Itemtransformable_1 = require(\"../Player/Itemtransformable\");\r\nconst
+    UITransformableButton_1 = require(\"../UI/UITransformableButton\");\r\nconst
+    GameManager_1 = require(\"./GameManager\");\r\nconst MultiplayerPropHuntManager_1
+    = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst NonHunterController_1 =
+    require(\"../Player/NonHunterController\");\r\nclass TransformableItemsManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.itemsTransformablesSO = [];\r\n        this._allItemsTransformables
+    = new Map();\r\n    }\r\n    Awake() {\r\n        if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Inequality(TransformableItemsManager.instance,
+    null))\r\n            UnityEngine_1.GameObject.Destroy(this.gameObject);\r\n       
+    else\r\n            TransformableItemsManager.instance = this;\r\n    }\r\n   
+    Start() {\r\n        this.InstantiateButtons();\r\n    }\r\n    InstantiateButtons()
+    {\r\n        this.itemsTransformablesSO.forEach(element => {\r\n            let
+    newUITransformableButton = UnityEngine_1.GameObject.Instantiate(this.uiTransformableButtonTemplate,
+    this.transformableButtonsParent);\r\n            newUITransformableButton.GetComponent($typeof(UITransformableButton_1.default)).SetButton(element.targetObject);\r\n           
+    let newObjectInGame = UnityEngine_1.GameObject.Instantiate(element.targetObject.itemPrefab,
+    this.transform);\r\n            newObjectInGame.SetActive(false);\r\n           
+    this._allItemsTransformables.set(element.targetObject.itemId, newObjectInGame);\r\n       
+    });\r\n    }\r\n    TransformPlayer(itemId, sessionId) {\r\n        let tempItemTransfromablethis
+    = this._allItemsTransformables.get(itemId);\r\n        let playerData = GameManager_1.default.instance.GetPlayer(sessionId);\r\n       
+    if (tempItemTransfromablethis && !playerData.isHunter) {\r\n            const
+    zepetoPlayer = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character.gameObject;\r\n           
+    zepetoPlayer.GetComponent($typeof(NonHunterController_1.default)).TransformIntoItem(tempItemTransfromablethis);\r\n           
+    tempItemTransfromablethis.SetActive(true);\r\n            console.log(\"Transform
+    in: \" + tempItemTransfromablethis.name + \" SessionId: \" + sessionId);\r\n       
+    }\r\n    }\r\n    TransformLocalPlayer(itemId) {\r\n        let tempItemTransfromablethis
+    = this._allItemsTransformables.get(itemId);\r\n        if (tempItemTransfromablethis)
+    {\r\n            MultiplayerPropHuntManager_1.default.instance.ChangeItem(itemId);\r\n       
+    }\r\n    }\r\n}\r\nexports.default = TransformableItemsManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVHJhbnNmb3JtYWJsZUl0ZW1zTWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlRyYW5zZm9ybWFibGVJdGVtc01hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBNkU7QUFDN0UsNkNBQW9EO0FBQ3BELG1FQUEyRDtBQUMzRCx1RUFBZ0U7QUFDaEUsK0NBQXdDO0FBQ3hDLDBGQUFtRjtBQUNuRiw2RUFBNEQ7QUFDNUQsdUVBQWdFO0FBRWhFLE1BQXFCLHlCQUEwQixTQUFRLHFDQUFxQjtJQUE1RTs7UUFLVywwQkFBcUIsR0FBaUQsRUFBRSxDQUFDO1FBRXhFLDRCQUF1QixHQUE0QixJQUFJLEdBQUcsRUFBc0IsQ0FBQztJQWdEN0YsQ0FBQztJQTlDRyxLQUFLO1FBQ0QsSUFuQkMscUNBQXFCLENBZ0U0cEksYUFBYyxDQTdDNXJJLHlCQUF5QixDQUFDLFFBQVEsRUFBSSxJQUFJO1lBQUUsd0JBQVUsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDOztZQUMvRSx5QkFBeUIsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDO0lBQ25ELENBQUM7SUFFRCxLQUFLO1FBQ0QsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7SUFDOUIsQ0FBQztJQUVNLGtCQUFrQjtRQUVyQixJQUFJLENBQUMscUJBQXFCLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxFQUFFO1lBQ3pDLElBQUksd0JBQXdCLEdBQTJCLHdCQUFVLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyw2QkFBNkIsRUFBRSxJQUFJLENBQUMsMEJBQTBCLENBQTBCLENBQUM7WUFDNUssd0JBQXdCLENBQUMsWUFBWSxTQUFDLCtCQUFxQixHQUFJLFNBQVMsQ0FBQyxPQUFPLENBQUMsWUFBWSxDQUFDLENBQUM7WUFDL0YsSUFBSSxlQUFlLEdBQWdCLHdCQUFVLENBQUMsV0FBVyxDQUFDLE9BQU8sQ0FBQyxZQUFZLENBQUMsVUFBVSxFQUFFLElBQUksQ0FBQyxTQUFTLENBQWUsQ0FBQztZQUV6SCxlQUFlLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1lBRWpDLElBQUksQ0FBQyx1QkFBdUIsQ0FBQyxHQUFHLENBQUMsT0FBTyxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUUsZUFBZSxDQUFDLENBQUM7UUFDbkYsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRU0sZUFBZSxDQUFDLE1BQWUsRUFBRSxTQUFpQjtRQUVyRCxJQUFJLHlCQUF5QixHQUFHLElBQUksQ0FBQyx1QkFBdUIsQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDekUsSUFBSSxVQUFVLEdBQUcscUJBQVcsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBRTNELElBQUcseUJBQXlCLElBQUksQ0FBQyxVQUFVLENBQUMsUUFBUSxFQUNwRDtZQUNJLE1BQU0sWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO1lBQ3RGLFlBQVksQ0FBQyxZQUFZLFNBQUMsNkJBQW1CLEdBQUksaUJBQWlCLENBQUMseUJBQXlCLENBQUMsQ0FBQztZQUM5Rix5QkFBeUIsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7WUFFMUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxnQkFBZ0IsR0FBRyx5QkFBeUIsQ0FBQyxJQUFJLEdBQUcsY0FBYyxHQUFHLFNBQVMsQ0FBQyxDQUFDO1NBQy9GO0lBQ0wsQ0FBQztJQUVNLG9CQUFvQixDQUFDLE1BQWU7UUFFdkMsSUFBSSx5QkFBeUIsR0FBRyxJQUFJLENBQUMsdUJBQXVCLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBRXpFLElBQUcseUJBQXlCLEVBQzVCO1lBQ0ksb0NBQTBCLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBQyxNQUFNLENBQUMsQ0FBQztTQUMxRDtJQUNMLENBQUM7Q0FDSjtBQXZERCw0Q0F1REMifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/TransformableItemsManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"uiTransformableButtonTemplate","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"transformableButtonsParent","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"ZEPETO.Script","name":"itemsTransformablesSO","type":"ZEPETO.Script.ZepetoScriptableObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"TransformableItemsManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 30046bd8a8f31a31a46cefabfed4ecd1
   onlyWriteTrigger: 0

@@ -16,7 +16,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public spawnPoint: Transform;
 
     public timePerGame: number;
-    private timeRemaining: number;
+    public timeRemaining: number;
 
     public timeToHide: number;
 
@@ -34,7 +34,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     Awake() {
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
         else GameManager.instance = this;
-
     }
 
     Start() {
@@ -43,7 +42,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     Update() {
         if (!GameManager.gameStarted) return;
-
         this.CheckRemainingTime();
     }
 

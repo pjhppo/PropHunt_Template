@@ -50,7 +50,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
     
             uiPlayerList.name = playerDataModel.sessionId;
-            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(playerDataModel.playerName);
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetDisplayName(playerDataModel.playerName);
             this._propTeamList.push(uiPlayerList);
         }
     }
@@ -99,16 +99,14 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     SetReady(sessionId: string, isReady : boolean, isHunter: boolean)
     {
-        if(!isReady) return;
-
         if(isHunter){
             let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
-            if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
+            if (playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(isReady); }
         }
         else
         {
             let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
-            if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
+            if (playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(isReady); }
         }
     }
 
