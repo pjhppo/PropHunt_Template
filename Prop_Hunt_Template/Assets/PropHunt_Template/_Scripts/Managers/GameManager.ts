@@ -101,6 +101,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     RestOneNonHunter() {
         this.nonHuntersLeft--;
+
         this.CheckRemainingNonHunters();
     }
 
@@ -120,8 +121,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
                 this.timeRemaining = this.timePerGame;
             }
             else if(this.gameState == GameState.HUNTERS_SEARCHING){
-                this.SelectTeamWins(false);
-                this.gameState = GameState.GAME_FINISH;
+                this.SelectTeamWins(true);
             }
         }
     }
@@ -136,12 +136,11 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
     }
 
-    SelectTeamWins(hunterWins: bool) {
-        if (hunterWins) {
+    SelectTeamWins(huntersWins : boolean) 
+    {
+        this.gameState = GameState.GAME_FINISH;
 
-        } else {
-
-        }
+        UIManager.instance.ShowWinScreen(huntersWins);
     }
 
 

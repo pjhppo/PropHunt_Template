@@ -5,6 +5,8 @@ import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManage
 export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private readyButton: Button;
     @SerializeField() private switchTeamButton: Button;
+    @SerializeField() private resetButton: Button;
+
 
     Start() 
     {
@@ -19,6 +21,10 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
             MultiplayerPropHuntManager.instance.SwitchReady();
             let activeButtons : boolean = !MultiplayerPropHuntManager.instance.GetReady();
             this.switchTeamButton.interactable = activeButtons;
+        });
+
+        this.resetButton.onClick.AddListener(()=>{
+            //Reset all
         });
     }
 }
