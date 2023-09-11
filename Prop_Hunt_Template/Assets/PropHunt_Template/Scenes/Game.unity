@@ -5442,11 +5442,13 @@ MonoBehaviour:
     - nonHunterScript
     - timeToHide
     - gameState
+    - timeRemaining
     unityValues:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 1773857128}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -5460,6 +5462,7 @@ MonoBehaviour:
     - 
     - '{"type":"System.Single, mscorlib","value":"15"}'
     - 
+    - '{"type":"System.Single, mscorlib","value":"0"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: 43b621a64f37651488c75c2bdda1d913, type: 3}
