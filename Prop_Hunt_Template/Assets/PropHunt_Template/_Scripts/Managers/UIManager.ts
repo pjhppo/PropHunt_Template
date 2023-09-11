@@ -98,16 +98,14 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     SetReady(sessionId: string, isReady : boolean, isHunter: boolean)
     {
-        if(!isReady) return;
-
         if(isHunter){
             let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
-            if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
+            if (playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(isReady); }
         }
         else
         {
             let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
-            if(playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(); }
+            if (playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(isReady); }
         }
     }
 

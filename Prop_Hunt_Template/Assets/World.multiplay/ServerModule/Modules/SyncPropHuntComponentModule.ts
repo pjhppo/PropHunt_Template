@@ -43,7 +43,13 @@ export default class SyncPropHuntComponentModule extends IModule {
             let allPlayersReady : boolean;
             allPlayersReady = this.playerDataModelCaches.every((playerCache) => playerCache.isReady == true);
 
-            if(allPlayersReady)
+            let anyHunter : boolean = false;
+            anyHunter = this.playerDataModelCaches.every((playerCache) => playerCache.isHunter == true);
+
+            let anyProp: boolean = false;
+            anyProp = this.playerDataModelCaches.every((playerCache) => playerCache.isHunter == false);
+
+            if(allPlayersReady && anyHunter && anyProp)
             {
                 console.log("StartGame: " + allPlayersReady);
                 this.server.broadcast(GAME_MESSAGE.OnStartGameArrived, "");

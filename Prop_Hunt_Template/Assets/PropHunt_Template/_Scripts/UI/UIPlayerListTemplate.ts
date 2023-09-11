@@ -10,27 +10,40 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
 
     private _user: string;
 
-    GetUser() {
+    Start()
+    {
+        this.readyIcon.color = Color.yellow
+    }
+
+    GetUser() 
+    {
         return this._user;
     }
 
-    SetUser(user: string) {
+    SetUser(user: string) 
+    {
         this._user = user;
     }
 
-    SetText(text: string) {
+    SetText(text: string) 
+    {
         this.txtName.text = text;
     }
 
-    SetColor() {
-
+    public SetReady(isReady : boolean)
+    {
+        if (isReady)
+        {
+            this.readyIcon.color = Color.green;
+        }
+        else
+        {
+            this.readyIcon.color = Color.yellow;
+        }
     }
 
-    public SetReady(){
-        this.readyIcon.color = Color.green;
-    }
-
-    public ChangeParent(newParent: Transform){
+    public ChangeParent(newParent: Transform)
+    {
         this.transform.SetParent(newParent);
     }
 }

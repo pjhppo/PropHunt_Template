@@ -110,10 +110,10 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         this.room.Send(GAME_MESSAGE.AddPlayer, playerName);
     }
 
-    public ChangeTeam(isHunter: boolean)
+    public SwitchTeam()
     {
-        this.localPlayerModel.isHunter = isHunter;
-        UIManager.instance.SwitchGameUI(isHunter);
+        this.localPlayerModel.isHunter = !this.localPlayerModel.isHunter;
+        UIManager.instance.SwitchGameUI(this.localPlayerModel.isHunter);
         this.SetPlayerDataModel();
     }   
 
@@ -122,9 +122,9 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         this.SetPlayerDataModel();
     }
 
-    public SetReady(isReady: boolean)
+    public SwitchReady()
     {
-        this.localPlayerModel.isReady = isReady;
+        this.localPlayerModel.isReady = !this.localPlayerModel.isReady;
         this.SetPlayerDataModel();
         this.room.Send(GAME_MESSAGE.Request_StartGame);
     }
@@ -353,6 +353,11 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         data.Add("Id", id);
         data.Add("Status", status);
         this.room.Send(MESSAGE.SyncTransformStatus, data.GetObject());
+    }
+
+    public GetReady()
+    {
+        return this.localPlayerModel.isReady;
     }
 }
 
