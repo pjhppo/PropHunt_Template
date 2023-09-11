@@ -25,7 +25,7 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
         this._user = user;
     }
 
-    SetText(text: string) 
+    SetDisplayName(text: string) 
     {
         this.txtName.text = text;
     }

@@ -50,7 +50,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
     
             uiPlayerList.name = playerDataModel.sessionId;
-            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetText(playerDataModel.playerName);
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetDisplayName(playerDataModel.playerName);
             this._propTeamList.push(uiPlayerList);
         }
     }

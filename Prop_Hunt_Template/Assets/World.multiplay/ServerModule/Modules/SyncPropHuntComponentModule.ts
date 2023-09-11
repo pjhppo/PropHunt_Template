@@ -44,10 +44,19 @@ export default class SyncPropHuntComponentModule extends IModule {
             allPlayersReady = this.playerDataModelCaches.every((playerCache) => playerCache.isReady == true);
 
             let anyHunter : boolean = false;
-            anyHunter = this.playerDataModelCaches.every((playerCache) => playerCache.isHunter == true);
-
             let anyProp: boolean = false;
-            anyProp = this.playerDataModelCaches.every((playerCache) => playerCache.isHunter == false);
+            
+            this.playerDataModelCaches.forEach(element => {
+                if(element.isHunter == true)
+                {
+                    anyHunter = true;
+                }
+                else
+                {
+                    anyProp = true;
+                }
+            });
+
 
             if(allPlayersReady && anyHunter && anyProp)
             {
