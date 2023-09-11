@@ -11,11 +11,14 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public static instance: GameManager;
 
     public static gameStarted: bool = false;
+    public gameState : GameState;
 
     public spawnPoint: Transform;
 
     public timePerGame: number;
     private timeRemaining: number;
+
+    public timeToHide: number;
 
     private nonHuntersLeft: number;
 
@@ -35,7 +38,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     Start() {
-      
+      this.gameState = GameState.CHOOSING_TEAM;
     }
 
     Update() {
@@ -48,6 +51,12 @@ export default class GameManager extends ZepetoScriptBehaviour {
     {
         if(!this._allPlayers.has(sessionId)){
             this._allPlayers.set(sessionId, dataModel)
+        }
+    }
+
+    public UpdatePlayerData(dataModel: PlayerDataModel){
+        if(this._allPlayers.has(dataModel.sessionId)){
+            this._allPlayers.set(dataModel.sessionId, dataModel)
         }
     }
 
@@ -65,15 +74,20 @@ export default class GameManager extends ZepetoScriptBehaviour {
     {
         this._allPlayers.forEach((player) =>{
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId).character.gameObject;
-            
-            if (player.isHunter) 
+                
+            if (player.isHunter){
                 zepetoPlayer.AddComponent<HunterController>();
-            else
+            }
+            else{
                 zepetoPlayer.AddComponent<NonHunterController>();
+            }
         });
 
-        this.timeRemaining = this.timePerGame;
+        this.ShowBlackoutOnHunters(true);
+
+        this.timeRemaining = this.timeToHide;
         GameManager.gameStarted = true;
+        this.gameState = GameState.PROPS_HIDING;
 
         // FOR TEST
         UIManager.instance.teamSelectorObj.SetActive(false);
@@ -101,7 +115,26 @@ export default class GameManager extends ZepetoScriptBehaviour {
         this.timeRemaining -= Time.deltaTime;
         UIManager.instance.UpdateTimeRemaining(this.timeRemaining);
         if (this.timeRemaining <= 0) {
-            this.SelectTeamWins(false);
+
+            if(this.gameState == GameState.PROPS_HIDING){
+                this.ShowBlackoutOnHunters(false);
+                this.gameState = GameState.HUNTERS_SEARCHING;
+                this.timeRemaining = this.timePerGame;
+            }
+            else if(this.gameState == GameState.HUNTERS_SEARCHING){
+                this.SelectTeamWins(false);
+                this.gameState = GameState.GAME_FINISH;
+            }
+        }
+    }
+
+    ShowBlackoutOnHunters(value : boolean)
+    {
+        let playerData = this.GetPlayer(MultiplayerPropHuntManager.instance.GetLocalSessionId());
+        
+        if(playerData.isHunter)
+        {
+            UIManager.instance.ShowBlackoutScreen(value);
         }
     }
 
@@ -112,4 +145,13 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         }
     }
+
+
+}
+
+enum GameState{
+    CHOOSING_TEAM,
+    PROPS_HIDING,
+    HUNTERS_SEARCHING,
+    GAME_FINISH
 }

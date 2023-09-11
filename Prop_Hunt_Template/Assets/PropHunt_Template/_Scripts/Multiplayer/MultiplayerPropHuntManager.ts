@@ -85,6 +85,8 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (message: PlayerDataModel) => 
         {
+            GameManager.instance.UpdatePlayerData(message);
+            
             UIManager.instance.SetReady( message.sessionId, message.isReady, message.isHunter);
             UIManager.instance.ChangeTeam( message.sessionId, message.isHunter);
             TransformableItemsManager.instance.TransformPlayer(message.itemId, message.sessionId);
