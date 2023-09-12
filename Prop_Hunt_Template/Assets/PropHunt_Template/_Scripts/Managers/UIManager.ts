@@ -135,6 +135,11 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.hunterCanvas.SetActive(isHunter);
     }
 
+    SwitchSpectateScreen(playerName: string)
+    {
+        
+    }
+
     ShowBlackoutScreen(value: boolean){
         this.huntersBlackoutScreen.SetActive(value);
     }
