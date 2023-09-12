@@ -6,6 +6,7 @@ import { ZepetoText } from 'ZEPETO.World.Gui';
 import GameManager from './GameManager';
 import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
+import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -50,7 +51,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
     
             uiPlayerList.name = playerDataModel.sessionId;
-            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetDisplayName(playerDataModel.playerName);
+            uiPlayerList.GetComponent<UIPlayerListTemplate>().SetDisplayName(ZepetoPlayers.instance.GetPlayer(playerDataModel.sessionId).name);
             this._propTeamList.push(uiPlayerList);
         }
     }

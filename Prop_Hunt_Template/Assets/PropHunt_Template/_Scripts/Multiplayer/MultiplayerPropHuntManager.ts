@@ -1,5 +1,5 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources, Debug} from 'UnityEngine';
+import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources, Debug, Input} from 'UnityEngine';
 import {ZepetoWorldMultiplay} from "ZEPETO.World";
 import {Room, RoomData} from "ZEPETO.Multiplay";
 import TransformSyncHelper, { UpdateOwner }  from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper';
@@ -9,6 +9,7 @@ import UIManager from '../../../PropHunt_Template/_Scripts/Managers/UIManager';
 import PlayerModel from '../../../PropHunt_Template/_Scripts/Multiplayer/PlayerModel';
 import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManager';
 import TransformableItemsManager from '../Managers/TransformableItemsManager';
+import { Player, State } from 'ZEPETO.Multiplay.Schema';
 
 export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     public multiplay: ZepetoWorldMultiplay;
@@ -54,6 +55,8 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             MultiplayerPropHuntManager.m_instance = this;
             GameObject.DontDestroyOnLoad(this.gameObject);
         }
+
+        this.SetInitialPlayerData();
     }
     
     private Start() {
@@ -61,13 +64,15 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             this.multiplay = this.GetComponent<ZepetoWorldMultiplay>();
         if(!this.multiplay) console.warn("Add ZepetoWorldMultiplay First");
             this.multiplay.RoomJoined += (room: Room) => {
-            this.room = room;
-            this.StartCoroutine(this.SendPing());
-            this.CheckMaster();
-            this.GetInstantiate();
+                this.room = room;
+                this.StartCoroutine(this.SendPing());
+                this.CheckMaster();
+                this.GetInstantiate();
+                
+                // We add the message handlers
+                this.AddMessagesHandlers();
 
-            // We add the message handlers
-            this.AddMessagesHandlers();
+                this.room.Send(GAME_MESSAGE.RequestPlayersCache, "");
         }
         this._dtHelpers = Object.FindObjectsOfType<DOTWeenSyncHelper>();
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
@@ -77,10 +82,13 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
 
     private AddMessagesHandlers()
     {
-        this.room.AddMessageHandler(GAME_MESSAGE.OnAddPlayerArrived, (message: PlayerDataModel) => {
-            this.FillLocalPlayerModel(message);
+        this.room.AddMessageHandler(GAME_MESSAGE.OnResetPlayerCache, (message) => {
+            this.playersData = [];
+        });
 
-            UIManager.instance.CreateTeamMember(message);
+        this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerJoin, (playerData: PlayerDataModel) => {
+            this.playersData.push(playerData);
+            //UIManager.instance.CreateTeamMember(playerData);
         });
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (message: PlayerDataModel) => 
@@ -98,18 +106,13 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         });
     }
 
-    private FillLocalPlayerModel(playerModel: PlayerDataModel)
+    private SetInitialPlayerData()
     {
-        this.localPlayerModel.sessionId = playerModel.sessionId;
-        this.localPlayerModel.playerName = playerModel.playerName;
-        this.localPlayerModel.isHunter = playerModel.isHunter;
-        this.localPlayerModel.isReady = playerModel.isReady;
-        this.localPlayerModel.itemId = playerModel.itemId;
-    }
-
-    public AddPlayer(playerName: string)
-    {
-        this.room.Send(GAME_MESSAGE.AddPlayer, playerName);
+        this.localPlayerModel = new PlayerModel;
+        this.localPlayerModel.sessionId = "";
+        this.localPlayerModel.isHunter = false;
+        this.localPlayerModel.isReady = false;
+        this.localPlayerModel.itemId = "";
     }
 
     public SwitchTeam()
@@ -391,22 +394,24 @@ enum MESSAGE {
 }
 
 enum GAME_MESSAGE {
-    AddPlayer = "AddPlayer",
     EditDataModel = "EditDataModel",
     Request_EditDataModel = "Request_EditDataModel",
     Request_StartGame = "Request_StartGame",
-    OnAddPlayerArrived = "OnAddPlayerArrived",
-    OnDataModelArrived = "OnDataModelArrived",
-    OnStartGameArrived = "OnStartGameArrived",
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
     SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
+    RequestPlayersCache = "RequestPlayersCache",
+    
+    OnResetPlayerCache = "OnResetPlayerCache",
+    OnPlayerJoin = "OnPlayerJoin",
+    OnPlayerLeave = "OnPlayerLeave",
+    OnDataModelArrived = "OnDataModelArrived",
+    OnStartGameArrived = "OnStartGameArrived",
 }
 
 //CAPTIVATAR
 export interface PlayerDataModel {
     sessionId: string;
-    playerName: string;
     isHunter: boolean;
     isReady: boolean;
     itemId: string;

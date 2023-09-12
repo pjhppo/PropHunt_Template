@@ -29,20 +29,40 @@ export default class GameManager extends ZepetoScriptBehaviour {
     @Header("Hunter")
     public timeToCatch: number;
     public playerLayer: LayerMask;
+    
     private _allPlayers: Map<string, PlayerDataModel> = new Map<string, PlayerDataModel>();
 
-    Awake() {
+    Awake() 
+    {
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
         else GameManager.instance = this;
     }
 
-    Start() {
-      this.gameState = GameState.CHOOSING_TEAM;
+    Start() 
+    {
+        this.SetGameState(GameState.CHOOSING_TEAM);
     }
 
-    Update() {
+    Update() 
+    {
         if (!GameManager.gameStarted) return;
         this.CheckRemainingTime();
+    }
+
+    public SetGameState(gameState: GameState) 
+    {
+        this.gameState = gameState;
+
+        switch (gameState) {
+            case GameState.CHOOSING_TEAM:
+                break;
+            case GameState.PROPS_HIDING:
+                break;
+            case GameState.HUNTERS_SEARCHING:
+                break;
+            case GameState.GAME_FINISH:
+                break;
+        }
     }
 
     public AddPlayer(sessionId: string, dataModel: PlayerDataModel)
@@ -143,7 +163,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         }
     }
-
 
 }
 

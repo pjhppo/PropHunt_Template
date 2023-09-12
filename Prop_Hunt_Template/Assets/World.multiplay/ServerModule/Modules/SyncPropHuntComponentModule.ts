@@ -6,23 +6,6 @@ export default class SyncPropHuntComponentModule extends IModule {
     private playerDataModelCaches : PlayerDataModel[] = [];
 
     async OnCreate() {
-        this.server.onMessage(GAME_MESSAGE.AddPlayer, (client, message) =>
-        {
-            const playerDataModelTemp: PlayerDataModel = 
-            {
-                sessionId: client.sessionId,
-                playerName: message,
-                isHunter: false,
-                isReady: false,
-                itemId: "",
-            };
-            this.playerDataModelCaches.push(playerDataModelTemp);
-            console.log("Llego: " + playerDataModelTemp.sessionId);
-
-            this.playerDataModelCaches.forEach((player) => {
-                this.server.broadcast(GAME_MESSAGE.OnAddPlayerArrived, player);
-            });
-        });
 
         this.server.onMessage(GAME_MESSAGE.EditDataModel, (client, message: PlayerDataModel) =>{
     
@@ -64,32 +47,62 @@ export default class SyncPropHuntComponentModule extends IModule {
                 this.server.broadcast(GAME_MESSAGE.OnStartGameArrived, "");
             }
          });
+
+        this.server.onMessage(GAME_MESSAGE.RequestPlayersCache, (client) =>
+        {
+            this.server.broadcast(GAME_MESSAGE.OnResetPlayerCache, "");
+            this.playerDataModelCaches.forEach((player) => {
+                this.server.broadcast(GAME_MESSAGE.OnPlayerJoin, player);
+            });
+        });
     }
 
-    async OnJoin(client: SandboxPlayer) {}
+    async OnJoin(client: SandboxPlayer) 
+    {
+        const newPlayer: PlayerDataModel =
+        {
+            sessionId: client.sessionId,
+            isHunter: false,
+            isReady: false,
+            itemId: "",
+        };
+        this.playerDataModelCaches.push(newPlayer);
+    }
 
-    async OnLeave(client: SandboxPlayer) {}
+    async OnLeave(client: SandboxPlayer) 
+    {
+        let index = this.playerDataModelCaches.findIndex(d => d.sessionId === client.sessionId);
+        if (index > -1) {
+            this.playerDataModelCaches.splice(index, 1);
+        }
+
+        this.playerDataModelCaches.forEach((player) => {
+            this.server.broadcast(GAME_MESSAGE.OnPlayerLeave, player);
+        });
+    }
 
     OnTick(deltaTime: number) {}
 
 }
 
 enum GAME_MESSAGE {
-    AddPlayer = "AddPlayer",
     EditDataModel = "EditDataModel",
     Request_EditDataModel = "Request_EditDataModel",
     Request_StartGame = "Request_StartGame",
-    OnAddPlayerArrived = "OnAddPlayerArrived",
-    OnDataModelArrived = "OnDataModelArrived",
-    OnStartGameArrived = "OnStartGameArrived",
     SEND_TEST = "SEND_TEST",
     ON_TEST = "ON_TEST",
     SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
+    RequestPlayersCache = "RequestPlayersCache",
+    
+    OnResetPlayerCache = "OnResetPlayerCache",
+    OnPlayerJoin = "OnPlayerJoin",
+    OnPlayerLeave = "OnPlayerLeave",
+    OnDataModelArrived = "OnDataModelArrived",
+    OnStartGameArrived = "OnStartGameArrived",
 }
 
 interface PlayerDataModel {
     sessionId: string;
-    playerName: string;
     isHunter: boolean;
     isReady: boolean;
     itemId: string;

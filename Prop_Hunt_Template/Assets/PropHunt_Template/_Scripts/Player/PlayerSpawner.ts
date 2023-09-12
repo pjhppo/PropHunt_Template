@@ -146,8 +146,6 @@ export default class PlayerSpawner extends ZepetoScriptBehaviour {
             || this.InterpolationType == PositionInterpolationType.Lerp 
             || this.ExtrapolationType == PositionExtrapolationType.FixedSpeed;
         playerStateSync.isUseInjectSpeed = isUseInjectSpeed;
-
-        MultiplayerPropHuntManager.instance.AddPlayer(zepetoPlayer.name);
     }
 
     // This is <Content Id, Content> Map for content such as official gestures and poses.
