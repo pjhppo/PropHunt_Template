@@ -31,6 +31,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public playerLayer: LayerMask;
     private _allPlayers: Map<string, PlayerDataModel> = new Map<string, PlayerDataModel>();
 
+    public get AllPlayers() { return this._allPlayers; }
+
     Awake() {
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
         else GameManager.instance = this;
