@@ -3,7 +3,7 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import NonHunterController from '../Player/NonHunterController';
 import { Time } from 'UnityEngine';
 import UIManager from './UIManager';
-import MultiplayerPropHuntManager, {PlayerDataModel} from '../Multiplayer/MultiplayerPropHuntManager';
+import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import HunterController from '../Player/HunterController';
 
@@ -11,7 +11,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public static instance: GameManager;
 
     public static gameStarted: bool = false;
-    public gameState : GameState;
+    public gameState: GameState;
 
     public spawnPoint: Transform;
 
@@ -29,26 +29,22 @@ export default class GameManager extends ZepetoScriptBehaviour {
     @Header("Hunter")
     public timeToCatch: number;
     public playerLayer: LayerMask;
-    
-    Awake() 
-    {
+
+    Awake() {
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
         else GameManager.instance = this;
     }
 
-    Start() 
-    {
+    Start() {
         this.SetGameState(GameState.CHOOSING_TEAM);
     }
 
-    Update() 
-    {
+    Update() {
         if (!GameManager.gameStarted) return;
         this.CheckRemainingTime();
     }
 
-    public SetGameState(gameState: GameState) 
-    {
+    public SetGameState(gameState: GameState) {
         this.gameState = gameState;
 
         switch (gameState) {
@@ -63,15 +59,14 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
     }
 
-    StartGame() 
-    {
+    StartGame() {
         MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId).character.gameObject;
-                
-            if (player.isHunter){
+
+            if (player.isHunter) {
                 zepetoPlayer.AddComponent<HunterController>();
             }
-            else{
+            else {
                 zepetoPlayer.AddComponent<NonHunterController>();
             }
         });
@@ -110,38 +105,57 @@ export default class GameManager extends ZepetoScriptBehaviour {
         UIManager.instance.UpdateTimeRemaining(this.timeRemaining);
         if (this.timeRemaining <= 0) {
 
-            if(this.gameState == GameState.PROPS_HIDING){
+            if (this.gameState == GameState.PROPS_HIDING) {
                 this.ShowBlackoutOnHunters(false);
                 this.SetGameState(GameState.HUNTERS_SEARCHING);
 
                 this.timeRemaining = this.timePerGame;
             }
-            else if(this.gameState == GameState.HUNTERS_SEARCHING){
+            else if (this.gameState == GameState.HUNTERS_SEARCHING) {
                 this.SelectTeamWins(true);
             }
         }
     }
 
-    ShowBlackoutOnHunters(value : boolean)
-    {
+    ShowBlackoutOnHunters(value: boolean) {
         let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(MultiplayerPropHuntManager.instance.GetLocalSessionId());
-        
-        if(playerData.isHunter)
-        {
+
+        if (playerData.isHunter) {
             UIManager.instance.ShowBlackoutScreen(value);
         }
     }
 
-    SelectTeamWins(huntersWins : boolean) 
-    {
+    SelectTeamWins(huntersWins: boolean) {
+        MultiplayerPropHuntManager.instance.SwitchReady();
+        this.StopGame();
+
         this.gameState = GameState.GAME_FINISH;
 
         UIManager.instance.ShowWinScreen(huntersWins);
     }
 
+    ResetGame() {
+        MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
+            const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId).character;
+            let gameScript;
+
+            gameScript = zepetoPlayer.GetComponent<NonHunterController>();
+            if (gameScript) {
+                gameScript.TransformIntoPlayer();
+                GameObject.Destroy(gameScript);
+            } else {
+                gameScript = zepetoPlayer.GetComponent<HunterController>();
+                if (gameScript) GameObject.Destroy(gameScript);
+            }
+
+            zepetoPlayer.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);
+        });
+
+        UIManager.instance.teamSelectorObj.SetActive(true);
+    }
 }
 
-enum GameState{
+enum GameState {
     CHOOSING_TEAM,
     PROPS_HIDING,
     HUNTERS_SEARCHING,
