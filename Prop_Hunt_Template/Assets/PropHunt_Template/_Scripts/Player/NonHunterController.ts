@@ -6,7 +6,7 @@ import UIManager from '../Managers/UIManager';
 import GameManager from '../Managers/GameManager';
 import PlayerModel from '../Multiplayer/PlayerModel';
 import MultiplayManager from '../../../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
-import { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
+import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 
 export default class NonHunterController extends ZepetoScriptBehaviour {
     private playerParent: GameObject;
@@ -73,7 +73,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     }
 
     NextSpectatorCamera() {
-        if (!(this.playerList.length > 0)) this.playerList = this.GetPlayerList();
+        if (!(this.playerList.length > 0)) this.playerList = MultiplayerPropHuntManager.instance.playersData;
 
         if (this.playerList.length > 1) {
             this.spectingNumber++;
@@ -85,7 +85,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     }
 
     PreviousSpectatorCamera() {
-        if (!(this.playerList.length > 0)) this.playerList = this.GetPlayerList();
+        if (!(this.playerList.length > 0)) this.playerList = MultiplayerPropHuntManager.instance.playersData;
 
         if (this.playerList.length > 1) {
             this.spectingNumber--;
@@ -94,14 +94,6 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
             let playerToSpect = ZepetoPlayers.instance.GetPlayer(this.playerList[this.spectingNumber].sessionId).character.transform;
             this.Spectate(playerToSpect);
         }
-    }
-
-    private GetPlayerList(): PlayerDataModel[] {
-        let playerList: PlayerDataModel[] = [];
-        GameManager.instance.AllPlayers.forEach((value, key) => {
-            if (!value.isHunter) playerList.push(value);
-        });
-        return playerList;
     }
 
     private LimitSpectingNumber(limit: number) {
