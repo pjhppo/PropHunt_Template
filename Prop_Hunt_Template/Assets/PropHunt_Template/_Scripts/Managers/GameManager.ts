@@ -137,7 +137,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     SelectTeamWins(huntersWins: boolean) {
         this.gameState = GameState.GAME_FINISH;
 
-        UIManager.instance.ShowWinScreen(huntersWins);
+        //UIManager.instance.ShowWinScreen(huntersWins);
     }
 
     ResetGame() {
@@ -147,7 +147,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
             gameScript = zepetoPlayer.GetComponent<NonHunterController>();
             if (gameScript) {
-                gameScript.TransformIntoPlayer();
+                gameScript.ResetNonHunter();
                 GameObject.Destroy(gameScript);
             } else {
                 gameScript = zepetoPlayer.GetComponent<HunterController>();

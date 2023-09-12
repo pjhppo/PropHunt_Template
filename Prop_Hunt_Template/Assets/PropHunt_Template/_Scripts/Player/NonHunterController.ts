@@ -1,5 +1,5 @@
 import { BoxCollider, GameObject, Mathf, MeshFilter, MeshRenderer, Quaternion, Transform, Vector3 } from 'UnityEngine';
-import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import { ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import Itemtransformable from './Itemtransformable';
 import UIManager from '../Managers/UIManager';
@@ -16,9 +16,13 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         this.playerParent = this.gameObject;
         this.playerChild = this.playerParent.transform.GetChild(0);
 
-        UIManager.instance.sliderRot.onValueChanged.AddListener((value) => {
-            this.RotateItem(value);
-        });
+        let player =ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;
+
+        if (player == this.playerParent){
+            UIManager.instance.sliderRot.onValueChanged.AddListener((value) => {
+                this.RotateItem(value);
+            });
+        }
 
         GameManager.instance.AddOneNonHunter();
     }
@@ -59,5 +63,14 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
             let rotation: Vector3 = new Vector3(0, Mathf.Lerp(0, 360, percentage), 0);
             this.playerParent.transform.rotation = Quaternion.Euler(rotation);
         }
+    }
+
+    Spectate(spectatePlayer: Transform){
+        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(spectatePlayer);
+    }
+
+    ResetNonHunter(){
+        this.TransformIntoPlayer();
+        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(this.playerParent.transform);
     }
 }

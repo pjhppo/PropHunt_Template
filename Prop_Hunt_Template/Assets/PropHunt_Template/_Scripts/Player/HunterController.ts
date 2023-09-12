@@ -50,6 +50,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
 
     CatchNonHunter(nonHunter: NonHunterController) {
         nonHunter.gameObject.SetActive(false);
+        nonHunter.Spectate(this.transform);
         UIManager.instance.ShowCatchedText();
         GameManager.instance.RestOneNonHunter();
         this.ResetCatchingState();
