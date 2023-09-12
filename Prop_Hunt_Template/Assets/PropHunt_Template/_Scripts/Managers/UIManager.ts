@@ -7,6 +7,7 @@ import GameManager from './GameManager';
 import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import WinnerScreen from '../UI/WinnerScreen';
+import { UIZepetoPlayerControl, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -36,6 +37,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     @Header("General")
     @SerializeField() private winnerScreen: GameObject;
+    private controlsUI: UIZepetoPlayerControl;
 
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
@@ -45,71 +47,68 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this._propTeamList = [];
     }
 
-    CreateTeamMember(playerDataModel: PlayerDataModel) 
-    {
-        if(GameManager.instance.GetPlayer(playerDataModel.sessionId) == null)
-        {
+    Start() {
+        // When the player is instantiated execute the lines below
+        ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
+            // Find a object with the type of UIZepetoPlayerControl and set it on the variable
+            this.controlsUI = GameObject.FindObjectOfType<UIZepetoPlayerControl>();
+        });
+    }
+
+    CreateTeamMember(playerDataModel: PlayerDataModel) {
+        if (GameManager.instance.GetPlayer(playerDataModel.sessionId) == null) {
             GameManager.instance.AddPlayer(playerDataModel.sessionId, playerDataModel);
 
             let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
-    
+
             uiPlayerList.name = playerDataModel.sessionId;
             uiPlayerList.GetComponent<UIPlayerListTemplate>().SetDisplayName(playerDataModel.playerName);
             this._propTeamList.push(uiPlayerList);
         }
     }
 
-    ChangeTeam(sessionId: string, isHunter: bool)
-    {
-        let playerListSelected : UIPlayerListTemplate[] = isHunter ? this._propTeamList : this._hunterTeamList;
+    ChangeTeam(sessionId: string, isHunter: bool) {
+        let playerListSelected: UIPlayerListTemplate[] = isHunter ? this._propTeamList : this._hunterTeamList;
 
-        if(playerListSelected)
-        {
-            let playerListTemplate : UIPlayerListTemplate = playerListSelected.find((element) => element.name == sessionId);
+        if (playerListSelected) {
+            let playerListTemplate: UIPlayerListTemplate = playerListSelected.find((element) => element.name == sessionId);
 
-            if(playerListTemplate) 
-            {
-                if(isHunter)
-                {
-                    let playerInHunters : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
+            if (playerListTemplate) {
+                if (isHunter) {
+                    let playerInHunters: UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
 
-                    if(!playerInHunters)
-                    {
+                    if (!playerInHunters) {
                         this._hunterTeamList.push(playerListTemplate);
                         let index = this._propTeamList.indexOf(playerListTemplate);
-    
+
                         this._propTeamList.splice(index, this._propTeamList.length);
                     }
 
                     playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
                 }
-                else
-                {
-                    let playerInProps : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
-                    if(!playerInProps)
-                    {
+                else {
+                    let playerInProps: UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
+                    if (!playerInProps) {
                         this._propTeamList.push(playerListTemplate);
                         let index = this._hunterTeamList.indexOf(playerListTemplate);
-    
+
                         this._hunterTeamList.splice(index, this._hunterTeamList.length);
                     }
 
                     playerListTemplate.GetComponent<UIPlayerListTemplate>().ChangeParent(this.nonHuntersParent);
 
                 }
-            } 
+            }
         }
     }
 
-    SetReady(sessionId: string, isReady : boolean, isHunter: boolean)
-    {
-        if(isHunter){
-            let playerListTemplate : UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
+    SetReady(sessionId: string, isReady: boolean, isHunter: boolean) {
+        if (isHunter) {
+            let playerListTemplate: UIPlayerListTemplate = this._hunterTeamList.find((element) => element.name == sessionId);
             if (playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(isReady); }
         }
-        else
-        {
-            let playerListTemplate : UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
+        else {
+            let playerListTemplate: UIPlayerListTemplate = this._propTeamList.find((element) => element.name == sessionId);
             if (playerListTemplate) { playerListTemplate.GetComponent<UIPlayerListTemplate>().SetReady(isReady); }
         }
     }
@@ -151,22 +150,26 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.catchedText.gameObject.SetActive(false);
     }
 
-    SwitchGameUI(isHunter: boolean = false){
+    SwitchGameUI(isHunter: boolean = false) {
         this.nonHunterCanvas.SetActive(!isHunter);
         this.hunterCanvas.SetActive(isHunter);
     }
 
-    SwitchSpectateScreen(playerName: string)
-    {
-        
+    SwitchSpectateScreen() {
+        if (this.controlsUI.gameObject.activeSelf) this.ShowControlsUI(false);
+        this.nonHunterCanvas.SetActive(false);
+        this.hunterCanvas.SetActive(false);
     }
 
-    ShowBlackoutScreen(value: boolean){
+    ShowBlackoutScreen(value: boolean) {
         this.huntersBlackoutScreen.SetActive(value);
     }
-    
-    ShowWinScreen(huntersWins: boolean){
+
+    ShowWinScreen(huntersWins: boolean) {
         this.winnerScreen.GetComponent<WinnerScreen>().SetWinner(huntersWins);
     }
 
+    ShowControlsUI(show: bool) {
+        this.controlsUI?.gameObject.SetActive(show);
+    }
 }

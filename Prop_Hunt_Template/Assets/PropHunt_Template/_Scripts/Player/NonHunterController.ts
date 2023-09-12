@@ -68,7 +68,13 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         }
     }
 
+    // Update() {
+    //     if (Input.GetKeyDown(KeyCode.Q)) this.NextSpectatorCamera();
+    //     if (Input.GetKeyDown(KeyCode.E)) this.PreviousSpectatorCamera();
+    // }
+    
     Spectate(spectatePlayer: Transform) {
+        UIManager.instance.SwitchSpectateScreen();
         ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(spectatePlayer);
     }
 
