@@ -74,7 +74,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     // }
     
     Spectate(spectatePlayer: Transform) {
-        UIManager.instance.SwitchSpectateScreen();
+        UIManager.instance.SwitchSpectateScreen("WTF");
         ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(spectatePlayer);
     }
 

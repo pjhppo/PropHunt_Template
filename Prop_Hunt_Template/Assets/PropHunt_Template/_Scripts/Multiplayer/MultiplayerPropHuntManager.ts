@@ -147,7 +147,6 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         data.Add("sessionId",  this.localPlayerModel.sessionId);
         data.Add("playerName",  this.localPlayerModel.playerName);
         data.Add("isHunter", this.localPlayerModel.isHunter);
-        Debug.LogError("OUT : " + this.localPlayerModel.isHunter);
         data.Add("isReady", this.localPlayerModel.isReady);
         data.Add("itemId", this.localPlayerModel.itemId);
 

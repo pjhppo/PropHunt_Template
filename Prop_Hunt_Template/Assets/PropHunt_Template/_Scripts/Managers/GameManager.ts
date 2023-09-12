@@ -80,7 +80,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         this.timeRemaining = this.timeToHide;
         GameManager.gameStarted = true;
-        this.gameState = GameState.PROPS_HIDING;
+        this.SetGameState(GameState.PROPS_HIDING);
 
         // FOR TEST
         UIManager.instance.teamSelectorObj.SetActive(false);
@@ -112,7 +112,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
             if(this.gameState == GameState.PROPS_HIDING){
                 this.ShowBlackoutOnHunters(false);
-                this.gameState = GameState.HUNTERS_SEARCHING;
+                this.SetGameState(GameState.HUNTERS_SEARCHING);
+
                 this.timeRemaining = this.timePerGame;
             }
             else if(this.gameState == GameState.HUNTERS_SEARCHING){

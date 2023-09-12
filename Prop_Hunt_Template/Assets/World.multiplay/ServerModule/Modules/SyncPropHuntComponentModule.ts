@@ -7,24 +7,19 @@ export default class SyncPropHuntComponentModule extends IModule {
 
     async OnCreate() {
 
-        this.server.onMessage<PlayerDataModel>(GAME_MESSAGE.EditDataModel, (client, playerData: PlayerDataModel) =>{
-    
-            console.log("IN " + playerData.isHunter);
+        this.playerDataModelCaches = [];
 
+        this.server.onMessage<PlayerDataModel>(GAME_MESSAGE.EditDataModel, (client, playerData: PlayerDataModel) =>{
             this.playerDataModelCaches.forEach((pd) => {
                 if (pd.sessionId == client.sessionId)
                 {
                     pd.isHunter = playerData.isHunter;
                     pd.isReady = playerData.isReady;
                     pd.itemId = playerData.itemId;
-                 
-                    console.log("PD OUT : " + pd.isHunter);
-                    
+
                     this.server.broadcast(GAME_MESSAGE.OnDataModelArrived, pd);
                 }
             });
-
-            console.log("Edito: " + playerData.sessionId + " ItemID: " + playerData.itemId); 
         });
 
         this.server.onMessage(GAME_MESSAGE.Request_StartGame, (client)=>{
@@ -47,7 +42,6 @@ export default class SyncPropHuntComponentModule extends IModule {
 
             if(allPlayersReady) // && anyHunter && anyProp)
             {
-                console.log("StartGame: " + allPlayersReady);
                 this.server.broadcast(GAME_MESSAGE.OnStartGameArrived, "");
             }
          });

@@ -62,7 +62,6 @@ export default class UIManager extends ZepetoScriptBehaviour {
     {
         MultiplayerPropHuntManager.instance.playersData.forEach(element => {
             let uiPlayerElement = this.GetUiPlayerElement(element.sessionId);
-            Debug.LogError(element.isHunter);
             if (element.isHunter) {
                 uiPlayerElement.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
             }
