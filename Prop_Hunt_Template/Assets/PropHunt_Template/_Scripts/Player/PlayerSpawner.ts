@@ -8,6 +8,7 @@ import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManage
 import TransformSyncHelper, {PositionExtrapolationType, PositionInterpolationType} from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper';
 import PlayerSync from '../../../Zepeto Multiplay Component/ZepetoScript/Player/PlayerSync';
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
+import UIManager from '../Managers/UIManager';
 
 export enum ZepetoPlayerSpawnType {
     NoneSpawn,//Do not create players
@@ -67,6 +68,7 @@ export default class PlayerSpawner extends ZepetoScriptBehaviour {
         
         ZepetoPlayers.instance.OnAddedPlayer.AddListener((sessionId: string) => {
             this.AddPlayerSync(sessionId);
+            UIManager.instance.OnZepetoAddPlayer();
         });
         if(this.UseZepetoGestureAPI) {
             this.ContentRequest();
@@ -119,7 +121,7 @@ export default class PlayerSpawner extends ZepetoScriptBehaviour {
     }
     
     // Attach a sync script to the ZEPETO character.
-    private AddPlayerSync(sessionId:string){
+    private AddPlayerSync(sessionId:string) {
         const isLocal:boolean = this._room.SessionId === sessionId;
         const player: Player = this._currentPlayers.get(sessionId);
         const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId);

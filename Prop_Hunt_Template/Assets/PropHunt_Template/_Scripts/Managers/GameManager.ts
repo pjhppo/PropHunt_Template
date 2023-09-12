@@ -30,8 +30,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public timeToCatch: number;
     public playerLayer: LayerMask;
     
-    private _allPlayers: Map<string, PlayerDataModel> = new Map<string, PlayerDataModel>();
-
     Awake() 
     {
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
@@ -65,32 +63,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
     }
 
-    public AddPlayer(sessionId: string, dataModel: PlayerDataModel)
-    {
-        if(!this._allPlayers.has(sessionId)){
-            this._allPlayers.set(sessionId, dataModel)
-        }
-    }
-
-    public UpdatePlayerData(dataModel: PlayerDataModel){
-        if(this._allPlayers.has(dataModel.sessionId)){
-            this._allPlayers.set(dataModel.sessionId, dataModel)
-        }
-    }
-
-    public GetPlayer(sessionId: string) : PlayerDataModel{
-        let playerDataModel : PlayerDataModel = null;
-        
-        if(this._allPlayers.has(sessionId)){
-            playerDataModel = this._allPlayers.get(sessionId);
-        }
-
-        return playerDataModel;
-    }
-
     StartGame() 
     {
-        this._allPlayers.forEach((player) =>{
+        MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId).character.gameObject;
                 
             if (player.isHunter){
@@ -148,7 +123,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     ShowBlackoutOnHunters(value : boolean)
     {
-        let playerData = this.GetPlayer(MultiplayerPropHuntManager.instance.GetLocalSessionId());
+        let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(MultiplayerPropHuntManager.instance.GetLocalSessionId());
         
         if(playerData.isHunter)
         {

@@ -42,7 +42,7 @@ export default class TransformableItemsManager extends ZepetoScriptBehaviour {
         if (!this.CheckItemExist(itemId)) return;
 
         let tempItemTransfromablethis: GameObject = this.GetItemAvailable(itemId);
-        let playerData = GameManager.instance.GetPlayer(sessionId);
+        let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(sessionId);
 
         if (tempItemTransfromablethis && !playerData.isHunter) {
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId).character.gameObject;

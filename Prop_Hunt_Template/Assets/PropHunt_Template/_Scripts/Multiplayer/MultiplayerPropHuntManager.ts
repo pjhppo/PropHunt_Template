@@ -32,6 +32,8 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     private localPlayerModel : PlayerModel = new PlayerModel();
     public playersData: PlayerDataModel[] = [];
 
+    private _playersInServer: number = 0;
+
     //CAPTIVATAR END
 
     get pingCheckCount(){ return this._pingCheckCount; }
@@ -88,16 +90,21 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerJoin, (playerData: PlayerDataModel) => {
             this.playersData.push(playerData);
-            //UIManager.instance.CreateTeamMember(playerData);
         });
 
-        this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (message: PlayerDataModel) => 
+        this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (playerData: PlayerDataModel) => 
         {
-            GameManager.instance.UpdatePlayerData(message);
+            this.playersData.forEach(pd => {
+                if (playerData.sessionId == pd.sessionId)
+                {
+                    if (playerData.isHunter == true) { pd.isHunter = true; } else { pd.isHunter = false; }
+                    if (playerData.isReady == true) { pd.isReady = true; } else { pd.isReady = false; }
+                    pd.itemId = playerData.itemId;
+                }
+            });
             
-            UIManager.instance.SetReady( message.sessionId, message.isReady, message.isHunter);
-            UIManager.instance.ChangeTeam( message.sessionId, message.isHunter);
-            TransformableItemsManager.instance.TransformPlayer(message.itemId, message.sessionId);
+            UIManager.instance.RefreshLobby();
+            TransformableItemsManager.instance.TransformPlayer(playerData.itemId, playerData.sessionId);
         });
 
 
@@ -140,6 +147,7 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         data.Add("sessionId",  this.localPlayerModel.sessionId);
         data.Add("playerName",  this.localPlayerModel.playerName);
         data.Add("isHunter", this.localPlayerModel.isHunter);
+        Debug.LogError("OUT : " + this.localPlayerModel.isHunter);
         data.Add("isReady", this.localPlayerModel.isReady);
         data.Add("itemId", this.localPlayerModel.itemId);
 
