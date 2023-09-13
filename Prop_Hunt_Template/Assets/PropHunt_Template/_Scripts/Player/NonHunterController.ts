@@ -52,6 +52,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     }
 
     TransformIntoPlayer() {
+        this.gameObject.SetActive(true);
         for (let index = 0; index < this.playerChild.childCount; index++) {
             this.playerChild.GetChild(index).gameObject.SetActive(true);
         }
@@ -68,11 +69,6 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         }
     }
 
-    // Update() {
-    //     if (Input.GetKeyDown(KeyCode.Q)) this.NextSpectatorCamera();
-    //     if (Input.GetKeyDown(KeyCode.E)) this.PreviousSpectatorCamera();
-    // }
-    
     Spectate(spectatePlayer: Transform) {
         UIManager.instance.SwitchSpectateScreen("WTF");
         ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(spectatePlayer);
@@ -109,6 +105,6 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
 
     ResetNonHunter() {
         this.TransformIntoPlayer();
-        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(this.playerParent.transform);
+        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform);
     }
 }

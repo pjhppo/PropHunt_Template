@@ -115,6 +115,7 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {
             GameManager.instance.StartGame();
         });
+
     }
 
     private SetInitialPlayerData()

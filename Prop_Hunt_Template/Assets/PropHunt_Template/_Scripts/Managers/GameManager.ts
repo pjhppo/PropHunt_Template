@@ -6,6 +6,7 @@ import UIManager from './UIManager';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import HunterController from '../Player/HunterController';
+import TransformableItemsManager from './TransformableItemsManager';
 
 export default class GameManager extends ZepetoScriptBehaviour {
     public static instance: GameManager;
@@ -42,8 +43,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     Update() {
         if (!GameManager.gameStarted) return;
         this.CheckRemainingTime();
-
-        if (Input.GetKeyDown(KeyCode.Q)) this.ResetGame();
     }
 
     public SetGameState(gameState: GameState) {
@@ -119,8 +118,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
     }
 
-    ShowBlackoutOnHunters(value: boolean) 
-    {
+    ShowBlackoutOnHunters(value: boolean) {
         /*
         let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(MultiplayerPropHuntManager.instance.GetLocalSessionId());
 
@@ -142,23 +140,24 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     ResetGame() {
-        MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
-            const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId).character;
+        MultiplayerPropHuntManager.instance.ChangeItem("");
 
+        MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
+            const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId);
             let gameScript;
 
-            gameScript = zepetoPlayer.GetComponent<NonHunterController>();
+            gameScript = zepetoPlayer.character.GetComponent<NonHunterController>();
             if (gameScript) {
-                gameScript.TransformIntoPlayer();
                 GameObject.Destroy(gameScript);
             } else {
-                gameScript = zepetoPlayer.GetComponent<HunterController>();
+                gameScript = zepetoPlayer.character.GetComponent<HunterController>();
                 if (gameScript) GameObject.Destroy(gameScript);
             }
 
-            zepetoPlayer.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);
+            zepetoPlayer.character.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);
         });
-        MultiplayerPropHuntManager.instance.ChangeItem("");
+
+
         UIManager.instance.teamSelectorObj.SetActive(true);
     }
 }
