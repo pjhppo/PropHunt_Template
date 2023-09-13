@@ -68,7 +68,7 @@ export default class PlayerSpawner extends ZepetoScriptBehaviour {
         
         ZepetoPlayers.instance.OnAddedPlayer.AddListener((sessionId: string) => {
             this.AddPlayerSync(sessionId);
-            UIManager.instance.OnZepetoAddPlayer();
+            UIManager.instance.OnZepetoAddPlayer(sessionId);
         });
         if(this.UseZepetoGestureAPI) {
             this.ContentRequest();

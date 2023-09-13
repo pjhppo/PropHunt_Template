@@ -1,7 +1,10 @@
 import { Color, Transform } from 'UnityEngine';
 import { Image } from 'UnityEngine.UI';
+import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui'
+import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
+import UIManager from '../Managers/UIManager';
 
 export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
 
@@ -13,6 +16,27 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
     Start()
     {
         this.readyIcon.color = Color.yellow
+    }
+
+    public Populate(sessionId: string)
+    {
+        this._user = sessionId;
+        this.txtName.text = ZepetoPlayers.instance.GetPlayer(sessionId).name;
+        this.SetReady(MultiplayerPropHuntManager.instance.GetPlayerData(sessionId).isReady);
+
+        if (MultiplayerPropHuntManager.instance.GetPlayerData(sessionId).isHunter)
+        {
+            this.ChangeParent(UIManager.instance.GetLobbyHunterParent());
+        }
+        else
+        {
+            this.ChangeParent(UIManager.instance.GetLobbyNonHunterParent());
+        }
+    }
+
+    public RefreshData()
+    {
+        
     }
 
     GetUser() 

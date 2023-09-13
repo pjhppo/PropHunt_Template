@@ -77,6 +77,11 @@ export default class SyncPropHuntComponentModule extends IModule {
         this.playerDataModelCaches.forEach((player) => {
             this.server.broadcast(GAME_MESSAGE.OnPlayerLeave, player);
         });
+
+        this.server.broadcast(GAME_MESSAGE.OnResetPlayerCache, "");
+        this.playerDataModelCaches.forEach((player) => {
+            this.server.broadcast(GAME_MESSAGE.OnPlayerJoin, player);
+        });
     }
 
     OnTick(deltaTime: number) {}
@@ -85,11 +90,7 @@ export default class SyncPropHuntComponentModule extends IModule {
 
 enum GAME_MESSAGE {
     EditDataModel = "EditDataModel",
-    Request_EditDataModel = "Request_EditDataModel",
     Request_StartGame = "Request_StartGame",
-    SEND_TEST = "SEND_TEST",
-    ON_TEST = "ON_TEST",
-    SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
     RequestPlayersCache = "RequestPlayersCache",
     
     OnResetPlayerCache = "OnResetPlayerCache",

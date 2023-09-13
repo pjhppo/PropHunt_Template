@@ -8,6 +8,7 @@ import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import WinnerScreen from '../UI/WinnerScreen';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import LobbyElementPool from '../UI/LobbyElementPool';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
@@ -35,61 +36,46 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     @Header("General")
     @SerializeField() private winnerScreen: GameObject;
-    private _uiPlayerList: UIPlayerListTemplate[] = [];
 
+    public lobbyElementPool: GameObject;
+    private _lobbyElementPool: LobbyElementPool;
 
     Awake() {
         if (UIManager.instance != null) GameObject.Destroy(this.gameObject);
         else UIManager.instance = this;
 
-        this._uiPlayerList = [];
+        this._lobbyElementPool = this.lobbyElementPool.GetComponent<LobbyElementPool>();
     }
 
-    OnZepetoAddPlayer()
+    public OnZepetoAddPlayer(sessionId: string)
     {
-        this._uiPlayerList.forEach(element => {
-            Object.Destroy(element, 1);
-        });
+        let uiElement = this._lobbyElementPool.GetElement();
+        uiElement.GetComponent<UIPlayerListTemplate>().Populate(sessionId);
+    }
 
-        this._uiPlayerList = [];
-
-        MultiplayerPropHuntManager.instance.playersData.forEach(element => {
-            this.CreateTeamMember(element);
+    public OnZepetoRemovePlayer(sessionId: string)
+    {
+        let result : GameObject = null;
+        this._lobbyElementPool.GetActiveList().forEach(poolElement => {
+            if (poolElement.GetComponent<UIPlayerListTemplate>().GetUser() == sessionId)
+            {
+                result = poolElement;
+            }
         });
+        this._lobbyElementPool.ReturnElement(result);
     }
 
     public RefreshLobby()
     {
-        MultiplayerPropHuntManager.instance.playersData.forEach(element => {
-            let uiPlayerElement = this.GetUiPlayerElement(element.sessionId);
-            if (element.isHunter) {
-                uiPlayerElement.GetComponent<UIPlayerListTemplate>().ChangeParent(this.huntersParent);
-            }
-            else {
-                uiPlayerElement.GetComponent<UIPlayerListTemplate>().ChangeParent(this.nonHuntersParent);
-            }
-            uiPlayerElement.GetComponent<UIPlayerListTemplate>().SetReady(element.isReady);
-        });
-    }
+        MultiplayerPropHuntManager.instance.playersData.forEach(PlayerData => {
+            this._lobbyElementPool.GetActiveList().forEach(poolElement => {
+                if (PlayerData.sessionId == poolElement.GetComponent<UIPlayerListTemplate>().GetUser())
+                {
+                    poolElement.GetComponent<UIPlayerListTemplate>().Populate(PlayerData.sessionId);
+                }
+            });
 
-    public GetUiPlayerElement(sessionId: string): UIPlayerListTemplate
-    {
-        let result = this._uiPlayerList[0];
-        this._uiPlayerList.forEach(element => {
-            if(element.name == sessionId)
-            {
-                result = element;   
-            }
         });
-        return result;
-    }
-
-    CreateTeamMember(playerDataModel: PlayerDataModel) 
-    {
-        let uiPlayerList: UIPlayerListTemplate = GameObject.Instantiate(this.uiTeamLayoutPrefab, this.nonHuntersParent) as UIPlayerListTemplate;
-        uiPlayerList.name = playerDataModel.sessionId;
-        uiPlayerList.GetComponent<UIPlayerListTemplate>().SetDisplayName(ZepetoPlayers.instance.GetPlayer(playerDataModel.sessionId).name);
-        this._uiPlayerList.push(uiPlayerList);
     }
 
     // This method controls the visual of the timer, normalizing the time to mins and secs
@@ -147,4 +133,12 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.winnerScreen.GetComponent<WinnerScreen>().SetWinner(huntersWins);
     }
 
+    public GetLobbyHunterParent() : Transform
+    {
+        return this.huntersParent;
+    }
+
+    public GetLobbyNonHunterParent(): Transform {
+        return this.nonHuntersParent;
+    }
 }

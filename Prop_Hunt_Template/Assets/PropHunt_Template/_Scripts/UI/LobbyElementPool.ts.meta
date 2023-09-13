@@ -1,0 +1,61 @@
+fileFormatVersion: 2
+guid: a4c783469534e2440809ff3e10554cca
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass LobbyElementPool extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    // Awake is called when the script
+    instance is being loaded\r\n    Awake() {\r\n        // Initialized from empty
+    arrays\r\n        this._activeList = [];\r\n        this._reserveList = [];\r\n       
+    // Default value of the reservation amount\r\n        this._reserve = 2;\r\n       
+    // Allocation of the current number of items in reserve\r\n        this._numberReserved
+    = this._reserve;\r\n        // Reservation Initialized\r\n        this.initializeReserve();\r\n   
+    }\r\n    // Initialization of the reservation array\r\n    initializeReserve()
+    {\r\n        for (let i = 0; i < this._reserve; i++) {\r\n            // Instantiating
+    a new block from the referenced prefab\r\n            let newUiElement = UnityEngine_1.GameObject.Instantiate(this.uiPrefab);\r\n           
+    newUiElement.transform.parent = this.parentTransform;\r\n            newUiElement.SetActive(false);\r\n           
+    this._reserveList.push(newUiElement);\r\n        }\r\n    }\r\n    // Get a block
+    or create a new one if needed\r\n    // This method receives as a parameter the
+    position in which the block will be located\r\n    GetElement() {\r\n       
+    // If there is no block available, it is created\r\n        if (this._numberReserved
+    == 0) {\r\n            let newUiElement = UnityEngine_1.GameObject.Instantiate(this.uiPrefab,
+    this.parentTransform);\r\n            // The new block is added to the reserve
+    array and the reserve item counter is incremented\r\n            this._reserveList.push(newUiElement);\r\n           
+    this._numberReserved++;\r\n        }\r\n        // Get a gameobject from the
+    reserve array and reduce the reserve item counter\r\n        const uiElement
+    = this._reserveList.pop();\r\n        this._numberReserved--;\r\n        // The
+    block is added to the array of active elements\r\n        this._activeList.push(uiElement);\r\n       
+    // The block is located based on the position passed by parameter\r\n       
+    uiElement.transform.position = this.parentTransform.position;\r\n        // It
+    is assigned as a child of this gameobject, the default rotation is applied and
+    it is activated\r\n        uiElement.transform.parent = this.parentTransform;\r\n       
+    uiElement.transform.rotation = this.parentTransform.rotation;\r\n        uiElement.SetActive(true);\r\n       
+    // Finally, the block reference is returned\r\n        return uiElement;\r\n   
+    }\r\n    // This method receives a block by parameter and returns it to the reserve
+    array\r\n    ReturnElement(gameObject) {\r\n        // Get the index of the gameObject
+    in the active array\r\n        const index = this._activeList.indexOf(gameObject);\r\n       
+    if (index >= 0) {\r\n            // The block is removed from the active array\r\n           
+    this._activeList.splice(index, 1);\r\n            // And is added to the reserve
+    array\r\n            this._reserveList.push(gameObject);\r\n            this._numberReserved++;\r\n           
+    gameObject.SetActive(false);\r\n        }\r\n    }\r\n    GetActiveList() {\r\n       
+    return this._activeList;\r\n    }\r\n}\r\nexports.default = LobbyElementPool;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9iYnlFbGVtZW50UG9vbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkxvYmJ5RWxlbWVudFBvb2wudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBb0Q7QUFDcEQsaURBQXFEO0FBRXJELE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQVUvRCwyREFBMkQ7SUFDcEQsS0FBSztRQUNSLGdDQUFnQztRQUNoQyxJQUFJLENBQUMsV0FBVyxHQUFHLEVBQUUsQ0FBQztRQUN0QixJQUFJLENBQUMsWUFBWSxHQUFHLEVBQUUsQ0FBQztRQUV2QiwwQ0FBMEM7UUFDMUMsSUFBSSxDQUFDLFFBQVEsR0FBRyxDQUFDLENBQUM7UUFFbEIsdURBQXVEO1FBQ3ZELElBQUksQ0FBQyxlQUFlLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQztRQUVyQywwQkFBMEI7UUFDMUIsSUFBSSxDQUFDLGlCQUFpQixFQUFFLENBQUM7SUFDN0IsQ0FBQztJQUVELDBDQUEwQztJQUNsQyxpQkFBaUI7UUFDckIsS0FBSyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQyxFQUFFLEVBQUU7WUFDcEMsdURBQXVEO1lBQ3ZELElBQUksWUFBWSxHQUFHLHdCQUFVLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxRQUFRLENBQWUsQ0FBQztZQUN2RSxZQUFZLENBQUMsU0FBUyxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsZUFBZSxDQUFDO1lBQ3JELFlBQVksQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7WUFDOUIsSUFBSSxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsWUFBWSxDQUFDLENBQUM7U0FDeEM7SUFDTCxDQUFDO0lBRUQsNENBQTRDO0lBQzVDLHNGQUFzRjtJQUMvRSxVQUFVO1FBQ2IsZ0RBQWdEO1FBQ2hELElBQUksSUFBSSxDQUFDLGVBQWUsSUFBSSxDQUFDLEVBQUU7WUFDM0IsSUFBSSxZQUFZLEdBQUcsd0JBQVUsQ0FBQyxXQUFXLENBQ3JDLElBQUksQ0FBQyxRQUFRLEVBQ2IsSUFBSSxDQUFDLGVBQWUsQ0FDVCxDQUFDO1lBRWhCLDBGQUEwRjtZQUMxRixJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxZQUFZLENBQUMsQ0FBQztZQUNyQyxJQUFJLENBQUMsZUFBZSxFQUFFLENBQUM7U0FDMUI7UUFFRCw4RUFBOEU7UUFDOUUsTUFBTSxTQUFTLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxHQUFHLEVBQUUsQ0FBQztRQUMxQyxJQUFJLENBQUMsZUFBZSxFQUFFLENBQUM7UUFFdkIscURBQXFEO1FBQ3JELElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBR2pDLGlFQUFpRTtRQUNqRSxTQUFTLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsZUFBZSxDQUFDLFFBQVEsQ0FBQztRQUU3RCxvR0FBb0c7UUFDcEcsU0FBUyxDQUFDLFNBQVMsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLGVBQWUsQ0FBQztRQUNsRCxTQUFTLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsZUFBZSxDQUFDLFFBQVEsQ0FBQztRQUM3RCxTQUFTLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBRTFCLDJDQUEyQztRQUMzQyxPQUFPLFNBQVMsQ0FBQztJQUNyQixDQUFDO0lBRUQsZ0ZBQWdGO0lBQ3pFLGFBQWEsQ0FBQyxVQUFzQjtRQUN2QyxzREFBc0Q7UUFDdEQsTUFBTSxLQUFLLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLENBQUM7UUFDbkQsSUFBSSxLQUFLLElBQUksQ0FBQyxFQUFFO1lBQ1osNkNBQTZDO1lBQzdDLElBQUksQ0FBQyxXQUFXLENBQUMsTUFBTSxDQUFDLEtBQUssRUFBRSxDQUFDLENBQUMsQ0FBQztZQUVsQyxvQ0FBb0M7WUFDcEMsSUFBSSxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUM7WUFDbkMsSUFBSSxDQUFDLGVBQWUsRUFBRSxDQUFDO1lBRXZCLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7U0FDL0I7SUFDTCxDQUFDO0lBRU0sYUFBYTtRQUVoQixPQUFPLElBQUksQ0FBQyxXQUFXLENBQUM7SUFDNUIsQ0FBQztDQUNKO0FBNUZELG1DQTRGQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/UI/LobbyElementPool.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"uiPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"parentTransform","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"LobbyElementPool","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 3cf938009a68ce6a89cf07ee4fcb9328
+  onlyWriteTrigger: 0

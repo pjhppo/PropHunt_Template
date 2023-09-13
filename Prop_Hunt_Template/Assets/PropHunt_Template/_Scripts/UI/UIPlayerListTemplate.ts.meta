@@ -20,14 +20,24 @@ ScriptedImporter:
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
-    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass UIPlayerListTemplate extends
-    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        this.readyIcon.color
-    = UnityEngine_1.Color.yellow;\r\n    }\r\n    GetUser() {\r\n        return this._user;\r\n   
-    }\r\n    SetUser(user) {\r\n        this._user = user;\r\n    }\r\n    SetDisplayName(text)
-    {\r\n        this.txtName.text = text;\r\n    }\r\n    SetReady(isReady) {\r\n       
-    if (isReady) {\r\n            this.readyIcon.color = UnityEngine_1.Color.green;\r\n       
-    }\r\n        else {\r\n            this.readyIcon.color = UnityEngine_1.Color.yellow;\r\n       
-    }\r\n    }\r\n    ChangeParent(newParent) {\r\n        this.transform.SetParent(newParent);\r\n   
-    }\r\n}\r\nexports.default = UIPlayerListTemplate;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlQbGF5ZXJMaXN0VGVtcGxhdGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJVSVBsYXllckxpc3RUZW1wbGF0ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUErQztBQUUvQyxpREFBcUQ7QUFHckQsTUFBcUIsb0JBQXFCLFNBQVEscUNBQXFCO0lBT25FLEtBQUs7UUFFRCxJQUFJLENBQUMsU0FBUyxDQUFDLEtBQUssR0FBRyxtQkFBSyxDQUFDLE1BQU0sQ0FBQTtJQUN2QyxDQUFDO0lBRUQsT0FBTztRQUVILE9BQU8sSUFBSSxDQUFDLEtBQUssQ0FBQztJQUN0QixDQUFDO0lBRUQsT0FBTyxDQUFDLElBQVk7UUFFaEIsSUFBSSxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUM7SUFDdEIsQ0FBQztJQUVELGNBQWMsQ0FBQyxJQUFZO1FBRXZCLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQztJQUM3QixDQUFDO0lBRU0sUUFBUSxDQUFDLE9BQWlCO1FBRTdCLElBQUksT0FBTyxFQUNYO1lBQ0ksSUFBSSxDQUFDLFNBQVMsQ0FBQyxLQUFLLEdBQUcsbUJBQUssQ0FBQyxLQUFLLENBQUM7U0FDdEM7YUFFRDtZQUNJLElBQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxHQUFHLG1CQUFLLENBQUMsTUFBTSxDQUFDO1NBQ3ZDO0lBQ0wsQ0FBQztJQUVNLFlBQVksQ0FBQyxTQUFvQjtRQUVwQyxJQUFJLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsQ0FBQztJQUN4QyxDQUFDO0NBQ0o7QUEzQ0QsdUNBMkNDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UIPlayerListTemplate.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"txtName","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"readyIcon","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIPlayerListTemplate","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: de5cb70a20f9684b71e001ad20be1916
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst MultiplayerPropHuntManager_1
+    = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\nconst UIManager_1
+    = require(\"../Managers/UIManager\");\r\nclass UIPlayerListTemplate extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        this.readyIcon.color = UnityEngine_1.Color.yellow;\r\n   
+    }\r\n    Populate(sessionId) {\r\n        this._user = sessionId;\r\n       
+    this.txtName.text = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).name;\r\n       
+    this.SetReady(MultiplayerPropHuntManager_1.default.instance.GetPlayerData(sessionId).isReady);\r\n       
+    if (MultiplayerPropHuntManager_1.default.instance.GetPlayerData(sessionId).isHunter)
+    {\r\n            this.ChangeParent(UIManager_1.default.instance.GetLobbyHunterParent());\r\n       
+    }\r\n        else {\r\n            this.ChangeParent(UIManager_1.default.instance.GetLobbyNonHunterParent());\r\n       
+    }\r\n    }\r\n    RefreshData() {\r\n    }\r\n    GetUser() {\r\n        return
+    this._user;\r\n    }\r\n    SetUser(user) {\r\n        this._user = user;\r\n   
+    }\r\n    SetDisplayName(text) {\r\n        this.txtName.text = text;\r\n    }\r\n   
+    SetReady(isReady) {\r\n        if (isReady) {\r\n            this.readyIcon.color
+    = UnityEngine_1.Color.green;\r\n        }\r\n        else {\r\n            this.readyIcon.color
+    = UnityEngine_1.Color.yellow;\r\n        }\r\n    }\r\n    ChangeParent(newParent)
+    {\r\n        this.transform.SetParent(newParent);\r\n    }\r\n}\r\nexports.default
+    = UIPlayerListTemplate;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlQbGF5ZXJMaXN0VGVtcGxhdGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJVSVBsYXllckxpc3RUZW1wbGF0ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUErQztBQUUvQyw2RUFBNEQ7QUFDNUQsaURBQXFEO0FBRXJELDBGQUFtRjtBQUNuRixxREFBOEM7QUFFOUMsTUFBcUIsb0JBQXFCLFNBQVEscUNBQXFCO0lBT25FLEtBQUs7UUFFRCxJQUFJLENBQUMsU0FBUyxDQUFDLEtBQUssR0FBRyxtQkFBSyxDQUFDLE1BQU0sQ0FBQTtJQUN2QyxDQUFDO0lBRU0sUUFBUSxDQUFDLFNBQWlCO1FBRTdCLElBQUksQ0FBQyxLQUFLLEdBQUcsU0FBUyxDQUFDO1FBQ3ZCLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsQ0FBQyxJQUFJLENBQUM7UUFDckUsSUFBSSxDQUFDLFFBQVEsQ0FBQyxvQ0FBMEIsQ0FBQyxRQUFRLENBQUMsYUFBYSxDQUFDLFNBQVMsQ0FBQyxDQUFDLE9BQU8sQ0FBQyxDQUFDO1FBRXBGLElBQUksb0NBQTBCLENBQUMsUUFBUSxDQUFDLGFBQWEsQ0FBQyxTQUFTLENBQUMsQ0FBQyxRQUFRLEVBQ3pFO1lBQ0ksSUFBSSxDQUFDLFlBQVksQ0FBQyxtQkFBUyxDQUFDLFFBQVEsQ0FBQyxvQkFBb0IsRUFBRSxDQUFDLENBQUM7U0FDaEU7YUFFRDtZQUNJLElBQUksQ0FBQyxZQUFZLENBQUMsbUJBQVMsQ0FBQyxRQUFRLENBQUMsdUJBQXVCLEVBQUUsQ0FBQyxDQUFDO1NBQ25FO0lBQ0wsQ0FBQztJQUVNLFdBQVc7SUFHbEIsQ0FBQztJQUVELE9BQU87UUFFSCxPQUFPLElBQUksQ0FBQyxLQUFLLENBQUM7SUFDdEIsQ0FBQztJQUVELE9BQU8sQ0FBQyxJQUFZO1FBRWhCLElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDO0lBQ3RCLENBQUM7SUFFRCxjQUFjLENBQUMsSUFBWTtRQUV2QixJQUFJLENBQUMsT0FBTyxDQUFDLElBQUksR0FBRyxJQUFJLENBQUM7SUFDN0IsQ0FBQztJQUVNLFFBQVEsQ0FBQyxPQUFpQjtRQUU3QixJQUFJLE9BQU8sRUFDWDtZQUNJLElBQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxHQUFHLG1CQUFLLENBQUMsS0FBSyxDQUFDO1NBQ3RDO2FBRUQ7WUFDSSxJQUFJLENBQUMsU0FBUyxDQUFDLEtBQUssR0FBRyxtQkFBSyxDQUFDLE1BQU0sQ0FBQztTQUN2QztJQUNMLENBQUM7SUFFTSxZQUFZLENBQUMsU0FBb0I7UUFFcEMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLENBQUM7SUFDeEMsQ0FBQztDQUNKO0FBaEVELHVDQWdFQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UIPlayerListTemplate.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"txtName","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"readyIcon","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIPlayerListTemplate","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: fe4d07a33e1c3969b6aa688da3a6acc8
   onlyWriteTrigger: 0

@@ -92,6 +92,10 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             this.playersData.push(playerData);
         });
 
+        this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerLeave, (playerData: PlayerDataModel) => {
+            UIManager.instance.OnZepetoRemovePlayer(playerData.sessionId);
+        });
+
         this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (playerData: PlayerDataModel) => 
         {
             this.playersData.forEach(pd => {
@@ -106,7 +110,6 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             UIManager.instance.RefreshLobby();
             TransformableItemsManager.instance.TransformPlayer(playerData.itemId, playerData.sessionId);
         });
-
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {
             GameManager.instance.StartGame();
@@ -151,11 +154,6 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         data.Add("itemId", this.localPlayerModel.itemId);
 
         this.room.Send(GAME_MESSAGE.EditDataModel, data.GetObject());
-    }
-
-    public SendTestPing()
-    {
-        this.room.Send(GAME_MESSAGE.SEND_TEST, "TEST");
     }
 
     public GetLocalSessionId(): string{
@@ -402,11 +400,7 @@ enum MESSAGE {
 
 enum GAME_MESSAGE {
     EditDataModel = "EditDataModel",
-    Request_EditDataModel = "Request_EditDataModel",
     Request_StartGame = "Request_StartGame",
-    SEND_TEST = "SEND_TEST",
-    ON_TEST = "ON_TEST",
-    SEND_PLAYERDATAMODEL = "SEND_PLAYERDATAMODEL",
     RequestPlayersCache = "RequestPlayersCache",
     
     OnResetPlayerCache = "OnResetPlayerCache",
