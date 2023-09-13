@@ -47,30 +47,25 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this._lobbyElementPool = this.lobbyElementPool.GetComponent<LobbyElementPool>();
     }
 
-    public OnZepetoAddPlayer(sessionId: string)
-    {
+    public OnZepetoAddPlayer(sessionId: string) {
         let uiElement = this._lobbyElementPool.GetElement();
         uiElement.GetComponent<UIPlayerListTemplate>().Populate(sessionId);
     }
 
-    public OnZepetoRemovePlayer(sessionId: string)
-    {
-        let result : GameObject = null;
+    public OnZepetoRemovePlayer(sessionId: string) {
+        let result: GameObject = null;
         this._lobbyElementPool.GetActiveList().forEach(poolElement => {
-            if (poolElement.GetComponent<UIPlayerListTemplate>().GetUser() == sessionId)
-            {
+            if (poolElement.GetComponent<UIPlayerListTemplate>().GetUser() == sessionId) {
                 result = poolElement;
             }
         });
         this._lobbyElementPool.ReturnElement(result);
     }
 
-    public RefreshLobby()
-    {
+    public RefreshLobby() {
         MultiplayerPropHuntManager.instance.playersData.forEach(PlayerData => {
             this._lobbyElementPool.GetActiveList().forEach(poolElement => {
-                if (PlayerData.sessionId == poolElement.GetComponent<UIPlayerListTemplate>().GetUser())
-                {
+                if (PlayerData.sessionId == poolElement.GetComponent<UIPlayerListTemplate>().GetUser()) {
                     poolElement.GetComponent<UIPlayerListTemplate>().Populate(PlayerData.sessionId);
                 }
             });
@@ -115,26 +110,28 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.catchedText.gameObject.SetActive(false);
     }
 
-    SwitchGameUI(isHunter: boolean = false){
+    SwitchGameUI(isHunter: boolean = false) {
         this.nonHunterCanvas.SetActive(!isHunter);
         this.hunterCanvas.SetActive(isHunter);
     }
 
-    SwitchSpectateScreen(playerName: string)
-    {
-        
+    SwitchSpectateScreen(playerName: string) {
+
     }
 
-    ShowBlackoutScreen(value: boolean){
+    ShowBlackoutScreen(value: boolean) {
         this.huntersBlackoutScreen.SetActive(value);
     }
-    
-    ShowWinScreen(huntersWins: boolean){
+
+    ShowWinScreen(huntersWins: boolean) {
         this.winnerScreen.GetComponent<WinnerScreen>().SetWinner(huntersWins);
     }
 
-    public GetLobbyHunterParent() : Transform
-    {
+    HideWinnerScreen() {
+        this.winnerScreen.SetActive(false);
+    }
+
+    public GetLobbyHunterParent(): Transform {
         return this.huntersParent;
     }
 

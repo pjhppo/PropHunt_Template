@@ -42,6 +42,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
     Update() {
         if (!GameManager.gameStarted) return;
         this.CheckRemainingTime();
+
+        if (Input.GetKeyDown(KeyCode.Q)) this.ResetGame();
     }
 
     public SetGameState(gameState: GameState) {
@@ -137,6 +139,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     ResetGame() {
         MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId).character;
+
             let gameScript;
 
             gameScript = zepetoPlayer.GetComponent<NonHunterController>();
@@ -150,7 +153,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
             zepetoPlayer.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);
         });
-
+        MultiplayerPropHuntManager.instance.ChangeItem("");
         UIManager.instance.teamSelectorObj.SetActive(true);
     }
 }

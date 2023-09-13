@@ -1,12 +1,11 @@
 import { BoxCollider, GameObject, Material, Mesh, MeshFilter, MeshRenderer, Sprite } from 'UnityEngine'
 import { Button } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import GameManager from '../Managers/GameManager';
 
 export default class Itemtransformable extends ZepetoScriptBehaviour {
-    
-    public itemId: string;
-    
+
+    public itemId: string = "none";
+
     public itemPrefab: GameObject;
     public iconSprite: Sprite;
 

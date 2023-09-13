@@ -2,6 +2,7 @@ import { Button } from 'UnityEngine.UI'
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
 import GameManager from '../Managers/GameManager';
+import UIManager from '../Managers/UIManager';
 
 export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private readyButton: Button;
@@ -22,6 +23,7 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
         });
 
         this.resetButton.onClick.AddListener(() => {
+            UIManager.instance.HideWinnerScreen();
             GameManager.instance.ResetGame();
         });
     }
