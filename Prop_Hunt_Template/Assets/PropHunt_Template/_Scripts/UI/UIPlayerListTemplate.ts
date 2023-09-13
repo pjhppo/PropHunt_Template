@@ -11,7 +11,7 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
     @SerializeField() private txtName: ZepetoText;
     @SerializeField() private readyIcon: Image;
 
-    private _user: string;
+    public _user: string;
 
     Start()
     {

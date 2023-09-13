@@ -1,5 +1,6 @@
 import { GameObject, Transform } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
+import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 
 export default class LobbyElementPool extends ZepetoScriptBehaviour {
 
@@ -87,6 +88,16 @@ export default class LobbyElementPool extends ZepetoScriptBehaviour {
 
             gameObject.SetActive(false);
         }
+    }
+
+    public ReturnElementById(sessionId: string)
+    {
+        this._activeList.forEach(element => {
+            if(element.GetComponent<UIPlayerListTemplate>().GetUser() == sessionId)
+            {
+                this.ReturnElement(element);
+            }
+        });
     }
 
     public GetActiveList(): GameObject[]
