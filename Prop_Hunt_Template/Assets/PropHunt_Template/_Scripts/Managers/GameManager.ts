@@ -117,12 +117,17 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
     }
 
-    ShowBlackoutOnHunters(value: boolean) {
+    ShowBlackoutOnHunters(value: boolean) 
+    {
+        /*
         let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(MultiplayerPropHuntManager.instance.GetLocalSessionId());
 
         if (playerData.isHunter) {
-            UIManager.instance.ShowBlackoutScreen(value);
+
         }
+        */
+
+        UIManager.instance.ShowBlackoutScreen(value);
     }
 
     SelectTeamWins(huntersWins: boolean) {
