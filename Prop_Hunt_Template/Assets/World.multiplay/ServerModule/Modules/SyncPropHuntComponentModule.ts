@@ -70,16 +70,41 @@ export default class SyncPropHuntComponentModule extends IModule {
     async OnLeave(client: SandboxPlayer) 
     {
         let index = this.playerDataModelCaches.findIndex(d => d.sessionId === client.sessionId);
+        this.server.broadcast(GAME_MESSAGE.OnPlayerLeave, this.playerDataModelCaches[index]);
         if (index > -1) {
             this.playerDataModelCaches.splice(index, 1);
         }
 
-        this.server.broadcast(GAME_MESSAGE.OnPlayerLeave, client.sessionId);
         this.server.broadcast(GAME_MESSAGE.OnResetPlayerCache, "");
 
         this.playerDataModelCaches.forEach((player) => {
             this.server.broadcast(GAME_MESSAGE.OnPlayerJoin, player);
         });
+
+        let huntersWins = false;
+        let amountOfHunters = 0;
+        let amountOfNonHunters = 0;
+        this.playerDataModelCaches.forEach((player) => {
+            if(player.isHunter)
+            {
+                amountOfHunters++;
+            }
+            else
+            {
+                amountOfNonHunters++;
+            }
+        });
+
+        if(amountOfHunters == 0)
+        {
+            huntersWins = false;
+            this.server.broadcast(GAME_MESSAGE.OnGameOver, huntersWins);
+        }
+        else if (amountOfNonHunters == 0)
+        {
+            huntersWins = true;
+            this.server.broadcast(GAME_MESSAGE.OnGameOver, huntersWins);
+        }
     }
 
     OnTick(deltaTime: number) {}
@@ -96,6 +121,7 @@ enum GAME_MESSAGE {
     OnPlayerLeave = "OnPlayerLeave",
     OnDataModelArrived = "OnDataModelArrived",
     OnStartGameArrived = "OnStartGameArrived",
+    OnGameOver = "OnGameOver",
 }
 
 interface PlayerDataModel {
