@@ -55,14 +55,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     public OnZepetoRemovePlayer(sessionId: string)
     {
-        let result : GameObject = null;
-        this._lobbyElementPool.GetActiveList().forEach(poolElement => {
-            if (poolElement.GetComponent<UIPlayerListTemplate>().GetUser() == sessionId)
-            {
-                result = poolElement;
-            }
-        });
-        this._lobbyElementPool.ReturnElement(result);
+        this._lobbyElementPool.ReturnElementById(sessionId);
     }
 
     public RefreshLobby()

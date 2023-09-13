@@ -74,11 +74,9 @@ export default class SyncPropHuntComponentModule extends IModule {
             this.playerDataModelCaches.splice(index, 1);
         }
 
-        this.playerDataModelCaches.forEach((player) => {
-            this.server.broadcast(GAME_MESSAGE.OnPlayerLeave, player);
-        });
-
+        this.server.broadcast(GAME_MESSAGE.OnPlayerLeave, client.sessionId);
         this.server.broadcast(GAME_MESSAGE.OnResetPlayerCache, "");
+
         this.playerDataModelCaches.forEach((player) => {
             this.server.broadcast(GAME_MESSAGE.OnPlayerJoin, player);
         });

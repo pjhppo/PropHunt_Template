@@ -92,8 +92,8 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             this.playersData.push(playerData);
         });
 
-        this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerLeave, (playerData: PlayerDataModel) => {
-            UIManager.instance.OnZepetoRemovePlayer(playerData.sessionId);
+        this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerLeave, (sessionId: string) => {
+            UIManager.instance.OnZepetoRemovePlayer(sessionId);
         });
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (playerData: PlayerDataModel) => 
