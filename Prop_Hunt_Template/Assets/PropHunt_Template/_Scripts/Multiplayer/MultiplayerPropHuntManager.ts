@@ -109,7 +109,7 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             
             UIManager.instance.RefreshLobby();
             
-            TransformableItemsManager.instance.TransformPlayer(playerData.itemId, playerData.sessionId);
+            if(!playerData.isHunter) TransformableItemsManager.instance.TransformPlayer(playerData.itemId, playerData.sessionId);
         });
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {

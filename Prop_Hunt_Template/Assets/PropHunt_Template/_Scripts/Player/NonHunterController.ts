@@ -15,6 +15,7 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
 
     private spectingNumber: number = 0;
     private playerList: PlayerDataModel[] = [];
+
     Start() {
         this.playerParent = this.gameObject;
         this.playerChild = this.playerParent.transform.GetChild(0);
@@ -31,14 +32,10 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
     }
 
     TransformIntoItem(itemObj: GameObject) {
-        for (let index = 0; index < this.playerChild.childCount; index++) {
-            this.playerChild.GetChild(index).gameObject.SetActive(false);
-        }
-        for (let index = 1; index < this.playerParent.transform.childCount; index++) {
-            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);
-        }
+        this.HidePlayer();
 
         if (itemObj) {
+            itemObj.SetActive(true);
             itemObj.transform.SetParent(this.playerParent.transform);
 
             this.objectTransformed = itemObj;
@@ -57,6 +54,15 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
             this.playerChild.GetChild(index).gameObject.SetActive(true);
         }
 
+        for (let index = 1; index < this.playerParent.transform.childCount; index++) {
+            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);
+        }
+    }
+
+    HidePlayer() {
+        for (let index = 0; index < this.playerChild.childCount; index++) {
+            this.playerChild.GetChild(index).gameObject.SetActive(false);
+        }
         for (let index = 1; index < this.playerParent.transform.childCount; index++) {
             this.playerParent.transform.GetChild(index).gameObject.SetActive(false);
         }
@@ -103,8 +109,8 @@ export default class NonHunterController extends ZepetoScriptBehaviour {
         if (this.spectingNumber < 0) this.spectingNumber = limit - 1;
     }
 
-    ResetNonHunter() {
+    ResetNonHunter(isLocal: bool) {
         this.TransformIntoPlayer();
-        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform);
+        if (isLocal) ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform);
     }
 }

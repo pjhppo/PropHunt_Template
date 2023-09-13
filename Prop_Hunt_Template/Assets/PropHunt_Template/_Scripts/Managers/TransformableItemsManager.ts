@@ -39,23 +39,16 @@ export default class TransformableItemsManager extends ZepetoScriptBehaviour {
     }
 
     public TransformPlayer(itemId: string, sessionId: string) {
+
+        if (!this.CheckItemExist(itemId)) return;
+
         let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(sessionId);
-
-        if (!this.CheckItemExist(itemId)) {
-            const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId).character.gameObject;
-            let nonHunter = zepetoPlayer.GetComponent<NonHunterController>();
-            if (nonHunter) nonHunter.ResetNonHunter();
-            return;
-        }
-
         let tempItemTransfromablethis: GameObject = this.GetItemAvailable(itemId);
 
         if (tempItemTransfromablethis && !playerData.isHunter) {
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId).character.gameObject;
-            zepetoPlayer.GetComponent<NonHunterController>().TransformIntoItem(tempItemTransfromablethis);
-            tempItemTransfromablethis.SetActive(true);
-
-            console.log("Transform in: " + tempItemTransfromablethis.name + " SessionId: " + sessionId);
+            let nonHunterScript = zepetoPlayer.GetComponent<NonHunterController>();
+            if (nonHunterScript) nonHunterScript.TransformIntoItem(tempItemTransfromablethis)
         }
     }
 

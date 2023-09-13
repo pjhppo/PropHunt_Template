@@ -139,14 +139,14 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     ResetGame() {
-        MultiplayerPropHuntManager.instance.ChangeItem("");
-
         MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
             const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId);
+            let isLocal = zepetoPlayer == ZepetoPlayers.instance.LocalPlayer.zepetoPlayer;
             let gameScript;
 
             gameScript = zepetoPlayer.character.GetComponent<NonHunterController>();
             if (gameScript) {
+                gameScript.ResetNonHunter(isLocal);
                 GameObject.Destroy(gameScript);
             } else {
                 gameScript = zepetoPlayer.character.GetComponent<HunterController>();
@@ -155,7 +155,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
             zepetoPlayer.character.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);
         });
-
 
         UIManager.instance.teamSelectorObj.SetActive(true);
     }
