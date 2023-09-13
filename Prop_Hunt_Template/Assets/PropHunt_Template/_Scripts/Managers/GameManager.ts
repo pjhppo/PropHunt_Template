@@ -93,7 +93,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     RestOneNonHunter() {
         this.nonHuntersLeft--;
-
         this.CheckRemainingNonHunters();
     }
 

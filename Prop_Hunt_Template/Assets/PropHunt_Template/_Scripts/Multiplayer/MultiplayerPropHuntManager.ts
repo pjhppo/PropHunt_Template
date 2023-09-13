@@ -92,8 +92,8 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             this.playersData.push(playerData);
         });
 
-        this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerLeave, (sessionId: string) => {
-            UIManager.instance.OnZepetoRemovePlayer(sessionId);
+        this.room.AddMessageHandler(GAME_MESSAGE.OnPlayerLeave, (playerData: PlayerDataModel) => {
+            UIManager.instance.OnZepetoRemovePlayer(playerData.sessionId);
         });
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (playerData: PlayerDataModel) => 
@@ -114,6 +114,12 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {
             GameManager.instance.StartGame();
+        });
+
+        this.room.AddMessageHandler(GAME_MESSAGE.OnGameOver, (message: string) => {
+            let result = false;
+            if (message == "True") { result = true; } else { result = false; }
+            GameManager.instance.SelectTeamWins(result);
         });
     }
 
@@ -409,6 +415,7 @@ enum GAME_MESSAGE {
     OnPlayerLeave = "OnPlayerLeave",
     OnDataModelArrived = "OnDataModelArrived",
     OnStartGameArrived = "OnStartGameArrived",
+    OnGameOver = "OnGameOver",
 }
 
 //CAPTIVATAR
