@@ -1,4 +1,4 @@
-import { Color, Transform } from 'UnityEngine';
+import { Color, Transform, Vector3 } from 'UnityEngine';
 import { Image } from 'UnityEngine.UI';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -32,6 +32,8 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
         {
             this.ChangeParent(UIManager.instance.GetLobbyNonHunterParent());
         }
+
+        this.transform.localScale = Vector3.one;
     }
 
     public RefreshData()
