@@ -1,4 +1,4 @@
-import { Debug, GameObject, Input, KeyCode, LayerMask, Transform } from 'UnityEngine';
+import { GameObject, LayerMask, Transform } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import NonHunterController from '../Player/NonHunterController';
 import { Time } from 'UnityEngine';
@@ -6,45 +6,47 @@ import UIManager from './UIManager';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import HunterController from '../Player/HunterController';
-import TransformableItemsManager from './TransformableItemsManager';
 
+// This class manages the calls and connections between different scripts and the basic operation of the game
 export default class GameManager extends ZepetoScriptBehaviour {
+    // Is used for the singleton pattern
     public static instance: GameManager;
 
-    public static gameStarted: bool = false;
-    public gameState: GameState;
+    public static gameStarted: bool = false; // Controls if the game has started
+    public gameState: GameState; // Contains the actual state of the game
 
-    public spawnPoint: Transform;
+    public spawnPoint: Transform; // Sets the spawnPoints for the players
 
-    public timePerGame: number;
-    public timeRemaining: number;
+    public timePerGame: number; // Sets the duration of each game
+    @SerializeField() public timeRemainingToHide: number; // Contains the remaining time to hide before the game start 
 
-    public timeToHide: number;
+    public timeToHide: number; // Sets the duration of the time to hide
 
-    private nonHuntersLeft: number;
-
-    @Header("NonHunter")
-    public timeToTransform: number;
-    public nonHunterScript: NonHunterController;
+    private nonHuntersLeft: number; // Contains the amount of props not catched
 
     @Header("Hunter")
-    public timeToCatch: number;
-    public playerLayer: LayerMask;
+    public timeToCatch: number; // Sets the catch time for the hunter
+    public playerLayer: LayerMask; // Sets the layer that the hunter detects to catch the props
 
     Awake() {
+        // Singleton pattern
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
         else GameManager.instance = this;
     }
 
     Start() {
+        // Call to the function SetGameState
         this.SetGameState(GameState.CHOOSING_TEAM);
     }
 
     Update() {
+        // Check if the game has started and returns if not
         if (!GameManager.gameStarted) return;
+        // Call to the function that controls the remaining time CheckRemainingTime
         this.CheckRemainingTime();
     }
 
+    // This function
     public SetGameState(gameState: GameState) {
         this.gameState = gameState;
 
@@ -74,7 +76,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         this.ShowBlackoutOnHunters(true);
 
-        this.timeRemaining = this.timeToHide;
+        this.timeRemainingToHide = this.timeToHide;
         GameManager.gameStarted = true;
         this.SetGameState(GameState.PROPS_HIDING);
 
@@ -101,15 +103,15 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     CheckRemainingTime() {
-        this.timeRemaining -= Time.deltaTime;
-        UIManager.instance.UpdateTimeRemaining(this.timeRemaining);
-        if (this.timeRemaining <= 0) {
+        this.timeRemainingToHide -= Time.deltaTime;
+        UIManager.instance.UpdateTimeRemaining(this.timeRemainingToHide);
+        if (this.timeRemainingToHide <= 0) {
 
             if (this.gameState == GameState.PROPS_HIDING) {
                 this.ShowBlackoutOnHunters(false);
                 this.SetGameState(GameState.HUNTERS_SEARCHING);
 
-                this.timeRemaining = this.timePerGame;
+                this.timeRemainingToHide = this.timePerGame;
             }
             else if (this.gameState == GameState.HUNTERS_SEARCHING) {
                 this.SelectTeamWins(true);
