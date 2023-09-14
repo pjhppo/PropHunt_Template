@@ -1,15 +1,13 @@
-import { forEachChild } from 'typescript';
-import { Debug, GameObject, Mathf, Object, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
+import { GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
 import { Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
-import GameManager from './GameManager';
 import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import WinnerScreen from '../UI/WinnerScreen';
-import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import LobbyElementPool from '../UI/LobbyElementPool';
 
+// 
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager;
 
