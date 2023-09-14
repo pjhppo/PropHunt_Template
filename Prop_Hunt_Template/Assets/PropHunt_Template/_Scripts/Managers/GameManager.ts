@@ -6,14 +6,17 @@ import UIManager from './UIManager';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import HunterController from '../Player/HunterController';
+import { UnityEvent } from 'UnityEngine.Events';
 
 // This class manages the calls and connections between different scripts and the basic operation of the game
 export default class GameManager extends ZepetoScriptBehaviour {
     // Is used for the singleton pattern
     public static instance: GameManager;
 
+    @HideInInspector() public OnReset: UnityEvent = new UnityEvent();
+
     public static gameStarted: bool = false; // Controls if the game has started
-    public gameState: GameState; // Contains the actual state of the game
+    public gameState: GameState; // Contains the actual state of the game0
 
     public spawnPoint: Transform; // Sets the spawnPoints for the players
 
@@ -52,10 +55,14 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         switch (gameState) {
             case GameState.CHOOSING_TEAM:
+                GameManager.gameStarted = false;
                 break;
             case GameState.PROPS_HIDING:
+                GameManager.gameStarted = true;
+                this.timeRemainingToHide = this.timeToHide;
                 break;
             case GameState.HUNTERS_SEARCHING:
+                this.timeRemainingToHide = this.timePerGame;
                 break;
             case GameState.GAME_FINISH:
                 break;
@@ -110,11 +117,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
             if (this.gameState == GameState.PROPS_HIDING) {
                 this.ShowBlackoutOnHunters(false);
                 this.SetGameState(GameState.HUNTERS_SEARCHING);
-
-                this.timeRemainingToHide = this.timePerGame;
             }
             else if (this.gameState == GameState.HUNTERS_SEARCHING) {
-                this.SelectTeamWins(true);
+                this.SelectTeamWins(false);
             }
         }
     }
@@ -159,6 +164,10 @@ export default class GameManager extends ZepetoScriptBehaviour {
         });
 
         UIManager.instance.teamSelectorObj.SetActive(true);
+
+        this.SetGameState(GameState.CHOOSING_TEAM);
+        if(this.OnReset != null)
+            this.OnReset.Invoke();
     }
 }
 
