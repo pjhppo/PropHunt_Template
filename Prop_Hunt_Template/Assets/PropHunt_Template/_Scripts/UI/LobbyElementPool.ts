@@ -100,6 +100,7 @@ export default class LobbyElementPool extends ZepetoScriptBehaviour {
         });
     }
 
+    // This function returns the active list
     public GetActiveList(): GameObject[]
     {
         return this._activeList;

@@ -19,21 +19,30 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
-    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst MultiplayerPropHuntManager_1
-    = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\nconst GameManager_1
-    = require(\"../Managers/GameManager\");\r\nconst UIManager_1 = require(\"../Managers/UIManager\");\r\nclass
-    UIButtonsListeners extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
-    {\r\n        GameManager_1.default.instance.OnReset.AddListener(() => {\r\n           
-    this.OnReset();\r\n        });\r\n        this.switchTeamButton.onClick.AddListener(()
-    => {\r\n            MultiplayerPropHuntManager_1.default.instance.SwitchTeam();\r\n       
-    });\r\n        //Esto va segun jugador(ID - Multiplayer)\r\n        this.readyButton.onClick.AddListener(()
-    => {\r\n            MultiplayerPropHuntManager_1.default.instance.SwitchReady();\r\n           
-    let activeButtons = MultiplayerPropHuntManager_1.default.instance.GetReady();\r\n           
-    this.switchTeamButton.interactable = !activeButtons;\r\n        });\r\n       
-    this.resetButton.onClick.AddListener(() => {\r\n            UIManager_1.default.instance.HideWinnerScreen();\r\n           
-    GameManager_1.default.instance.ResetGame();\r\n        });\r\n    }\r\n    OnReset()
-    {\r\n        this.switchTeamButton.interactable = true;\r\n    }\r\n}\r\nexports.default
-    = UIButtonsListeners;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlCdXR0b25zTGlzdGVuZXJzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlCdXR0b25zTGlzdGVuZXJzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsbURBQXVDO0FBQ3ZDLGlEQUFxRDtBQUNyRCwwRkFBbUY7QUFDbkYseURBQWtEO0FBQ2xELHFEQUE4QztBQUU5QyxNQUFxQixrQkFBbUIsU0FBUSxxQ0FBcUI7SUFNakUsS0FBSztRQUVELHFCQUFXLENBQUMsUUFBUSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO1lBQ3pDLElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQztRQUNuQixDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUMzQyxvQ0FBMEIsQ0FBQyxRQUFRLENBQUMsVUFBVSxFQUFFLENBQUM7UUFDckQsQ0FBQyxDQUFDLENBQUM7UUFFSCx5Q0FBeUM7UUFDekMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN0QyxvQ0FBMEIsQ0FBQyxRQUFRLENBQUMsV0FBVyxFQUFFLENBQUM7WUFDbEQsSUFBSSxhQUFhLEdBQVksb0NBQTBCLENBQUMsUUFBUSxDQUFDLFFBQVEsRUFBRSxDQUFDO1lBQzVFLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxZQUFZLEdBQUcsQ0FBQyxhQUFhLENBQUM7UUFDeEQsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsV0FBVyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3RDLG1CQUFTLENBQUMsUUFBUSxDQUFDLGdCQUFnQixFQUFFLENBQUM7WUFDdEMscUJBQVcsQ0FBQyxRQUFRLENBQUMsU0FBUyxFQUFFLENBQUM7UUFDckMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRUQsT0FBTztRQUNILElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxZQUFZLEdBQUcsSUFBSSxDQUFDO0lBQzlDLENBQUM7Q0FDSjtBQWhDRCxxQ0FnQ0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UIButtonsListeners.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"readyButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"switchTeamButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"resetButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIButtonsListeners","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: d82a09785d3321587658fc737f386397
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    MultiplayerPropHuntManager_1 = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\nconst
+    GameManager_1 = require(\"../Managers/GameManager\");\r\nconst UIManager_1 =
+    require(\"../Managers/UIManager\");\r\n// This class asign the button listeners
+    commands\r\nclass UIButtonsListeners extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        // Add the listener of the OnReset event\r\n       
+    GameManager_1.default.instance.OnReset.AddListener(() => {\r\n            //
+    Call to the function OnReset\r\n            this.OnReset();\r\n        });\r\n       
+    // Add the listener of the switch team button\r\n        this.switchTeamButton.onClick.AddListener(()
+    => {\r\n            // Call to the function SwitchTeam on the MultiplayerPropHuntManager\r\n           
+    MultiplayerPropHuntManager_1.default.instance.SwitchTeam();\r\n        });\r\n       
+    // Add the listener of the ready button\r\n        this.readyButton.onClick.AddListener(()
+    => {\r\n            // Call to the function SwitchReady on the MultiplayerPropHuntManager\r\n           
+    MultiplayerPropHuntManager_1.default.instance.SwitchReady();\r\n            //
+    Get a reference of the ready state\r\n            let activeButtons = MultiplayerPropHuntManager_1.default.instance.GetReady();\r\n           
+    // Set the interactable setting of the switch team button in the inverse of the
+    activeButtons\r\n            this.switchTeamButton.interactable = !activeButtons;\r\n       
+    });\r\n        // Add the listener of the reset button\r\n        this.resetButton.onClick.AddListener(()
+    => {\r\n            // Call to the function to hide the winner screen on the
+    UIManager\r\n            UIManager_1.default.instance.HideWinnerScreen();\r\n           
+    // Call to the function to reset the game on the GameManager\r\n            GameManager_1.default.instance.ResetGame();\r\n       
+    });\r\n    }\r\n    // This function is called when reset the game\r\n    OnReset()
+    {\r\n        // Set the interactable button of the switch teams in true\r\n       
+    this.switchTeamButton.interactable = true;\r\n    }\r\n}\r\nexports.default =
+    UIButtonsListeners;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlCdXR0b25zTGlzdGVuZXJzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlCdXR0b25zTGlzdGVuZXJzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsaURBQXFEO0FBQ3JELDBGQUFtRjtBQUNuRix5REFBa0Q7QUFDbEQscURBQThDO0FBRTlDLGlEQUFpRDtBQUNqRCxNQUFxQixrQkFBbUIsU0FBUSxxQ0FBcUI7SUFNakUsS0FBSztRQUVELHdDQUF3QztRQUN4QyxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUUsRUFBRTtZQUN6QywrQkFBK0I7WUFDL0IsSUFBSSxDQUFDLE9BQU8sRUFBRSxDQUFDO1FBQ25CLENBQUMsQ0FBQyxDQUFDO1FBRUgsNkNBQTZDO1FBQzdDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUMzQyxvRUFBb0U7WUFDcEUsb0NBQTBCLENBQUMsUUFBUSxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBQ3JELENBQUMsQ0FBQyxDQUFDO1FBRUgsdUNBQXVDO1FBQ3ZDLElBQUksQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdEMscUVBQXFFO1lBQ3JFLG9DQUEwQixDQUFDLFFBQVEsQ0FBQyxXQUFXLEVBQUUsQ0FBQztZQUNsRCxxQ0FBcUM7WUFDckMsSUFBSSxhQUFhLEdBQVksb0NBQTBCLENBQUMsUUFBUSxDQUFDLFFBQVEsRUFBRSxDQUFDO1lBQzVFLDZGQUE2RjtZQUM3RixJQUFJLENBQUMsZ0JBQWdCLENBQUMsWUFBWSxHQUFHLENBQUMsYUFBYSxDQUFDO1FBQ3hELENBQUMsQ0FBQyxDQUFDO1FBRUgsdUNBQXVDO1FBQ3ZDLElBQUksQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdEMsa0VBQWtFO1lBQ2xFLG1CQUFTLENBQUMsUUFBUSxDQUFDLGdCQUFnQixFQUFFLENBQUM7WUFDdEMsNERBQTREO1lBQzVELHFCQUFXLENBQUMsUUFBUSxDQUFDLFNBQVMsRUFBRSxDQUFDO1FBQ3JDLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVELDhDQUE4QztJQUM5QyxPQUFPO1FBQ0gsMERBQTBEO1FBQzFELElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxZQUFZLEdBQUcsSUFBSSxDQUFDO0lBQzlDLENBQUM7Q0FDSjtBQTVDRCxxQ0E0Q0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UIButtonsListeners.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"readyButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"switchTeamButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"resetButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIButtonsListeners","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: a1f3c51239e0be9866ed81c7475a154f
   onlyWriteTrigger: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43965745, g: 0.48805588, b: 0.56827986, a: 1}
+  m_IndirectSpecularColor: {r: 0.4396577, g: 0.48805654, b: 0.5682807, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5357,8 +5357,8 @@ MonoBehaviour:
     - timePerGame
     - timeToHide
     - gameState
-    - timeRemainingToHide
     - OnReset
+    - timeRemaining
     unityValues:
     - {fileID: 0}
     - {fileID: 0}
@@ -5375,8 +5375,8 @@ MonoBehaviour:
     - '{"type":"System.Single, mscorlib","value":"65"}'
     - '{"type":"System.Single, mscorlib","value":"5"}'
     - 
-    - '{"type":"System.Single, mscorlib","value":"0"}'
     - '{"type":"UnityEngine.Events.UnityEvent, UnityEngine.CoreModule","value":"{\"m_PersistentCalls\":{\"m_Calls\":[]}}"}'
+    - '{"type":"System.Single, mscorlib","value":"0"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: 43b621a64f37651488c75c2bdda1d913, type: 3}

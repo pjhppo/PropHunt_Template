@@ -22,54 +22,77 @@ ScriptedImporter:
     { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
     UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
     = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    Itemtransformable_1 = require(\"./Itemtransformable\");\r\nconst UIManager_1
-    = require(\"../Managers/UIManager\");\r\nconst GameManager_1 = require(\"../Managers/GameManager\");\r\nconst
-    PlayerModel_1 = require(\"../Multiplayer/PlayerModel\");\r\nconst MultiplayManager_1
-    = require(\"../../../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager\");\r\nconst
-    MultiplayerPropHuntManager_1 = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\nclass
-    NonHunterController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
-    {\r\n        super(...arguments);\r\n        this.spectingNumber = 0;\r\n       
-    this.playerList = [];\r\n    }\r\n    Start() {\r\n        this.playerParent
-    = this.gameObject;\r\n        this.playerChild = this.playerParent.transform.GetChild(0);\r\n       
+    UIManager_1 = require(\"../Managers/UIManager\");\r\nconst GameManager_1 = require(\"../Managers/GameManager\");\r\nconst
+    MultiplayerPropHuntManager_1 = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\n//
+    Class representing the controller for non-hunter characters\r\nclass NonHunterController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.spectingNumber = 0; // Number used for spectating\r\n       
+    this.playerList = []; // List of player data\r\n    }\r\n    Start() {\r\n       
+    // Set the main player object\r\n        this.playerParent = this.gameObject;\r\n       
+    // Set the player''s child object\r\n        this.playerChild = this.playerParent.transform.GetChild(0);\r\n       
     let player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n       
-    if (__UnityEngine__.Object.op_Equality(player, this.playerParent)) {\r\n           
-    UIManager_1.default.instance.sliderRot.onValueChanged.AddListener((value) =>
-    {\r\n                this.RotateItem(value);\r\n            });\r\n        }\r\n       
-    GameManager_1.default.instance.AddOneNonHunter();\r\n    }\r\n    TransformIntoItem(itemObj)
-    {\r\n        this.HidePlayer();\r\n        if (itemObj) {\r\n            itemObj.SetActive(true);\r\n           
-    itemObj.transform.SetParent(this.playerParent.transform);\r\n            this.objectTransformed
-    = itemObj;\r\n            let coll = this.objectTransformed.GetComponent($typeof(UnityEngine_1.BoxCollider));\r\n           
-    coll.size = itemObj.GetComponent($typeof(UnityEngine_1.BoxCollider)).size;\r\n       
-    }\r\n        let objPos = this.playerParent.transform.transform.position;\r\n       
-    this.objectTransformed.transform.position = objPos;\r\n    }\r\n    TransformIntoPlayer()
-    {\r\n        this.gameObject.SetActive(true);\r\n        for (let index = 0;
-    index < this.playerChild.childCount; index++) {\r\n            this.playerChild.GetChild(index).gameObject.SetActive(true);\r\n       
+    // Check if the local player is this character\r\n        if (__UnityEngine__.Object.op_Equality(player,
+    this.playerParent)) {\r\n            // Attach an event listener to the rotation
+    slider\r\n            UIManager_1.default.instance.sliderRot.onValueChanged.AddListener((value)
+    => {\r\n                this.RotateItem(value);\r\n            });\r\n       
+    }\r\n        // Increase the non-hunter count in the game manager\r\n       
+    GameManager_1.default.instance.AddOneNonHunter();\r\n    }\r\n    // Transform
+    the character into an item\r\n    TransformIntoItem(itemObj) {\r\n        //
+    Hide the player''s visual representation\r\n        this.HidePlayer();\r\n       
+    if (itemObj) {\r\n            // Activate the transformed item\r\n           
+    itemObj.SetActive(true);\r\n            // Set the item as a child of the player\r\n           
+    itemObj.transform.SetParent(this.playerParent.transform);\r\n            // Store
+    a reference to the transformed item\r\n            this.objectTransformed = itemObj;\r\n           
+    // Get a reference of the collider of the object\r\n            let coll = this.objectTransformed.GetComponent($typeof(UnityEngine_1.BoxCollider));\r\n           
+    // Adjust the collider size\r\n            coll.size = itemObj.GetComponent($typeof(UnityEngine_1.BoxCollider)).size;\r\n       
+    }\r\n        // Save a reference of the playerParent position\r\n        let
+    objPos = this.playerParent.transform.transform.position;\r\n        // Set the
+    item''s position to match the player''s position\r\n        this.objectTransformed.transform.position
+    = objPos;\r\n    }\r\n    // Transform the character back into a player\r\n   
+    TransformIntoPlayer() {\r\n        // Activate the player object\r\n        this.gameObject.SetActive(true);\r\n       
+    for (let index = 0; index < this.playerChild.childCount; index++) {\r\n           
+    // Activate child objects\r\n            this.playerChild.GetChild(index).gameObject.SetActive(true);\r\n       
     }\r\n        for (let index = 1; index < this.playerParent.transform.childCount;
-    index++) {\r\n            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);\r\n       
-    }\r\n    }\r\n    HidePlayer() {\r\n        for (let index = 0; index < this.playerChild.childCount;
-    index++) {\r\n            this.playerChild.GetChild(index).gameObject.SetActive(false);\r\n       
+    index++) {\r\n            // Deactivate other children\r\n            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);\r\n       
+    }\r\n    }\r\n    // Hide the player''s visual representation\r\n    HidePlayer()
+    {\r\n        for (let index = 0; index < this.playerChild.childCount; index++)
+    {\r\n            // Deactivate child objects\r\n            this.playerChild.GetChild(index).gameObject.SetActive(false);\r\n       
     }\r\n        for (let index = 1; index < this.playerParent.transform.childCount;
-    index++) {\r\n            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);\r\n       
-    }\r\n    }\r\n    RotateItem(percentage) {\r\n        if (__UnityEngine__.Object.op_Inequality(this.objectTransformed,
-    null)) {\r\n            let rotation = new UnityEngine_1.Vector3(0, UnityEngine_1.Mathf.Lerp(0,
-    360, percentage), 0);\r\n            this.playerParent.transform.rotation = UnityEngine_1.Quaternion.Euler(rotation);\r\n       
-    }\r\n    }\r\n    Spectate(spectatePlayer) {\r\n        UIManager_1.default.instance.SwitchSpectateScreen(\"WTF\");\r\n       
-    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(spectatePlayer);\r\n   
-    }\r\n    NextSpectatorCamera() {\r\n        if (!(this.playerList.length > 0))\r\n           
-    this.playerList = MultiplayerPropHuntManager_1.default.instance.playersData;\r\n       
-    if (this.playerList.length > 1) {\r\n            this.spectingNumber++;\r\n           
-    this.LimitSpectingNumber(this.playerList.length);\r\n            let playerToSpect
-    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.playerList[this.spectingNumber].sessionId).character.transform;\r\n           
-    this.Spectate(playerToSpect);\r\n        }\r\n    }\r\n    PreviousSpectatorCamera()
-    {\r\n        if (!(this.playerList.length > 0))\r\n            this.playerList
-    = MultiplayerPropHuntManager_1.default.instance.playersData;\r\n        if (this.playerList.length
-    > 1) {\r\n            this.spectingNumber--;\r\n            this.LimitSpectingNumber(this.playerList.length);\r\n           
-    let playerToSpect = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.playerList[this.spectingNumber].sessionId).character.transform;\r\n           
-    this.Spectate(playerToSpect);\r\n        }\r\n    }\r\n    LimitSpectingNumber(limit)
-    {\r\n        if (this.spectingNumber >= limit)\r\n            this.spectingNumber
-    = 0;\r\n        if (this.spectingNumber < 0)\r\n            this.spectingNumber
-    = limit - 1;\r\n    }\r\n    ResetNonHunter(isLocal) {\r\n        this.TransformIntoPlayer();\r\n       
-    if (isLocal)\r\n            ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform);\r\n   
-    }\r\n}\r\nexports.default = NonHunterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTm9uSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5vbkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQXVJO0FBQ3ZJLDZFQUEwRTtBQUMxRSxpREFBcUQ7QUFDckQsMkRBQW9EO0FBQ3BELHFEQUE4QztBQUM5Qyx5REFBa0Q7QUFDbEQsNERBQXFEO0FBQ3JELCtHQUF3RztBQUN4RywwRkFBd0c7QUFFeEcsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBQXRFOztRQUtZLG1CQUFjLEdBQVcsQ0FBQyxDQUFDO1FBQzNCLGVBQVUsR0FBc0IsRUFBRSxDQUFDO0lBbUcvQyxDQUFDO0lBakdHLEtBQUs7UUFDRCxJQUFJLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUM7UUFDcEMsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFFM0QsSUFBSSxNQUFNLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO1FBRWxGLDJCQTJGODZNLFdBQVksQ0EzRnQ3TSxNQUFNLEVBQUksSUFBSSxDQUFDLFlBQVksR0FBRTtZQUM3QixtQkFBUyxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsY0FBYyxDQUFDLFdBQVcsQ0FBQyxDQUFDLEtBQUssRUFBRSxFQUFFO2dCQUM5RCxJQUFJLENBQUMsVUFBVSxDQUFDLEtBQUssQ0FBQyxDQUFDO1lBQzNCLENBQUMsQ0FBQyxDQUFDO1NBQ047UUFFRCxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxlQUFlLEVBQUUsQ0FBQztJQUMzQyxDQUFDO0lBRUQsaUJBQWlCLENBQUMsT0FBbUI7UUFDakMsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBRWxCLElBQUksT0FBTyxFQUFFO1lBQ1QsT0FB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","assetPath":"Assets/PropHunt_Template/_Scripts/Player/NonHunterController.ts","manifest":{"properties":[],"name":"NonHunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: e2bdff4a6caeb942c3a85f6f2dc12881
+    index++) {\r\n            // Deactivate other children\r\n            this.playerParent.transform.GetChild(index).gameObject.SetActive(false);\r\n       
+    }\r\n    }\r\n    // Rotate the transformed item\r\n    RotateItem(percentage)
+    {\r\n        if (__UnityEngine__.Object.op_Inequality(this.objectTransformed,
+    null)) {\r\n            // Calculate the rotation\r\n            let rotation
+    = new UnityEngine_1.Vector3(0, UnityEngine_1.Mathf.Lerp(0, 360, percentage),
+    0);\r\n            // Apply the rotation\r\n            this.playerParent.transform.rotation
+    = UnityEngine_1.Quaternion.Euler(rotation);\r\n        }\r\n    }\r\n    // Spectate
+    a player\r\n    Spectate(spectatePlayer) {\r\n        // Switch to the spectate
+    screen\r\n        UIManager_1.default.instance.SwitchSpectateScreen(\"WTF\");\r\n       
+    // Set the camera to follow the player\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(spectatePlayer);\r\n   
+    }\r\n    // Switch to the next spectator camera\r\n    NextSpectatorCamera()
+    {\r\n        // Get the player list if not already obtained\r\n        if (!(this.playerList.length
+    > 0))\r\n            this.playerList = MultiplayerPropHuntManager_1.default.instance.playersData;\r\n       
+    if (this.playerList.length > 1) {\r\n            // Increment the specting number\r\n           
+    this.spectingNumber++;\r\n            // Limit the specting number within the
+    player count\r\n            this.LimitSpectingNumber(this.playerList.length);\r\n           
+    // Get the player to spectate\r\n            let playerToSpect = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.playerList[this.spectingNumber].sessionId).character.transform;\r\n           
+    // Start spectating\r\n            this.Spectate(playerToSpect);\r\n        }\r\n   
+    }\r\n    // Switch to the previous spectator camera\r\n    PreviousSpectatorCamera()
+    {\r\n        // Get the player list if not already obtained\r\n        if (!(this.playerList.length
+    > 0))\r\n            this.playerList = MultiplayerPropHuntManager_1.default.instance.playersData;\r\n       
+    if (this.playerList.length > 1) {\r\n            // Decrement the specting number\r\n           
+    this.spectingNumber--;\r\n            // Limit the specting number within the
+    player count\r\n            this.LimitSpectingNumber(this.playerList.length);\r\n           
+    // Get the player to spectate\r\n            let playerToSpect = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.playerList[this.spectingNumber].sessionId).character.transform;\r\n           
+    // Start spectating\r\n            this.Spectate(playerToSpect);\r\n        }\r\n   
+    }\r\n    // Ensure the specting number stays within bounds\r\n    LimitSpectingNumber(limit)
+    {\r\n        // Reset the specting number if it exceeds the limit\r\n       
+    if (this.spectingNumber >= limit)\r\n            this.spectingNumber = 0;\r\n       
+    // Wrap around if the specting number is negative\r\n        if (this.spectingNumber
+    < 0)\r\n            this.spectingNumber = limit - 1;\r\n    }\r\n    // Reset
+    the non-hunter character\r\n    ResetNonHunter(isLocal) {\r\n        // Transform
+    the character back into a player\r\n        this.TransformIntoPlayer();\r\n       
+    // Set the camera to follow the local player\r\n        if (isLocal)\r\n           
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.SetFollowTarget(ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform);\r\n   
+    }\r\n}\r\nexports.default = NonHunterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTm9uSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5vbkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQTZGO0FBQzdGLDZFQUE0RDtBQUM1RCxpREFBc0Q7QUFDdEQscURBQThDO0FBQzlDLHlEQUFrRDtBQUNsRCwwRkFBd0c7QUFFeEcsOERBQThEO0FBQzlELE1BQXFCLG1CQUFvQixTQUFRLHFDQUFxQjtJQUF0RTs7UUFLWSxtQkFBYyxHQUFXLENBQUMsQ0FBQyxDQUFDLDZCQUE2QjtRQUN6RCxlQUFVLEdBQXNCLEVBQUUsQ0FBQyxDQUFDLHNCQUFzQjtJQWlKdEUsQ0FBQztJQS9JRyxLQUFLO1FBQ0QsNkJBQTZCO1FBQzdCLElBQUksQ0FBQyxZQUFZLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQztRQUNwQyxnQ0FBZ0M7UUFDaEMsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFFM0QsSUFBSSxNQUFNLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO1FBQ2xGLDhDQUE4QztRQUM5QywyQkF3SXV3SSxXQUFZLENBeEkvd0ksTUFBTSxFQUFJLElBQUksQ0FBQyxZQUFZLEdBQUU7WUFDN0Isa0RBQWtEO1lBQ2xELG1CQUFTLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxjQUFjLENBQUMsV0FBVyxDQUFDLENBQUMsS0FBSyxFQUFFLEVBQUU7Z0JBQzlELElBQUksQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLENBQUM7WUFDM0IsQ0FBQyxDQUFDLENBQUM7U0FDTjtRQUVELG9EQUFvRDtRQUNwRCxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxlQUFlLEVBQUUsQ0FBQztJQUMzQyxDQUFDO0lBRUQsdUNBQXVDO0lBQ3ZDLGlC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","assetPath":"Assets/PropHunt_Template/_Scripts/Player/NonHunterController.ts","manifest":{"properties":[],"name":"NonHunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 2ab46f586f8da13519862d228c364f80
   onlyWriteTrigger: 0

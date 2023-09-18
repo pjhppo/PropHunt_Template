@@ -19,10 +19,12 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
-    WinnerScreen extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    SetWinner(huntersWins)
-    {\r\n        this.winnerTittle.text = huntersWins ? \"Hunters Wins!\" : \"Props
-    Wins!\";\r\n        this.gameObject.SetActive(true);\r\n    }\r\n}\r\nexports.default
-    = WinnerScreen;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiV2lubmVyU2NyZWVuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiV2lubmVyU2NyZWVuLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBR3JELE1BQXFCLFlBQWEsU0FBUSxxQ0FBcUI7SUFJcEQsU0FBUyxDQUFDLFdBQW9CO1FBRWpDLElBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxHQUFHLFdBQVcsQ0FBQyxDQUFDLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUM7UUFDdkUsSUFBSSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDcEMsQ0FBQztDQUNKO0FBVEQsK0JBU0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/UI/WinnerScreen.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"winnerTittle","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"WinnerScreen","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: c60c9fd04f75651eb0f1f42b27829e31
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\n//
+    This class controls the winner screen\r\nclass WinnerScreen extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    // This function shows the winner on the screen\r\n    SetWinner(huntersWins)
+    {\r\n        // Change the text to show who won\r\n        this.winnerTittle.text
+    = huntersWins ? \"Hunters Wins!\" : \"Props Wins!\";\r\n        // Active this
+    game object\r\n        this.gameObject.SetActive(true);\r\n    }\r\n}\r\nexports.default
+    = WinnerScreen;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiV2lubmVyU2NyZWVuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiV2lubmVyU2NyZWVuLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBR3JELHdDQUF3QztBQUN4QyxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBSTNELCtDQUErQztJQUN4QyxTQUFTLENBQUMsV0FBb0I7UUFFakMsa0NBQWtDO1FBQ2xDLElBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxHQUFHLFdBQVcsQ0FBQyxDQUFDLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUM7UUFDdkUsMEJBQTBCO1FBQzFCLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ3BDLENBQUM7Q0FDSjtBQVpELCtCQVlDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/UI/WinnerScreen.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"winnerTittle","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"WinnerScreen","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 4b3c240649ab6a2984ec1f27cfb627f1
   onlyWriteTrigger: 0

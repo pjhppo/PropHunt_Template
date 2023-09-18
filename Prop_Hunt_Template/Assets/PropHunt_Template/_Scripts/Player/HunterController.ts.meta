@@ -23,36 +23,67 @@ ScriptedImporter:
     ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst NonHunterController_1
     = require(\"./NonHunterController\");\r\nconst UIManager_1 = require(\"../Managers/UIManager\");\r\nconst
     ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
-    GameManager_1 = require(\"../Managers/GameManager\");\r\nclass HunterController
-    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
-    super(...arguments);\r\n        this.flashLightRadius = 0.5;\r\n    }\r\n   
-    Start() {\r\n        this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
-    this.timeToCatch = GameManager_1.default.instance.timeToCatch;\r\n    }\r\n   
-    Update() {\r\n        if (!GameManager_1.default.gameStarted)\r\n           
-    return;\r\n        let position = this.GetForwardPosition(this.transform);\r\n       
-    this.flashLightDetectionZone = position;\r\n        let colls = UnityEngine_1.Physics.OverlapSphere(this.flashLightDetectionZone,
-    this.flashLightRadius, GameManager_1.default.instance.playerLayer.value);\r\n       
-    if (colls.length > 0) {\r\n            colls.forEach(coll => {\r\n               
-    let nonHunter = coll.GetComponent($typeof(NonHunterController_1.default));\r\n               
-    if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Equality(nonHunter, null))\r\n                   
-    return;\r\n                this.TryCatchNonHunter(nonHunter);\r\n           
-    });\r\n        }\r\n        else {\r\n            this.ResetCatchingState();\r\n       
-    }\r\n    }\r\n    TryCatchNonHunter(nonHunter) {\r\n        let position = this.mainCamera.WorldToScreenPoint(nonHunter.transform.position);\r\n       
-    UIManager_1.default.instance.ShowIconPercentage(true, position);\r\n        this.UpdateCatchPercentage();\r\n       
-    if (this.remainingTimeToCatch < 0) {\r\n            this.CatchNonHunter(nonHunter);\r\n       
-    }\r\n    }\r\n    CatchNonHunter(nonHunter) {\r\n        nonHunter.HidePlayer();\r\n       
-    nonHunter.Spectate(this.transform);\r\n        UIManager_1.default.instance.ShowCatchedText();\r\n       
-    GameManager_1.default.instance.RestOneNonHunter();\r\n        this.ResetCatchingState();\r\n   
-    }\r\n    UpdateCatchPercentage() {\r\n        this.remainingTimeToCatch -= UnityEngine_1.Time.deltaTime;\r\n       
-    let timePercentage = this.remainingTimeToCatch / this.timeToCatch;\r\n       
+    GameManager_1 = require(\"../Managers/GameManager\");\r\n// This function is
+    responsible for controlling the hunters\r\nclass HunterController extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.detectionRadius
+    = 0.5; // Set the radius of the detection zone \r\n    }\r\n    Start() {\r\n       
+    // Get the reference of the zepeto camera\r\n        this.mainCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    // Get the time to catch from the game manager\r\n        this.timeToCatch =
+    GameManager_1.default.instance.timeToCatch;\r\n    }\r\n    Update() {\r\n       
+    // Check if the game has started if it is not, stop\r\n        if (!GameManager_1.default.gameStarted)\r\n           
+    return;\r\n        // Save the position for the detection zone calling at the
+    GetForwardPosition function\r\n        let position = this.GetForwardPosition(this.transform);\r\n       
+    // Set the position on the variable for the detection zone\r\n        this.detectionZone
+    = position;\r\n        // Get the colliders getting them from the overlapSpher
+    function\r\n        // https://docs.unity3d.com/ScriptReference/Physics.OverlapSphere.html\r\n       
+    let colls = UnityEngine_1.Physics.OverlapSphere(this.detectionZone, this.detectionRadius,
+    GameManager_1.default.instance.playerLayer.value);\r\n        // Check if there
+    are colliders getted\r\n        if (colls.length > 0) {\r\n            // For
+    each collider getted\r\n            colls.forEach(coll => {\r\n               
+    // Get a reference of the non hunter from the collider\r\n                let
+    nonHunter = coll.GetComponent($typeof(NonHunterController_1.default));\r\n               
+    // Check if the reference if null if it is, stop\r\n                if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Equality(nonHunter,
+    null))\r\n                    return;\r\n                // Call to the function
+    TryCatchNonHuntert\r\n                this.TryCatchNonHunter(nonHunter);\r\n           
+    });\r\n        }\r\n        else {\r\n            // Call to the function to
+    reset the catch state\r\n            this.ResetCatchingState();\r\n        }\r\n   
+    }\r\n    // This function controls the catch system\r\n    TryCatchNonHunter(nonHunter)
+    {\r\n        // Get the position of the prop of the world in the screen\r\n       
+    // https://docs.unity3d.com/ScriptReference/Camera.WorldToScreenPoint.html\r\n       
+    let position = this.mainCamera.WorldToScreenPoint(nonHunter.transform.position);\r\n       
+    // Show the icon charging calling at the function in UIManager passing as parameter
+    if you want to show it, and the position to show it\r\n        UIManager_1.default.instance.ShowIconPercentage(true,
+    position);\r\n        // Call to the function to update the catch percentage\r\n       
+    this.UpdateCatchPercentage();\r\n        // Check if the remaining time is less
+    than 0\r\n        if (this.remainingTimeToCatch < 0) {\r\n            // Call
+    to the function to catch the hunter\r\n            this.CatchNonHunter(nonHunter);\r\n       
+    }\r\n    }\r\n    // This function do the logic when the nonHunter is catched\r\n   
+    CatchNonHunter(nonHunter) {\r\n        // Call to the functions to hide te player
+    and set the spectator\r\n        nonHunter.HidePlayer();\r\n        nonHunter.Spectate(this.transform);\r\n       
+    // Call to the function to show the catched text in the UIManager\r\n       
+    UIManager_1.default.instance.ShowCatchedText();\r\n        // Rest one non hunter
+    of the game calling at the function in the GameManager\r\n        GameManager_1.default.instance.RestOneNonHunter();\r\n       
+    // Resets the catching state calling to the function\r\n        this.ResetCatchingState();\r\n   
+    }\r\n    // This function updates the time state when the player is catching
+    someone\r\n    UpdateCatchPercentage() {\r\n        // Rest the real time to
+    the remaining time\r\n        this.remainingTimeToCatch -= UnityEngine_1.Time.deltaTime;\r\n       
+    // Get a percentage of the remaining time\r\n        let timePercentage = this.remainingTimeToCatch
+    / this.timeToCatch;\r\n        // Updates the UI calling at the function in UIManager\r\n       
     UIManager_1.default.instance.UpdateChargeFillAmount(timePercentage);\r\n    }\r\n   
-    ResetCatchingState() {\r\n        this.remainingTimeToCatch = this.timeToCatch;\r\n       
-    UIManager_1.default.instance.ShowIconPercentage(false, UnityEngine_1.Vector3.zero);\r\n   
-    }\r\n    OnDrawGizmos() {\r\n        UnityEngine_1.Gizmos.color = UnityEngine_1.Color.red;\r\n       
-    UnityEngine_1.Gizmos.DrawWireSphere(this.flashLightDetectionZone, this.flashLightRadius);\r\n   
-    }\r\n    GetForwardPosition(tfPos) {\r\n        let finalPos = tfPos.position;\r\n       
+    // This function resets the catching state of the player\r\n    ResetCatchingState()
+    {\r\n        // Set the remainig time to the total time to catch someone\r\n       
+    this.remainingTimeToCatch = this.timeToCatch;\r\n        // Hide the icon charging
+    calling at the function in the UIManager\r\n        UIManager_1.default.instance.ShowIconPercentage(false,
+    UnityEngine_1.Vector3.zero);\r\n    }\r\n    // This function shows ONLY IN EDITOR
+    the catching zone of the hunter by a red sphere\r\n    // Function: https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnDrawGizmos.html\r\n   
+    // Related: https://docs.unity3d.com/ScriptReference/Gizmos.html \r\n    OnDrawGizmos()
+    {\r\n        // Set the gizmo color to red\r\n        UnityEngine_1.Gizmos.color
+    = UnityEngine_1.Color.red;\r\n        // Creates a gizmo of a wired sphere with
+    the position and radius of the detection zone\r\n        UnityEngine_1.Gizmos.DrawWireSphere(this.detectionZone,
+    this.detectionRadius);\r\n    }\r\n    // This function returns the forward position
+    of an object\r\n    GetForwardPosition(tfPos) {\r\n        let finalPos = tfPos.position;\r\n       
     finalPos.x += tfPos.forward.x;\r\n        finalPos.y += tfPos.forward.y;\r\n       
     finalPos.z += tfPos.forward.z;\r\n        return finalPos;\r\n    }\r\n}\r\nexports.default
-    = HunterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBMkc7QUFDM0csaURBQXFEO0FBQ3JELCtEQUF3RDtBQUN4RCxxREFBOEM7QUFDOUMsNkVBQTREO0FBQzVELHlEQUFrRDtBQUVsRCxNQUFxQixnQkFBaUIsU0FBUSxxQ0FBcUI7SUFBbkU7O1FBT1kscUJBQWdCLEdBQVcsR0FBRyxDQUFDO0lBbUUzQyxDQUFDO0lBL0RHLEtBQUs7UUFDRCxJQUFJLENBQUMsVUFBVSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFlBQVksQ0FBQyxNQUFNLENBQUM7UUFDN0QsSUFBSSxDQUFDLFdBQVcsR0FBRyxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUM7SUFDeEQsQ0FBQztJQUVELE1BQU07UUFDRixJQUFJLENBQUMscUJBQVcsQ0FBQyxXQUFXO1lBQUUsT0FBTztRQUVyQyxJQUFJLFFBQVEsR0FBRyxJQUFJLENBQUMsa0JBQWtCLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ3ZELElBQUksQ0FBQyx1QkFBdUIsR0FBRyxRQUFRLENBQUM7UUFDeEMsSUFBSSxLQUFLLEdBQWUscUJBQU8sQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLHVCQUF1QixFQUFFLElBQUksQ0FBQyxnQkFBZ0IsRUFBRSxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsS0FBSyxDQUFDLENBQUM7UUFFM0ksSUFBSSxLQUFLLENBQUMsTUFBTSxHQUFHLENBQUMsRUFBRTtZQUNsQixLQUFLLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxFQUFFO2dCQUNqQixJQUFJLFNBQVMsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLDZCQUFtQixFQUFHLENBQUM7Z0JBQ3pELElBaENQLHFDQUFxQixDQWdGMjhILFdBQVksQ0FoRGorSCxTQUFTLEVBQUksSUFBSTtvQkFBRSxPQUFPO2dCQUM5QixJQUFJLENBQUMsaUJBQWlCLENBQUMsU0FBUyxDQUFDLENBQUM7WUFDdEMsQ0FBQyxDQUFDLENBQUM7U0FDTjthQUFNO1lBQ0gsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7U0FDN0I7SUFDTCxDQUFDO0lBRUQsaUJBQWlCLENBQUMsU0FBOEI7UUFDNUMsSUFBSSxRQUFRLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQyxrQkFBa0IsQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBQ2hGLG1CQUFTLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLElBQUksRUFBRSxRQUFRLENBQUMsQ0FBQztRQUN0RCxJQUFJLENBQUMscUJBQXFCLEVBQUUsQ0FBQztRQUM3QixJQUFJLElBQUksQ0FBQyxvQkFBb0IsR0FBRyxDQUFDLEVBQUU7WUFDL0IsSUFBSSxDQUFDLGNBQWMsQ0FBQyxTQUFTLENBQUMsQ0FBQztTQUNsQztJQUNMLENBQUM7SUFFRCxjQUFjLENBQUMsU0FBOEI7UUFDekMsU0FBUyxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBQ3ZCLFNBQVMsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ25DLG1CQUFTLENBQUMsUUFBUSxDQUFDLGVBQWUsRUFBRSxDQUFDO1FBQ3JDLHFCQUFXLENBQUMsUUFBUSxDQUFDLGdCQUFnQixFQUFFLENBQUM7UUFDeEMsSUFBSSxDQUFDLGtCQUFrQixFQUFFLENBQUM7SUFDOUIsQ0FBQztJQUVELHFCQUFxQjtRQUNqQixJQUFJLENBQUMsb0JBQW9CLElBQUksa0JBQUksQ0FBQyxTQUFTLENBQUM7UUFDNUMsSUFBSSxjQUFjLEdBQUcsSUFBSSxDQUFDLG9CQUFvQixHQUFHLElBQUksQ0FBQyxXQUFXLENBQUM7UUFDbEUsbUJBQVMsQ0FBQyxRQUFRLENBQUMsc0JBQXNCLENBQUMsY0FBYyxDQUFDLENBQUM7SUFDOUQsQ0FBQztJQUVELGtCQUFrQjtRQUNkLElBQUksQ0FBQyxvQkFBb0IsR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDO1FBQzdDLG1CQUFTLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLEtBQUssRUFBRSxxQkFBTyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQy9ELENBQUM7SUFFRCxZQUFZO1FBQ1Isb0JBQU0sQ0FBQyxLQUFLLEdBQUcsbUJBQUssQ0FBQyxHQUFHLENBQUM7UUFDekIsb0JBQU0sQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLHVCQUF1QixFQUFFLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO0lBQy9FLENBQUM7SUFFRCxrQkFBa0IsQ0FBQyxLQUFnQjtRQUMvQixJQUFJLFFBQVEsR0FBRyxLQUFLLENBQUMsUUFBUSxDQUFDO1FBQzlCLFFBQVEsQ0FBQyxDQUFDLElBQUksS0FBSyxDQUFDLE9BQU8sQ0FBQyxDQUFDLENBQUM7UUFDOUIsUUFBUSxDQUFDLENBQUMsSUFBSSxLQUFLLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztRQUM5QixRQUFRLENBQUMsQ0FBQyxJQUFJLEtBQUssQ0FBQyxPQUFPLENBQUMsQ0FBQyxDQUFDO1FBQzlCLE9BQU8sUUFBUSxDQUFDO0lBQ3BCLENBQUM7Q0FDSjtBQTFFRCxtQ0EwRUMifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/Player/HunterController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"playerLayer","type":"UnityEngine.LayerMask","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"HunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 24118a144844715b95c3df82516c0f02
+    = HunterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSHVudGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkh1bnRlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBMkc7QUFDM0csaURBQXFEO0FBQ3JELCtEQUF3RDtBQUN4RCxxREFBOEM7QUFDOUMsNkVBQTREO0FBQzVELHlEQUFrRDtBQUVsRCwyREFBMkQ7QUFDM0QsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBQW5FOztRQU9ZLG9CQUFlLEdBQVcsR0FBRyxDQUFDLENBQUMsd0NBQXdDO0lBMkduRixDQUFDO0lBdkdHLEtBQUs7UUFDRCx5Q0FBeUM7UUFDekMsSUFBSSxDQUFDLFVBQVUsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDO1FBQzdELDhDQUE4QztRQUM5QyxJQUFJLENBQUMsV0FBVyxHQUFHLHFCQUFXLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQztJQUN4RCxDQUFDO0lBRUQsTUFBTTtRQUNGLG1EQUFtRDtRQUNuRCxJQUFJLENBQUMscUJBQVcsQ0FBQyxXQUFXO1lBQUUsT0FBTztRQUVyQyxzRkFBc0Y7UUFDdEYsSUFBSSxRQUFRLEdBQUcsSUFBSSxDQUFDLGtCQUFrQixDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQztRQUN2RCwwREFBMEQ7UUFDMUQsSUFBSSxDQUFDLGFBQWEsR0FBRyxRQUFRLENBQUM7UUFDOUIsZ0VBQWdFO1FBQ2hFLHNFQUFzRTtRQUN0RSxJQUFJLEtBQUssR0FBZSxxQkFBTyxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsYUFBYSxFQUFFLElBQUksQ0FBQyxlQUFlLEVBQUUscUJBQVcsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBRWhJLHNDQUFzQztRQUN0QyxJQUFJLEtBQUssQ0FBQyxNQUFNLEdBQUcsQ0FBQyxFQUFFO1lBQ2xCLDJCQUEyQjtZQUMzQixLQUFLLENBQUMsT0FB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","assetPath":"Assets/PropHunt_Template/_Scripts/Player/HunterController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"playerLayer","type":"UnityEngine.LayerMask","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"HunterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 85a3c9bb1b350ed67e2bcd6eb5edfca0
   onlyWriteTrigger: 0

@@ -1,5 +1,5 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources, Debug, Input} from 'UnityEngine';
+import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources} from 'UnityEngine';
 import {ZepetoWorldMultiplay} from "ZEPETO.World";
 import {Room, RoomData} from "ZEPETO.Multiplay";
 import TransformSyncHelper, { UpdateOwner }  from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper';
@@ -9,7 +9,6 @@ import UIManager from '../../../PropHunt_Template/_Scripts/Managers/UIManager';
 import PlayerModel from '../../../PropHunt_Template/_Scripts/Multiplayer/PlayerModel';
 import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManager';
 import TransformableItemsManager from '../Managers/TransformableItemsManager';
-import { Player, State } from 'ZEPETO.Multiplay.Schema';
 
 export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     public multiplay: ZepetoWorldMultiplay;
@@ -27,14 +26,12 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     
     private readonly pingInterval:number = 1;
 
-    //CAPTIVATAR START
+    // USER START
 
-    private localPlayerModel : PlayerModel = new PlayerModel();
-    public playersData: PlayerDataModel[] = [];
+    private localPlayerModel : PlayerModel = new PlayerModel(); // Saves a player model with the local player
+    public playersData: PlayerDataModel[] = []; // Save the data of the players in the game
 
-    private _playersInServer: number = 0;
-
-    //CAPTIVATAR END
+    // USER END
 
     get pingCheckCount(){ return this._pingCheckCount; }
     get latency(){ return this._latency; }
@@ -80,7 +77,7 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
     }
 
-    // CAPTIVATAR STAR - - - - - - 
+    // USER START - - - - - - 
 
     private AddMessagesHandlers()
     {
@@ -183,7 +180,7 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         return this.room;
     }
         
-    // CAPTIVATAR END - - - - - - 
+    // USER END - - - - - - 
     
     /**Util**/
     private CheckMaster(){
