@@ -285,12 +285,15 @@ MonoBehaviour:
     keys:
     - readyIcon
     - txtName
+    - _user
     unityValues:
     - {fileID: 5142620938239905853}
     - {fileID: 7204367865398069961}
+    - {fileID: 0}
     values:
     - 
     - 
+    - '{"type":"System.String, mscorlib","value":""}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: 67e18129cea5d064d8202d7ca0f0e100, type: 3}

@@ -6,6 +6,7 @@ import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import WinnerScreen from '../UI/WinnerScreen';
 import LobbyElementPool from '../UI/LobbyElementPool';
+import { ZepetoPlayerControl } from 'ZEPETO.Character.Controller';
 
 // This function is responsible for all the tasks that need to be displayed on the UI
 export default class UIManager extends ZepetoScriptBehaviour {
@@ -101,8 +102,8 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     // This function shows or hide the icon of the charging image and position it by parameters
     ShowIconPercentage(show: bool, pointerPos: Vector3) {
-        // Check if the parameter is different to the active settings of the item then do the inverse
-        if (show != this.icon.activeSelf) this.icon.SetActive(show);
+        // Activate the icon by the passed parameter
+        this.icon.SetActive(show);
         // Positioning the icon by the parameter
         this.icon.transform.position = pointerPos;
     }
@@ -129,10 +130,6 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.nonHunterCanvas.SetActive(!isHunter);
         // If is hunter activate the hunter canvas
         this.hunterCanvas.SetActive(isHunter);
-    }
-
-    SwitchSpectateScreen(playerName: string) {
-
     }
 
     // This function shows the blackout screen by a parameter
