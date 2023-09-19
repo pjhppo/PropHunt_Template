@@ -4,7 +4,7 @@ import NonHunterController from '../Player/NonHunterController';
 import { Time } from 'UnityEngine';
 import UIManager from './UIManager';
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
-import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import { UIZepetoPlayerControl, ZepetoPlayerControl, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import HunterController from '../Player/HunterController';
 import { UnityEvent } from 'UnityEngine.Events';
 
@@ -30,6 +30,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public timeToCatch: number; // Sets the catch time for the hunter
     public playerLayer: LayerMask; // Sets the layer that the hunter detects to catch the props
 
+    private zepetoControl: UIZepetoPlayerControl;
     Awake() {
         // Singleton pattern
         if (GameManager.instance != null) GameObject.Destroy(this.gameObject);
@@ -39,6 +40,14 @@ export default class GameManager extends ZepetoScriptBehaviour {
     Start() {
         // Call to the function SetGameState
         this.SetGameState(GameState.CHOOSING_TEAM);
+
+        // When add the local player
+        ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
+            // Get the reference of the zepeto ui control
+            this.zepetoControl = GameObject.FindObjectOfType<UIZepetoPlayerControl>();
+            // Deactivate the UI for control
+            this.ActiveControls(false);
+        });
     }
 
     Update() {
@@ -108,11 +117,20 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         // Unactive the team selector on the UIManager
         UIManager.instance.teamSelectorObj.SetActive(false);
+
+        // Activate the control ui
+        this.ActiveControls(true);
     }
 
     // This function change the gameStarted to false
     StopGame() {
         GameManager.gameStarted = false;
+    }
+
+    // This function activate the ui for movement of zepeto by the parameter
+    ActiveControls(active:bool) {
+        // Activate the object depending on the parameter
+        this.zepetoControl.gameObject.SetActive(active);
     }
 
     // This function add a non hunter to the team
@@ -131,7 +149,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     // This function checks if there are nonHunters not catched
     CheckRemainingNonHunters() {
         // Check if there are non hunters if it is return
-        if (this.nonHuntersLeft > 0) return;
+        if (this.nonHuntersLeft > 0 || !GameManager.gameStarted) return;
         // If there aren't call to the function to select the team winner
         this.SelectTeamWins(true);
     }
@@ -214,7 +232,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
         // Switch the game state into choosing team
         this.SetGameState(GameState.CHOOSING_TEAM);
         // Check if the event "OnReset" is not null and call it if not
-        if(this.OnReset != null) this.OnReset.Invoke();
+        if (this.OnReset != null) this.OnReset.Invoke();
     }
 }
 
