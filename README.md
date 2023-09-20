@@ -88,6 +88,7 @@ To create a new item for the props we need to create a new item scriptable objec
 <br><img src = "docs/images/scriptables.png" alt = "transformable item manager img"></img><br>
 Every scriptable object will need some references to create a new object.
 <br><img src = "docs/images/itemtransformableSO.png" alt = "transformable item manager img"></img><br>
+
 | Variable    | Utility                                                                           |
 | ----------- | --------------------------------------------------------------------------------- |
 | Item Id     | You have to set an UNIQUE ID for the item, any other scriptable can have the same |
