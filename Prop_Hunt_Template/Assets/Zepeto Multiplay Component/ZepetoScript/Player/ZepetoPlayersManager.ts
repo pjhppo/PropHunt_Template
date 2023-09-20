@@ -7,6 +7,7 @@ import {GameObject, Object, Quaternion, Vector3, WaitForSeconds} from "UnityEngi
 import PlayerSync from './PlayerSync';
 import TransformSyncHelper,{PositionExtrapolationType, PositionInterpolationType} from '../Transform/TransformSyncHelper';
 import GameManager from '../../../PropHunt_Template/_Scripts/Managers/GameManager';
+import RandomSpawner from '../../../PropHunt_Template/_Scripts/Managers/RandomSpawner';
 
 export enum ZepetoPlayerSpawnType {
     NoneSpawn,//Do not create players
@@ -112,7 +113,7 @@ export default class ZepetoPlayersManager extends ZepetoScriptBehaviour {
             const spawnInfo = new SpawnInfo();
 
             // Set spawn position from GameManager reference
-            spawnInfo.position = GameManager.instance.spawnPoint.position;
+            spawnInfo.position = RandomSpawner.instance.GetRandomSpawnPos();
             spawnInfo.rotation = this.transform.rotation;
             const isLocal = this._room.SessionId === player.sessionId;
             ZepetoPlayers.instance.CreatePlayerWithUserId(sessionId, player.zepetoUserId, spawnInfo, isLocal);

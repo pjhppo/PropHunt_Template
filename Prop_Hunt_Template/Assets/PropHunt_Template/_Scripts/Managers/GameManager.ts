@@ -1,4 +1,4 @@
-import { GameObject, LayerMask, Transform } from 'UnityEngine';
+import { GameObject, LayerMask, Quaternion, Transform } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import NonHunterController from '../Player/NonHunterController';
 import { Time } from 'UnityEngine';
@@ -7,6 +7,7 @@ import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManage
 import { UIZepetoPlayerControl, ZepetoPlayerControl, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import HunterController from '../Player/HunterController';
 import { UnityEvent } from 'UnityEngine.Events';
+import RandomSpawner from './RandomSpawner';
 
 // This class manages the calls and connections between different scripts and the basic operation of the game
 export default class GameManager extends ZepetoScriptBehaviour {
@@ -16,8 +17,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     public static gameStarted: bool = false; // Controls if the game has started
     public gameState: GameState; // Contains the actual state of the game0
-
-    public spawnPoint: Transform; // Sets the spawnPoints for the players
 
     public timePerGame: number; // Sets the duration of each game
     @SerializeField() public timeRemaining: number; // Contains the remaining time to hide before the game start 
@@ -222,8 +221,11 @@ export default class GameManager extends ZepetoScriptBehaviour {
                 // Check if the script is not null then destroy the script
                 if (gameScript) GameObject.Destroy(gameScript);
             }
+            // Get a new random spawn
+            let spawnpoint = RandomSpawner.instance.GetRandomSpawnPos();
+
             // Teleport the player to the spawnpoint
-            zepetoPlayer.character.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);
+            zepetoPlayer.character.Teleport(spawnpoint, Quaternion.identity);
         });
 
         // Active the team selector screen from the UIManager

@@ -9,6 +9,7 @@ import TransformSyncHelper, {PositionExtrapolationType, PositionInterpolationTyp
 import PlayerSync from '../../../Zepeto Multiplay Component/ZepetoScript/Player/PlayerSync';
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
 import UIManager from '../Managers/UIManager';
+import RandomSpawner from '../Managers/RandomSpawner';
 
 export enum ZepetoPlayerSpawnType {
     NoneSpawn,//Do not create players
@@ -70,6 +71,7 @@ export default class PlayerSpawner extends ZepetoScriptBehaviour {
             this.AddPlayerSync(sessionId);
             UIManager.instance.OnZepetoAddPlayer(sessionId);
         });
+
         if(this.UseZepetoGestureAPI) {
             this.ContentRequest();
         }
@@ -107,7 +109,7 @@ export default class PlayerSpawner extends ZepetoScriptBehaviour {
             const spawnInfo = new SpawnInfo();
 
             // Set spawn position from GameManager reference
-            spawnInfo.position = GameManager.instance.spawnPoint.position;
+            spawnInfo.position = RandomSpawner.instance.GetRandomSpawnPos();
             spawnInfo.rotation = this.transform.rotation;
             const isLocal = this._room.SessionId === player.sessionId;
             ZepetoPlayers.instance.CreatePlayerWithUserId(sessionId, player.zepetoUserId, spawnInfo, isLocal);

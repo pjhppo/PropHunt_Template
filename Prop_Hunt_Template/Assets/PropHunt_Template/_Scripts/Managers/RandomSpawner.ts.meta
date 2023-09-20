@@ -1,0 +1,63 @@
+fileFormatVersion: 2
+guid: 246354d42df2e1443be320002e38795c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst GameManager_1 = require(\"./GameManager\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\n//
+    This class controls the spawn of the players\r\nclass RandomSpawner extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.spawnSizeX
+    = 3; // Size of X for the area to spawn\r\n        this.spawnSizeZ = 3; // Size
+    of Z for the area to spawn\r\n        this.spawnSize = UnityEngine_1.Vector3.zero;
+    // Size of the bounds that will be created\r\n        this.spawnpoints = [];
+    // List of the spawnpoints\r\n        this.spawnAreas = []; // List of bounds
+    to spawn players\r\n    }\r\n    Awake() {\r\n        //Singleton pattern\r\n       
+    if (RandomSpawner.instance)\r\n            UnityEngine_1.GameObject.Destroy(this.gameObject);\r\n       
+    else\r\n            RandomSpawner.instance = this;\r\n        // Set the spawn
+    size\r\n        this.spawnSize = new UnityEngine_1.Vector3(this.spawnSizeX, 0,
+    this.spawnSizeZ);\r\n    }\r\n    Start() {\r\n        // For each spawn point
+    creates a bound and save it into the array\r\n        this.spawnpoints.forEach(spawn
+    => {\r\n            let bound = new UnityEngine_1.Bounds(spawn.position, this.spawnSize);\r\n           
+    this.spawnAreas.push(bound);\r\n        });\r\n        // When added the local
+    player\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            // Send the local player to a random position\r\n           
+    this.GetRandomSpawnPos();\r\n        });\r\n    }\r\n    Update() {\r\n       
+    if (UnityEngine_1.Input.GetKeyDown(UnityEngine_1.KeyCode.Q))\r\n            ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.Teleport(this.GetRandomSpawnPos(),
+    UnityEngine_1.Quaternion.identity);\r\n    }\r\n    GetRandomSpawnPos() {\r\n       
+    // Get a random number between 0 and the spawpoints\r\n        let rnd = UnityEngine_1.Mathf.RoundToInt(UnityEngine_1.Random.Range(0,
+    this.spawnpoints.length - 1));\r\n        let sizeX = this.spawnAreas[rnd].size.x
+    / 2;\r\n        let sizeZ = this.spawnAreas[rnd].size.z / 2;\r\n        // Get
+    a random position inside the bound\r\n        let rndX = UnityEngine_1.Mathf.RoundToInt(UnityEngine_1.Random.Range(-sizeX,
+    sizeX));\r\n        let rndZ = UnityEngine_1.Mathf.RoundToInt(UnityEngine_1.Random.Range(-sizeZ,
+    sizeZ));\r\n        // Save a reference of the spawn point selected\r\n       
+    let spawnPos = new UnityEngine_1.Vector3(this.spawnAreas[rnd].center.x + rndX,
+    0, this.spawnAreas[rnd].center.z + rndZ);\r\n        // Get a list of colliders
+    inside a little sphere with the layers of players\r\n        let colls = UnityEngine_1.Physics.OverlapSphere(spawnPos,
+    0.25, GameManager_1.default.instance.playerLayer.value);\r\n        // Check
+    if there are other players near to the spawn position\r\n        if (colls.length
+    > 0) {\r\n            // Send to another position\r\n            console.log(\"COLLS:
+    \" + colls.length);\r\n            // this.SendToRandomPosition(obj);\r\n       
+    }\r\n        else {\r\n            // Set in this position\r\n            return
+    spawnPos;\r\n        }\r\n    }\r\n    OnDrawGizmos() {\r\n        UnityEngine_1.Gizmos.color
+    = UnityEngine_1.Color.blue;\r\n        this.spawnAreas.forEach(area => {\r\n           
+    UnityEngine_1.Gizmos.DrawWireCube(area.center, area.size);\r\n        });\r\n   
+    }\r\n}\r\nexports.default = RandomSpawner;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUmFuZG9tU3Bhd25lci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlJhbmRvbVNwYXduZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBaUo7QUFDakosaURBQXFEO0FBQ3JELCtDQUF3QztBQUN4Qyw2RUFBNEQ7QUFFNUQsK0NBQStDO0FBQy9DLE1BQXFCLGFBQWMsU0FBUSxxQ0FBcUI7SUFBaEU7O1FBR3NCLGVBQVUsR0FBVyxDQUFDLENBQUMsQ0FBQyxrQ0FBa0M7UUFDMUQsZUFBVSxHQUFXLENBQUMsQ0FBQyxDQUFDLGtDQUFrQztRQUVwRSxjQUFTLEdBQVkscUJBQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQywwQ0FBMEM7UUFFM0QsZ0JBQVcsR0FBZ0IsRUFBRSxDQUFDLENBQUMsMEJBQTBCO1FBRTNFLGVBQVUsR0FBYSxFQUFFLENBQUMsQ0FBQyxrQ0FBa0M7SUErRHpFLENBQUM7SUE3REcsS0FBSztRQUNELG1CQUFtQjtRQUNuQixJQUFJLGFBQWEsQ0FBQyxRQUFRO1lBQUUsd0JBQVUsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDOztZQUMzRCxhQUFhLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQztRQUVuQyxxQkFBcUI7UUFDckIsSUFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLHFCQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDLEVBQUUsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDO0lBQ3RFLENBQUM7SUFFRCxLQUFLO1FBQ0Qsa0VBQWtFO1FBQ2xFLElBQUksQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxFQUFFO1lBQzdCLElBQUksS0FBSyxHQUFHLElBQUksb0JBQU0sQ0FBQyxLQUFLLENBQUMsUUFBUSxFQUFFLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQztZQUN2RCxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUNoQyxDQUFDLENBQUMsQ0FBQztRQUVILDhCQUE4QjtRQUM5QiwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxrQkFBa0IsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3ZELDZDQUE2QztZQUM3QyxJQUFJLENBQUMsaUJBQWlCLEVBQUUsQ0FBQztRQUM3QixDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFFRCxNQUFNO1FBQ0YsSUFBSSxtQkFBSyxDQUFDLFVBQVUsQ0FBQyxxQkFBTyxDQUFDLENBQUMsQ0FBQztZQUFFLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsaUJBQWlCLEVBQUUsRUFBRSx3QkFBVSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQ3ZKLENBQUM7SUFFRCxpQkFBaUI7UUFDYixtREFBbUQ7UUFDbkQsSUFBSSxHQUFHLEdBQUcsbUJBQUssQ0FBQyxVQUFVLENBQUMsb0JBQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxFQUFFLElBQUksQ0FBQyxXQUFXLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFFekUsSUFBSSxLQUFLLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQyxHQUFHLENBQUMsQ0FBQyxJQUFJLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUM1QyxJQUFJLEtBQUssR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLEdBQUcsQ0FBQyxDQUFDLElBQUksQ0FBQyxDQUFDLEdBQUcsQ0FBQyxDQUFDO1FBQzVDLHlDQUF5QztRQUN6QyxJQUFJLElBQUksR0FBRyxtQkFBSyxDQUFDLFVBQVUsQ0FBQyxvQkFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLEtBQUssRUFBRSxLQUFLLENBQUMsQ0FBQyxDQUFDO1FBQ3pELElBQUksSUFBSSxHQUFHLG1CQUFLLENBQUMsVUFBVSxDQUFDLG9CQUFNLENBQUMsS0FBSyxDQUFDLENBQUMsS0FBSyxFQUFFLEtBQUssQ0FBQyxDQUFDLENBQUM7UUFFekQsK0NBQStDO1FBQy9DLElBQUksUUFBUSxHQUFHLElBQUkscUJBQU8sQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLEdBQUcsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxDQUFDLEdBQUcsSUFBSSxFQUFFLENBQUMsRUFBRSxJQUFJLENBQUMsVUFBVSxDQUFDLEdBQUcsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxDQUFDLEdBQUcsSUFBSSxDQUFDLENBQUM7UUFFMUcsNEVBQTRFO1FBQzVFLElBQUksS0FBSyxHQUFlLHFCQUFPLENBQUMsYUFBYSxDQUFDLFFBQVEsRUFBRSxJQUFJLEVBQUUscUJBQVcsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBRXRHLDhEQUE4RDtRQUM5RCxJQUFJLEtBQUssQ0FBQyxNQUFNLEdBQUcsQ0FBQyxFQUFFO1lBQ2xCLDJCQUEyQjtZQUMzQixPQUFPLENBQUMsR0FBRyxDQUFDLFNBQVMsR0FBRyxLQUFLLENBQUMsTUFBTSxDQUFDLENBQUM7WUFFdEMsa0NBQWtDO1NBQ3JDO2FBQU07WUFDSCx1QkFBdUI7WUFDdkIsT0FBTyxRQUFRLENBQUM7U0FDbkI7SUFDTCxDQUFDO0lBRUQsWUFBWTtRQUNSLG9CQUFNLENBQUMsS0FBSyxHQUFHLG1CQUFLLENBQUMsSUFBSSxDQUFDO1FBQzFCLElBQUksQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxFQUFFO1lBQzNCLG9CQUFNLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxNQUFNLEVBQUUsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQ2hELENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUNKO0FBekVELGdDQXlFQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/Managers/RandomSpawner.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"spawnSizeX","type":"System.Single","isArray":false,"initValue":["3"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"spawnSizeZ","type":"System.Single","isArray":false,"initValue":["3"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"spawnpoints","type":"UnityEngine.Transform[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"RandomSpawner","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 61514ab1ee879c283697a019e4c579d4
+  onlyWriteTrigger: 0

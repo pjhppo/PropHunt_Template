@@ -20,6 +20,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
     Start() {
         // Get the reference of the zepeto camera
         this.mainCamera = ZepetoPlayers.instance.ZepetoCamera.camera;
+        
         // Get the time to catch from the game manager
         this.timeToCatch = GameManager.instance.timeToCatch;
     }
