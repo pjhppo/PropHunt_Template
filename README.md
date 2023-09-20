@@ -76,6 +76,7 @@ This class is included into the multiplay component of the <a href="https://gith
 
 This class controls the spawn of the buttons and the items which the player can transform in.
 You can create a new item and drag and drop it on the list of items and it will create a new button automatically.
+
 | Variable                      | Utility                                                               |
 | ----------------------------- | --------------------------------------------------------------------- |
 | uiTransformableButtonTemplate | Reference to the prefab button that will be created on the UI         |
