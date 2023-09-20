@@ -60,7 +60,9 @@ The random spawner generates spawn areas where you want to.
 To create an spawnpoint you have to create an empty object and position it where you want to create an spawn area.
 
 <br><img src = "docs/images/spawnpoints.png" alt = "spawn points img"></img><br>
+
 The spawn areas will be created on the start method of unity so, whe you click the play button this areas in the editor will show you the size of the areas visually
+
 <br><img src = "docs/images/spawnareas.png" alt = "spawn areas img" width="400"></img><br>
 
 **Mutliplayer Manager**
@@ -86,7 +88,9 @@ You can create a new item and drag and drop it on the list of items and it will 
 To create a new item for the props we need to create a new item scriptable object (you can duplicate one of the existent)
 
 <br><img src = "docs/images/scriptables.png" alt = "transformable item manager img"></img><br>
+
 Every scriptable object will need some references to create a new object.
+
 <br><img src = "docs/images/itemtransformableSO.png" alt = "transformable item manager img"></img><br>
 
 | Variable    | Utility                                                                           |
@@ -101,5 +105,6 @@ Every scriptable object will need some references to create a new object.
 **Lobby Element Pool**
 This is a pool of items to create in the ui of the lobby, the first variable **Ui Prefab** saves the prefab that will be created for the pool, and the **Parent Transform** saves the transform that will be the parent for those items.
 To learn about the pool pattern you <a href="https://en.wikipedia.org/wiki/Object_pool_pattern">check it here.</a>
+
 <br><img src = "docs/images/lobbypool.png" alt = "transformable item manager img"></img><br>
 
