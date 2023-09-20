@@ -19,7 +19,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public gameState: GameState; // Contains the actual state of the game0
 
     public timePerGame: number; // Sets the duration of each game
-    @SerializeField() public timeRemaining: number; // Contains the remaining time to hide before the game start 
+    @NonSerialized() public timeRemaining: number; // Contains the remaining time to hide before the game start 
 
     public timeToHide: number; // Sets the duration of the time to hide
 

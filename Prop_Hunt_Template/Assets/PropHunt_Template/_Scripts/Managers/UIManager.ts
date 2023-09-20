@@ -12,14 +12,11 @@ import { ZepetoPlayerControl } from 'ZEPETO.Character.Controller';
 export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager; // Is used for the singleton pattern
 
-    public iconImagePrefab: GameObject; // 
-
     public icon: GameObject; // Reference to the GO of the charging icon of the hunter
     public iconCharge: Image; // Reference to the Image of the chargin icon of the hunte
 
     public txtTime: ZepetoText; // Reference to the text that shows the timer
     public teamSelectorObj: GameObject; // Reference to the team selector screen GO
-    public uiTeamLayoutPrefab: GameObject; // 
 
     @SerializeField() huntersParent: Transform; // Reference to the hunters parent
     @SerializeField() nonHuntersParent: Transform; // Reference to the non hunters parent
