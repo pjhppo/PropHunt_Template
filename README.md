@@ -18,11 +18,11 @@ Now, are you ready to start?
 - If you haven't install the Zepeto World you can check how to do it <a href="https://docs.zepeto.me/studio/reference/installation_and_settings">Here!</a>
 
 - Once you have installed Zepeto, you have to pull this repository and you can do it in 3 ways
-  - <a href="#cloning">Cloning it</a>
+  - [Cloning](Cloning-the-project)
   - <a href="#download">Downloading it</a>
   - <a href="#package">Getting the package</a>
 
-<h3 id="cloning">Cloning the project</h3>
+### Cloning the project
 
 First we go to the [Code] button and click it.
 
