@@ -17,9 +17,12 @@ Now, are you ready to start?
 
 - If you haven't install the Zepeto World you can check how to do it <a href="https://docs.zepeto.me/studio/reference/installation_and_settings">Here!</a>
 
-- Once you have installed Zepeto, you have to pull this repository or get the package from the releases section, you can do it like this:
+- Once you have installed Zepeto, you have to pull this repository and you can do it in 3 ways
+  - <a href="#cloning">Cloning it</a>
+  - <a href="#download">Downloading it</a>
+  - <a href="#package">Getting the package</a>
 
-<h3>Cloning the project</h3>
+<h3 id="cloning">Cloning the project</h3>
 
 First we go to the [Code] button and click it.
 
@@ -29,7 +32,7 @@ Then click on the icon to copy the link of the repository (make sure that you ar
 
 <br><img src = "docs/images/download/02.png" alt = "copy github link img"></img><br>
 
-Once you have it, using your your preferred software (in this case we are using <a href="https://git-fork.com/"> Fork</a>) click on "File->Clone" or press "Ctrl + N" to clone.
+Once you have it, using your your preferred software (in this case we are using <a href="https://git-fork.com/" target="_blank"> Fork</a>) click on "File->Clone" or press "Ctrl + N" to clone.
 
 <br><img src = "docs/images/download/03.png" alt = "clone project img"></img><br>
 
@@ -39,7 +42,7 @@ Here we fill the URL tab and set the folder where you want to save it and press 
 
 Once it clones the project you can open it from unity hub.
 
-<h3>Downloading the project</h3>
+<h3 id="download">Downloading the project</h3>
 
 Click on the same [Code] button but instead of clicking on the link, click on download zip
 
@@ -47,7 +50,7 @@ Click on the same [Code] button but instead of clicking on the link, click on do
 
 Then extract the files and open it with unity.
 
-<h3>Getting it from the releases section</h3>
+<h3 id="package">Getting it from the releases section</h3>
 
 Go to the releases section or click in the lastest release
 
@@ -65,6 +68,13 @@ Then click on the file ".unitypackage" and import it in a new project of Unity!
   
 
 ## 🔨 Tools
+
+>**Tooltip <span>&#8594;</span>**  The project was made to be used on horizontal mode, if you >have it in portrait make sure to change it from Unity.
+>- Open the menu from the down arrow just right of the publish button.
+><br><img src = "docs/images/worldsettings.png" alt = "unitypackage img"></img><br>
+>- Click on open world settings and change the orientation to horizontal
+><br><img src = "docs/images/horizontalmode.png" alt = "unitypackage img"></img><br>
+
 
 **GameManager**
 The GameManager shows the basic settings for the game
@@ -95,7 +105,7 @@ The random spawner generates spawn areas where you want to.
 
 <br><img src = "docs/images/randomspawner.png" alt = "random spawner img"></img><br>
 
-#####spawn point creation
+<h4>spawn point creation</h4>
 To create an spawnpoint you have to create an empty object and position it where you want to create an spawn area.
 
 <br><img src = "docs/images/spawnpoints.png" alt = "spawn points img"></img><br>
