@@ -19,7 +19,7 @@ Now, are you ready to start?
 
 - Once you have installed Zepeto, you have to pull this repository or get the package from the releases section, you can do it like this:
 
-###Cloning the project
+<h3>Cloning the project</h3>
 
 First we go to the [Code] button and click it.
 
@@ -39,7 +39,7 @@ Here we fill the URL tab and set the folder where you want to save it and press 
 
 Once it clones the project you can open it from unity hub.
 
-###Downloading the project
+<h3>Downloading the project</h3>
 
 Click on the same [Code] button but instead of clicking on the link, click on download zip
 
@@ -47,7 +47,7 @@ Click on the same [Code] button but instead of clicking on the link, click on do
 
 Then extract the files and open it with unity.
 
-###Getting it from the releases section
+<h3>Getting it from the releases section</h3>
 
 Go to the releases section or click in the lastest release
 
