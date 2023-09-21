@@ -18,9 +18,9 @@ Now, are you ready to start?
 - If you haven't install the Zepeto World you can check how to do it <a href="https://docs.zepeto.me/studio/reference/installation_and_settings">Here!</a>
 
 - Once you have installed Zepeto, you have to pull this repository and you can do it in 3 ways
-  - [Cloning](#Cloning-the-project)
-  - <a href="#download">Downloading it</a>
-  - <a href="#package">Getting the package</a>
+  - [Cloning it](#Cloning-the-project)
+  - [Downloading it](#Downloading-the-project)
+  - [By Unitypackage](#Getting-it-from-the-releases-section)
 
 ### Cloning the project
 
@@ -42,7 +42,7 @@ Here we fill the URL tab and set the folder where you want to save it and press 
 
 Once it clones the project you can open it from unity hub.
 
-<h3 id="download">Downloading the project</h3>
+### Downloading the project
 
 Click on the same [Code] button but instead of clicking on the link, click on download zip
 
@@ -50,7 +50,7 @@ Click on the same [Code] button but instead of clicking on the link, click on do
 
 Then extract the files and open it with unity.
 
-<h3 id="package">Getting it from the releases section</h3>
+### Getting it from the releases section
 
 Go to the releases section or click in the lastest release
 
