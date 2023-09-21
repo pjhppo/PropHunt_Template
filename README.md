@@ -19,7 +19,8 @@ Now, are you ready to start?
 
 - Once you have installed Zepeto, you have to pull this repository or get the package from the releases section, you can do it like this:
 
-**Cloning the project**
+###Cloning the project
+
 First we go to the [Code] button and click it.
 
 <br><img src = "docs/images/download/01.png" alt = "button code img"></img><br>
@@ -38,7 +39,7 @@ Here we fill the URL tab and set the folder where you want to save it and press 
 
 Once it clones the project you can open it from unity hub.
 
-**Downloading the project**
+###Downloading the project
 
 Click on the same [Code] button but instead of clicking on the link, click on download zip
 
@@ -46,7 +47,7 @@ Click on the same [Code] button but instead of clicking on the link, click on do
 
 Then extract the files and open it with unity.
 
-**Getting it from the releases section**
+###Getting it from the releases section
 
 Go to the releases section or click in the lastest release
 
