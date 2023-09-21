@@ -1,5 +1,5 @@
 
-# Find a pair game
+# Prop Hunt Template
 
 ## 📢 About
 
@@ -11,13 +11,51 @@ Now, are you ready to start?
 
   
 
-## ❓ How to create with Runner template
+## ❓ How to create with Prop Hunt template
 
 :wrench: Installation and settings
 
-- Download Unity Hub and Unity 2020.3.9f1 version. ([Download](https://unity.com/releases/editor/archive))
+- If you haven't install the Zepeto World you can check how to do it <a href="https://docs.zepeto.me/studio/reference/installation_and_settings">Here!</a>
 
-- Pull the repository.
+- Once you have installed Zepeto, you have to pull this repository or get the package from the releases section, you can do it like this:
+
+**Cloning the project**
+First we go to the [Code] button and click it.
+
+<br><img src = "docs/images/download/01.png" alt = "button code img"></img><br>
+
+Then click on the icon to copy the link of the repository (make sure that you are on the https tab) or copy it manually.
+
+<br><img src = "docs/images/download/02.png" alt = "copy github link img"></img><br>
+
+Once you have it, using your your preferred software (in this case we are using <a href="https://git-fork.com/"> Fork</a>) click on "File->Clone" or press "Ctrl + N" to clone.
+
+<br><img src = "docs/images/download/03.png" alt = "clone project img"></img><br>
+
+Here we fill the URL tab and set the folder where you want to save it and press clone.
+
+<br><img src = "docs/images/download/04.png" alt = "cloning settings img"></img><br>
+
+Once it clones the project you can open it from unity hub.
+
+**Downloading the project**
+
+Click on the same [Code] button but instead of clicking on the link, click on download zip
+
+<br><img src = "docs/images/download/05.png" alt = "download zip img"></img><br>
+
+Then extract the files and open it with unity.
+
+**Getting it from the releases section**
+
+Go to the releases section or click in the lastest release
+
+<br><img src = "docs/images/download/06.png" alt = "releases section img"></img><br>
+
+Then click on the file ".unitypackage" and import it in a new project of Unity!
+
+<br><img src = "docs/images/download/07.png" alt = "unitypackage img"></img><br>
+
 
   
 
