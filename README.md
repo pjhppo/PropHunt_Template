@@ -3,9 +3,9 @@
 
 ## 📢 About
 
-Nice to meet you Creators! 👋 Welcome to Runner template guide!
+Nice to meet you Creators! 👋 Welcome to Prop Hunt template guide!
 
-With Runner you can create amazing worlds to play with your friends!
+With Prop Hunt you can create amazing worlds to play with your friends!
 
 Now, are you ready to start?
 
