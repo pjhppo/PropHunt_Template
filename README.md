@@ -65,7 +65,39 @@ Then click on the file ".unitypackage" and import it in a new project of Unity!
 
 > 💡 Enjoy and start creating with the Template! :tada:
 
-  
+## ❓ FAQ
+<h3> How to open the project</h3>
+
+To open the project you have to press the [Open] button in Unity Hub and then look for the folder that you download.
+Then inside this folder you have the project folder and the docs, select the template folder and it will open the project.
+
+<br><img src = "docs/images/howto/unityproject.png" alt = "unity project img" width="600"></img><br>
+
+<h3> How to play</h3>
+
+Before you press play to test the template you have to open the scene and start the server. 
+First find the scene in the next folder and open it.
+
+<br><img src = "docs/images/howto/scene.png" alt = "scene img" width="600"></img><br>
+
+Then first press the [Start Server Button(green)] and then you can press [Play] to test the template.
+
+<br><img src = "docs/images/howto/howtoplay.png" alt = "how to play img" width="600"></img><br>
+
+
+<h3> How to change variables</h3>
+
+To make changes in the game you can go in the Hierachy and select the "Managers" folder there are the most customizables settings for the template.
+
+<br><img src = "docs/images/howto/wherearevariables.png" alt = "variables img" width="600"></img><br>
+
+
+<h3> World multiplay component missing</h3>
+
+If you have an error showing that some component is missing, you have to go to the project/packages folder and find the ZEPETO.World folder, then right click it and press in Reimport, it will took some time to fix that problem.
+
+<br><img src = "docs/images/howto/reimportzepetoworld.png" alt = "reimport folder img" width="600"></img><br>
+
 
 ## 🔨 Tools
 

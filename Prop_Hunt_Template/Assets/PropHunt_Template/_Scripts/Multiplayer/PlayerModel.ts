@@ -1,3 +1,4 @@
+import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 
 // This class holds the data of the players
