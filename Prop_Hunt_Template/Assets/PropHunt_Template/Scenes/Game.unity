@@ -28368,6 +28368,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1966516324}
     m_Modifications:
+    - target: {fileID: 8809673989237004328, guid: d2aec21df17657045b695f3fd06e1122, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -26.5444
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809673989237004328, guid: d2aec21df17657045b695f3fd06e1122, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -1.2069
+      objectReference: {fileID: 0}
     - target: {fileID: 8809673989896856962, guid: d2aec21df17657045b695f3fd06e1122, type: 3}
       propertyPath: m_Name
       value: PlayerWinner
