@@ -33,6 +33,9 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @Header("General")
     @SerializeField() private winnerScreen: GameObject; // Reference to the winner screen GO
 
+    @SerializeField() private txtPropsCounter: ZepetoText;
+    @HideInInspector() public propsAmount: number = 0;
+
     public lobbyElementPool: GameObject; // Reference to the element that shows on the lobby
     private _lobbyElementPool: LobbyElementPool; // Reference to the script of the lobby pool
 
@@ -74,8 +77,13 @@ export default class UIManager extends ZepetoScriptBehaviour {
         });
     }
 
+    // This function updates the txt of the props amount receiving the actual amount by parameter
+    UpdatePropsCounter(amount: number) {
+        this.txtPropsCounter.text = amount.toString() + "/" + this.propsAmount.toString();
+    }
+
     // This method controls the visual of the timer, normalizing the time to mins and secs
-    UpdateTimeRemaining(timeRemaining: number) {
+    UpdateTimeRemaining(timeRemaining: number){
         // We round the value of the minutes
         let tempMin: number = Mathf.FloorToInt(timeRemaining / 60);
 
@@ -89,7 +97,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
         let tempSegString: string = tempSeg < 10 ? "0" + tempSeg : tempSeg.toString();
 
         // We update the "remaininTxt" text to a text string consisting of "tempMinString" and "tempSegString"
-        this.txtTime.text = tempMinString + tempSegString;
+        this.txtTime.text = tempMinString + tempSegString;    
     }
 
     // This functions updates the fill amount of the charging icon image
@@ -137,11 +145,13 @@ export default class UIManager extends ZepetoScriptBehaviour {
     // This function shows the winner screen by a parameter
     ShowWinScreen(huntersWins: boolean) {
         // Get the component WinnerScreen from the go saved and call to the function SetWinner sending the parameter
-        this.winnerScreen.GetComponent<WinnerScreen>().SetWinner(huntersWins);
+        let winnerScript = this.winnerScreen.GetComponent<WinnerScreen>();
+        winnerScript.SetWinner(huntersWins);
     }
 
     // This function hides the winner screen
     HideWinnerScreen() {
+        this.propsAmount = 0;
         this.winnerScreen.SetActive(false);
     }
 

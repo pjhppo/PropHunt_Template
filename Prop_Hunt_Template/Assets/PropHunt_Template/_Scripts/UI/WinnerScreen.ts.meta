@@ -19,12 +19,36 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\n//
-    This class controls the winner screen\r\nclass WinnerScreen extends ZEPETO_Script_1.ZepetoScriptBehaviour
-    {\r\n    // This function shows the winner on the screen\r\n    SetWinner(huntersWins)
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_World_Gui_1 = require(\"ZEPETO.World.Gui\");\r\nconst MultiplayerPropHuntManager_1
+    = require(\"../Multiplayer/MultiplayerPropHuntManager\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    GameManager_1 = require(\"../Managers/GameManager\");\r\nconst UIManager_1 =
+    require(\"../Managers/UIManager\");\r\n// This class controls the winner screen\r\nclass
+    WinnerScreen extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.winnersList = [];\r\n    }\r\n   
+    // This function shows the winner on the screen\r\n    SetWinner(huntersWins)
     {\r\n        // Change the text to show who won\r\n        this.winnerTittle.text
     = huntersWins ? \"Hunters Wins!\" : \"Props Wins!\";\r\n        // Active this
-    game object\r\n        this.gameObject.SetActive(true);\r\n    }\r\n}\r\nexports.default
-    = WinnerScreen;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiV2lubmVyU2NyZWVuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiV2lubmVyU2NyZWVuLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBR3JELHdDQUF3QztBQUN4QyxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBSTNELCtDQUErQztJQUN4QyxTQUFTLENBQUMsV0FBb0I7UUFFakMsa0NBQWtDO1FBQ2xDLElBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxHQUFHLFdBQVcsQ0FBQyxDQUFDLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUM7UUFDdkUsMEJBQTBCO1FBQzFCLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ3BDLENBQUM7Q0FDSjtBQVpELCtCQVlDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/UI/WinnerScreen.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"winnerTittle","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"WinnerScreen","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 4b3c240649ab6a2984ec1f27cfb627f1
+    game object\r\n        this.gameObject.SetActive(true);\r\n        // Get the
+    formatted time from UIManager\r\n        this.txtTimeRemaining.text = \"Remaining
+    time \" + UIManager_1.default.instance.txtTime.text;\r\n        // Call to the
+    function to Show the winners\r\n        this.ShowWinners(huntersWins);\r\n   
+    }\r\n    // This function instantiates the winners on the winner screen\r\n   
+    ShowWinners(hunterWins) {\r\n        // Delete winners if they are there\r\n       
+    this.DeleteWinners();\r\n        // For each player saved on the multiplayer
+    manager\r\n        MultiplayerPropHuntManager_1.default.instance.playersData.forEach((player)
+    => {\r\n            // Check if the player is part of the winner team\r\n           
+    if (player.isHunter == hunterWins) {\r\n                // Instance the winner\r\n               
+    let winnerObj = UnityEngine_1.GameObject.Instantiate(this.winnerPrefab, this.winnerParent);\r\n               
+    // Save the name of the player\r\n                let playerName = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(player.sessionId).name;\r\n               
+    // Set the name of the player\r\n                winnerObj.GetComponentInChildren($typeof(ZEPETO_World_Gui_1.ZepetoText)).text
+    = playerName;\r\n                // Add the player to the array of winners\r\n               
+    this.winnersList.push(winnerObj);\r\n            }\r\n        });\r\n    }\r\n   
+    // This function destroys the winners that are in the winnerList array\r\n   
+    DeleteWinners() {\r\n        for (let index = 0; index < this.winnersList.length;
+    index++) {\r\n            UnityEngine_1.GameObject.Destroy(this.winnersList[index]);\r\n       
+    }\r\n        // Reset the list to the default value\r\n        this.winnersList
+    = [];\r\n    }\r\n}\r\nexports.default = WinnerScreen;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiV2lubmVyU2NyZWVuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiV2lubmVyU2NyZWVuLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBQ3JELHVEQUE2QztBQUM3QywwRkFBbUY7QUFDbkYsNkNBQW9EO0FBQ3BELDZFQUE0RDtBQUM1RCx5REFBa0Q7QUFDbEQscURBQThDO0FBRTlDLHdDQUF3QztBQUN4QyxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBQS9EOztRQVNZLGdCQUFXLEdBQWlCLEVBQUUsQ0FBQztJQTZDM0MsQ0FBQztJQTNDRywrQ0FBK0M7SUFDeEMsU0FBUyxDQUFDLFdBQW9CO1FBQ2pDLGtDQUFrQztRQUNsQyxJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksR0FBRyxXQUFXLENBQUMsQ0FBQyxDQUFDLGVBQWUsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUFDO1FBQ3ZFLDBCQUEwQjtRQUMxQixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUVoQyx3Q0FBd0M7UUFDeEMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLElBQUksR0FBRyxpQkFBaUIsR0FBRyxtQkFBUyxDQUFDLFFBQVEsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDO1FBRWpGLDJDQUEyQztRQUMzQyxJQUFJLENBQUMsV0FBVyxDQUFDLFdBQVcsQ0FBQyxDQUFDO0lBQ2xDLENBQUM7SUFFRCw4REFBOEQ7SUFDdkQsV0FBVyxDQUFDLFVBQW1CO1FBQ2xDLG1DQUFtQztRQUNuQyxJQUFJLENBQUMsYUFBYSxFQUFFLENBQUM7UUFFckIsbURBQW1EO1FBQ25ELG9DQUEwQixDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLENBQUMsTUFBTSxFQUFFLEVBQUU7WUFDL0QsaURBQWlEO1lBQ2pELElBQUksTUFBTSxDQUFDLFFBQVEsSUFBSSxVQUFVLEVBQUU7Z0JBQy9CLHNCQUFzQjtnQkFDdEIsSUFBSSxTQUFTLEdBQWUsd0JBQVUsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLFlBQVksRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFlLENBQUM7Z0JBQ3ZHLDhCQUE4QjtnQkFDOUIsSUFBSSxVQUFVLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsQ0FBQyxJQUFJLENBQUM7Z0JBQ3pFLDZCQUE2QjtnQkFDN0IsU0FBUyxDQUFDLHNCQUFzQixTQUFDLDZCQUFVLEdBQUksSUFBSSxHQUFHLFVBQVUsQ0FBQztnQkFDakUseUNBQXlDO2dCQUN6QyxJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQzthQUNwQztRQUNMLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVELHNFQUFzRTtJQUN0RSxhQUFhO1FBQ1QsS0FBSyxJQUFJLEtBQUssR0FBRyxDQUFDLEVBQUUsS0FBSyxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsTUFBTSxFQUFFLEtBQUssRUFBRSxFQUFFO1lBQzFELHdCQUFVLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQztTQUMvQztRQUNELHNDQUFzQztRQUN0QyxJQUFJLENBQUMsV0FBVyxHQUFHLEVBQUUsQ0FBQztJQUMxQixDQUFDO0NBQ0o7QUF0REQsK0JBc0RDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/UI/WinnerScreen.ts","manifest":{"properties":[{"assembly":"ZEPETO.World.Gui","name":"winnerTittle","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"winnerParent","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"winnerPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"ZEPETO.World.Gui","name":"txtTimeRemaining","type":"ZEPETO.World.Gui.ZepetoText","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"WinnerScreen","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 092e70c1eddb9dd049fa9321fd6efda7
   onlyWriteTrigger: 0

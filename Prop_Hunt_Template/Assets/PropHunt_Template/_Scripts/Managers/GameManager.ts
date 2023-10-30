@@ -23,7 +23,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     public timeToHide: number; // Sets the duration of the time to hide
 
-    private nonHuntersLeft: number; // Contains the amount of props not catched
+    private nonHuntersLeft: number = 0; // Contains the amount of props not catched
 
     @Header("Hunter")
     public timeToCatch: number; // Sets the catch time for the hunter
@@ -127,7 +127,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     }
 
     // This function activate the ui for movement of zepeto by the parameter
-    ActiveControls(active:bool) {
+    ActiveControls(active: bool) {
         // Activate the object depending on the parameter
         this.zepetoControl.gameObject.SetActive(active);
     }
@@ -135,6 +135,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
     // This function add a non hunter to the team
     AddOneNonHunter() {
         this.nonHuntersLeft++;
+
+        // Call to update the props counter
+        UIManager.instance.UpdatePropsCounter(this.nonHuntersLeft);
     }
 
     // This function rest a non hunter to the team
@@ -143,6 +146,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         // Call to the function to check the number of non hunters
         this.CheckRemainingNonHunters();
+
+        // Call to update the props counter
+        UIManager.instance.UpdatePropsCounter(this.nonHuntersLeft);
     }
 
     // This function checks if there are nonHunters not catched
@@ -184,6 +190,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     // This function select wich team is the winner
     SelectTeamWins(huntersWins: boolean) {
+        if (!GameManager.gameStarted) return;
+        
         // Call to the function to set the player ready state
         MultiplayerPropHuntManager.instance.SwitchReady();
         // Call to the function to stop the game
