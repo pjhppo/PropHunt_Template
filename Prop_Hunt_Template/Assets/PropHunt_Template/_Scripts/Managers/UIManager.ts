@@ -1,5 +1,5 @@
 import { GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
-import { Image, Slider } from 'UnityEngine.UI';
+import { Button, Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
 import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
@@ -23,6 +23,8 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     @Header("NonHunter") // Non hunters/props section
     @SerializeField() private nonHunterCanvas: GameObject; // Reference to the non hunter canvas
+    @SerializeField() private btnpropList: Button; // Reference to the prop list button
+    @SerializeField() private propList: GameObject; // Reference to the prop list
     public sliderRot: Slider; // Reference to the slider to rotate the object
 
     @Header("Hunter") // hunters section
@@ -46,6 +48,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
         // Get the reference of the script of the lobby element
         this._lobbyElementPool = this.lobbyElementPool.GetComponent<LobbyElementPool>();
+
+        this.btnpropList.onClick.AddListener(()=>{
+            this.propList.SetActive(!this.propList.activeSelf);
+        });
     }
 
     // This functions is called when one player is added to the game
@@ -83,7 +89,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
     }
 
     // This method controls the visual of the timer, normalizing the time to mins and secs
-    UpdateTimeRemaining(timeRemaining: number){
+    UpdateTimeRemaining(timeRemaining: number) {
         // We round the value of the minutes
         let tempMin: number = Mathf.FloorToInt(timeRemaining / 60);
 
@@ -97,7 +103,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
         let tempSegString: string = tempSeg < 10 ? "0" + tempSeg : tempSeg.toString();
 
         // We update the "remaininTxt" text to a text string consisting of "tempMinString" and "tempSegString"
-        this.txtTime.text = tempMinString + tempSegString;    
+        this.txtTime.text = tempMinString + tempSegString;
     }
 
     // This functions updates the fill amount of the charging icon image
