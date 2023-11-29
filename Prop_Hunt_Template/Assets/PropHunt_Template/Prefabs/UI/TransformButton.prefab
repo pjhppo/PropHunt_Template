@@ -137,9 +137,15 @@ MonoBehaviour:
   script:
     keys:
     - itemPrefab
+    - itemId
+    - iconSprite
     unityValues:
     - {fileID: 4252904093821003221, guid: d9cd733366ac04ebe913bbf2b4005bc0, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     values:
+    - 
+    - '{"type":"System.String, mscorlib","value":"none"}'
     - 
     unityArrayValues: []
     arrayValues: []
