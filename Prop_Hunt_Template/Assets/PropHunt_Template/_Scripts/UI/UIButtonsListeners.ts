@@ -3,6 +3,8 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
 import GameManager from '../Managers/GameManager';
 import UIManager from '../Managers/UIManager';
+import TransformableItemsManager from '../Managers/TransformableItemsManager';
+import UITransformableButton from './UITransformableButton';
 
 // This class asign the button listeners commands
 export default class UIButtonsListeners extends ZepetoScriptBehaviour {
@@ -10,11 +12,14 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private switchTeamButton: Button; // Reference to the switch team button
     @SerializeField() private resetButton: Button; // Reference to the reset button
 
+    @SerializeField() private releaseButton: Button;
+    @SerializeField() private transformButton: Button;
 
-    Start() 
-    {
+    private buttonTransformed: UITransformableButton;
+
+    Start() {
         // Add the listener of the OnReset event
-        GameManager.instance.OnReset.AddListener(()=> {
+        GameManager.instance.OnReset.AddListener(() => {
             // Call to the function OnReset
             this.OnReset();
         });
@@ -42,10 +47,25 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
             // Call to the function to reset the game on the GameManager
             GameManager.instance.ResetGame();
         });
+
+        this.releaseButton.onClick.AddListener(() => {
+            if (this.buttonTransformed) this.buttonTransformed.SetDefault();
+            UIManager.instance.ResetPropSelectedButton();
+            TransformableItemsManager.instance.TransformLocalPlayer("");
+        });
+
+        this.transformButton.onClick.AddListener(() => {
+            if (this.buttonTransformed) this.buttonTransformed.SetDefault();
+            this.buttonTransformed = UIManager.instance.buttonSelected;
+            this.buttonTransformed.SetTransformed();
+
+            // Call to the function to transform the player from the TransformableItemsManager
+            TransformableItemsManager.instance.TransformLocalPlayer(UIManager.instance.buttonSelected._myItemTransformable.itemId);
+        });
     }
 
     // This function is called when reset the game
-    OnReset(){
+    OnReset() {
         // Set the interactable button of the switch teams in true
         this.switchTeamButton.interactable = true;
     }

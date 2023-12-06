@@ -22,17 +22,24 @@ ScriptedImporter:
     { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
     ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst TransformableItemsManager_1
     = require(\"../Managers/TransformableItemsManager\");\r\nconst Itemtransformable_1
-    = require(\"../Player/Itemtransformable\");\r\n// This class is responsible for
-    the operation of the UI buttons for transformation\r\nclass UITransformableButton
+    = require(\"../Player/Itemtransformable\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UIManager_1 = require(\"../Managers/UIManager\");\r\n// This class is responsible
+    for the operation of the UI buttons for transformation\r\nclass UITransformableButton
     extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Awake() {\r\n        //
-    Get the component button and save it\r\n        this.button = this.GetComponent($typeof(UnityEngine_UI_1.Button));\r\n   
-    }\r\n    // This function set the behaviour of the button\r\n    SetButton(itemTransformable)
-    {\r\n        // Save the item transformable reference\r\n        this._myItemTransformable
-    = itemTransformable;\r\n        // Set the sprite of the icon getting it from
-    the item\r\n        this.icon.sprite = this._myItemTransformable.iconSprite;\r\n       
-    // Set the button listener\r\n        this.button.onClick.AddListener(() => {\r\n           
-    // Call to the function to transform the player from the TransformableItemsManager\r\n           
-    TransformableItemsManager_1.default.instance.TransformLocalPlayer(this._myItemTransformable.itemId);\r\n       
-    });\r\n    }\r\n}\r\nexports.default = UITransformableButton;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlUcmFuc2Zvcm1hYmxlQnV0dG9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlUcmFuc2Zvcm1hYmxlQnV0dG9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsbURBQStDO0FBQy9DLGlEQUFxRDtBQUNyRCxxRkFBOEU7QUFDOUUsbUVBQTREO0FBQzVELG1GQUFtRjtBQUNuRixNQUFxQixxQkFBc0IsU0FBUSxxQ0FBcUI7SUFNcEUsS0FBSztRQUNELHVDQUF1QztRQUN2QyxJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsdUJBQU0sRUFBRyxDQUFDO0lBQzlDLENBQUM7SUFFRCxnREFBZ0Q7SUFDekMsU0FBUyxDQUFDLGlCQUFvQztRQUNqRCx3Q0FBd0M7UUFDeEMsSUFBSSxDQUFDLG9CQUFvQixHQUFHLGlCQUFpQixDQUFDO1FBRTlDLHNEQUFzRDtRQUN0RCxJQUFJLENBQUMsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsb0JBQW9CLENBQUMsVUFBVSxDQUFDO1FBRXhELDBCQUEwQjtRQUMxQixJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2pDLGtGQUFrRjtZQUNsRixtQ0FBeUIsQ0FBQyxRQUFRLENBQUMsb0JBQW9CLENBQUMsSUFBSSxDQUFDLG9CQUFvQixDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBQzlGLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUNKO0FBekJELHdDQXlCQyJ9","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UITransformableButton.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"icon","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UITransformableButton","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: 6b4382cc9041f3e8246f15256c9d268e
+    Get the component button and save it\r\n        this.button = this.GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    this.SetDefault();\r\n    }\r\n    // This function set the behaviour of the
+    button\r\n    SetButton(itemTransformable) {\r\n        // Save the item transformable
+    reference\r\n        this._myItemTransformable = itemTransformable;\r\n       
+    // Set the sprite of the icon getting it from the item\r\n        this.icon.sprite
+    = this._myItemTransformable.iconSprite;\r\n        // Set the button listener\r\n       
+    this.button.onClick.AddListener(() => {\r\n            this.SetSelected();\r\n           
+    UIManager_1.default.instance.SetPropSelectedButton(this);\r\n        });\r\n   
+    }\r\n    // This function actives the selected state\r\n    SetSelected() {\r\n       
+    this.selected.SetActive(true);\r\n        this.checkMark.SetActive(false);\r\n   
+    }\r\n    // This function actives the transformed state\r\n    SetTransformed()
+    {\r\n        this.selected.SetActive(false);\r\n        this.checkMark.SetActive(true);\r\n   
+    }\r\n    // This function actives the default state\r\n    SetDefault() {\r\n       
+    this.selected.SetActive(false);\r\n        this.checkMark.SetActive(false);\r\n   
+    }\r\n}\r\nexports.default = UITransformableButton;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlUcmFuc2Zvcm1hYmxlQnV0dG9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlUcmFuc2Zvcm1hYmxlQnV0dG9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsbURBQStDO0FBQy9DLGlEQUFxRDtBQUNyRCxxRkFBOEU7QUFDOUUsbUVBQTREO0FBQzVELDZDQUF5QztBQUN6QyxxREFBOEM7QUFDOUMsbUZBQW1GO0FBQ25GLE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQVNwRSxLQUFLO1FBQ0QsdUNBQXVDO1FBQ3ZDLElBQUksQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyx1QkFBTSxFQUFHLENBQUM7UUFDMUMsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO0lBQ3RCLENBQUM7SUFFRCxnREFBZ0Q7SUFDekMsU0FBUyxDQUFDLGlCQUFvQztRQUNqRCx3Q0FBd0M7UUFDeEMsSUFBSSxDQUFDLG9CQUFvQixHQUFHLGlCQUFpQixDQUFDO1FBRTlDLHNEQUFzRDtRQUN0RCxJQUFJLENBQUMsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsb0JBQW9CLENBQUMsVUFBVSxDQUFDO1FBRXhELDBCQUEwQjtRQUMxQixJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2pDLElBQUksQ0FBQyxXQUFXLEVBQUUsQ0FBQztZQUNuQixtQkFBUyxDQUFDLFFBQVEsQ0FBQyxxQkFBcUIsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUNuRCxDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFFRCwyQ0FBMkM7SUFDM0MsV0FBVztRQUNQLElBQUksQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQzlCLElBQUksQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ3BDLENBQUM7SUFFRCw4Q0FBOEM7SUFDOUMsY0FBYztRQUNWLElBQUksQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQy9CLElBQUksQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ25DLENBQUM7SUFFRCwwQ0FBMEM7SUFDMUMsVUFBVTtRQUNOLElBQUksQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQy9CLElBQUksQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ3BDLENBQUM7Q0FDSjtBQS9DRCx3Q0ErQ0MifQ==","assetPath":"Assets/PropHunt_Template/_Scripts/UI/UITransformableButton.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"icon","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"selected","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"checkMark","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"","name":"_myItemTransformable","type":"P:/Work/Captivatar/ZEPETO/zepeto-prop-hunt/Prop_Hunt_Template/Assets/PropHunt_Template/_Scripts/Player/Itemtransformable.default","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"HideInInspector","args":[]}]}],"name":"UITransformableButton","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 24280f329a677ec30e6a1424c44e144b
   onlyWriteTrigger: 0

@@ -535,14 +535,17 @@ MonoBehaviour:
     - readyIcon
     - txtName
     - _user
+    - _isHunter
     unityValues:
     - {fileID: 5142620938239905853}
     - {fileID: 7659574462886004983}
+    - {fileID: 0}
     - {fileID: 0}
     values:
     - 
     - 
     - '{"type":"System.String, mscorlib","value":""}'
+    - '{"type":"System.Boolean, mscorlib","value":"False"}'
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: 67e18129cea5d064d8202d7ca0f0e100, type: 3}

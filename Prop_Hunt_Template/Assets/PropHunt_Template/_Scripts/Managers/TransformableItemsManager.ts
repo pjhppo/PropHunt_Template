@@ -46,10 +46,10 @@ export default class TransformableItemsManager extends ZepetoScriptBehaviour {
         this.itemsTransformablesSO.forEach(element => {
             // We instance the button and save a reference on a variable
             let newUITransformableButton = GameObject.Instantiate(this.uiTransformableButtonTemplate, this.transformableButtonsParent) as GameObject;
-            
+
             // We save a variable with the script of the button
             let buttonScript = newUITransformableButton.GetComponent<UITransformableButton>();
-            
+
             // Then we call at the function "SetButton" on the script
             buttonScript.SetButton(element.targetObject);
 
@@ -61,7 +61,10 @@ export default class TransformableItemsManager extends ZepetoScriptBehaviour {
     // This function transforms the players who have decided to transform into an object
     public TransformPlayer(itemId: string, sessionId: string) {
         // Call to a function to check if the item exist and return if it is not
-        if (!this.CheckItemExist(itemId)) return;
+        if (!this.CheckItemExist(itemId)) {
+            this.UntransformPlayer(sessionId);
+            return;
+        }
 
         // Get a reference of the playerData that will be transform
         let playerData = MultiplayerPropHuntManager.instance.GetPlayerData(sessionId);
@@ -77,6 +80,15 @@ export default class TransformableItemsManager extends ZepetoScriptBehaviour {
             // If we can get the component we call to the function to transform the player
             if (nonHunterScript) nonHunterScript.TransformIntoItem(tempItemTransfromablethis)
         }
+    }
+
+    public UntransformPlayer(sessionId: string) {
+        // Get reference of the zepetoPlayer that will be transformed
+        const zepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId).character.gameObject;
+        // Get his NonHunterController component
+        let nonHunterScript = zepetoPlayer.GetComponent<NonHunterController>();
+        // If we can get the component we call to the function to transform the player
+        if (nonHunterScript) nonHunterScript.TransformIntoPlayer();
     }
 
     // This functions calls to transform the local player and communicate this to the server

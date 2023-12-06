@@ -1,4 +1,4 @@
-import { GameObject, Mathf, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
+import { Coroutine, Debug, GameObject, Mathf, Screen, Time, Transform, Vector3, WaitForSeconds, WaitUntil } from 'UnityEngine';
 import { Button, Image, Slider } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui';
@@ -6,7 +6,8 @@ import UIPlayerListTemplate from '../UI/UIPlayerListTemplate';
 import MultiplayerPropHuntManager, { PlayerDataModel } from '../Multiplayer/MultiplayerPropHuntManager';
 import WinnerScreen from '../UI/WinnerScreen';
 import LobbyElementPool from '../UI/LobbyElementPool';
-import { ZepetoPlayerControl } from 'ZEPETO.Character.Controller';
+import { RectTransform } from 'UnityEngine';
+import UITransformableButton from '../UI/UITransformableButton';
 
 // This function is responsible for all the tasks that need to be displayed on the UI
 export default class UIManager extends ZepetoScriptBehaviour {
@@ -26,6 +27,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @SerializeField() private btnpropList: Button; // Reference to the prop list button
     @SerializeField() private propList: GameObject; // Reference to the prop list
     public sliderRot: Slider; // Reference to the slider to rotate the object
+    private showingProps: bool = false;
 
     @Header("Hunter") // hunters section
     @SerializeField() private hunterCanvas: GameObject; // Reference to the hunter canvas
@@ -38,6 +40,19 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @SerializeField() private txtPropsCounter: ZepetoText;
     @HideInInspector() public propsAmount: number = 0;
 
+    public txtPropCounter: ZepetoText;
+    public txtHunterCounter: ZepetoText;
+    public propsCounter: number = 0;
+    public huntersCounter: number = 0;
+
+    private rectPropList: RectTransform;
+    private limitOut: Vector3;
+    private limitIn: Vector3;
+
+    private showingCoroutine: Coroutine;
+
+    @NonSerialized() public buttonSelected: UITransformableButton;
+
     public lobbyElementPool: GameObject; // Reference to the element that shows on the lobby
     private _lobbyElementPool: LobbyElementPool; // Reference to the script of the lobby pool
 
@@ -49,9 +64,23 @@ export default class UIManager extends ZepetoScriptBehaviour {
         // Get the reference of the script of the lobby element
         this._lobbyElementPool = this.lobbyElementPool.GetComponent<LobbyElementPool>();
 
-        this.btnpropList.onClick.AddListener(()=>{
-            this.propList.SetActive(!this.propList.activeSelf);
+        this.btnpropList.onClick.AddListener(() => {
+            this.showingProps = !this.showingProps;
+            if (this.showingCoroutine) this.StopCoroutine(this.showingCoroutine);
+            this.showingCoroutine = this.StartCoroutine(this.ShowPropListCoroutine(this.showingProps));
         });
+
+        // Update the texts of the counters in the lobby to be 0
+        this.txtHunterCounter.text = this.huntersCounter.toString();
+        this.txtPropCounter.text = this.propsCounter.toString();
+
+        // Get the reference of the rect transform of the proplist
+        this.rectPropList = this.propList.GetComponent<RectTransform>();
+
+        this.limitIn = this.rectPropList.position;
+        let _limitOut = this.rectPropList.position;
+        _limitOut.x = Screen.width;
+        this.limitOut = _limitOut;
     }
 
     // This functions is called when one player is added to the game
@@ -59,7 +88,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
         // Get a reference of an element of the pool calling to the function of the script
         let uiElement = this._lobbyElementPool.GetElement();
         // populate the ui element with the data of the new player
-        uiElement.GetComponent<UIPlayerListTemplate>().Populate(sessionId);
+        uiElement.GetComponent<UIPlayerListTemplate>().Populate(sessionId, false, true);
     }
 
     // This functions is called when someone leaves the game
@@ -68,16 +97,28 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this._lobbyElementPool.ReturnElementById(sessionId);
     }
 
+    public SetPropSelectedButton(btnScript: UITransformableButton) {
+        if (this.buttonSelected) this.buttonSelected.selected.SetActive(false);
+        this.buttonSelected = btnScript;
+    }
+
+    public ResetPropSelectedButton() {
+        if (this.buttonSelected) this.buttonSelected.SetDefault();
+        this.buttonSelected = null;
+    }
+
     // This function updates the lobby info 
     public RefreshLobby() {
         // For each player data in the multiplayer manager
         MultiplayerPropHuntManager.instance.playersData.forEach(PlayerData => {
             // For each pool element in the pool list
             this._lobbyElementPool.GetActiveList().forEach(poolElement => {
+                let poolElementScript = poolElement.GetComponent<UIPlayerListTemplate>();
                 // Check if the session id of the player is equal to the  pool element
-                if (PlayerData.sessionId == poolElement.GetComponent<UIPlayerListTemplate>().GetUser()) {
+                if (PlayerData.sessionId == poolElementScript.GetUser()) {
+                    let teamChanged = PlayerData.isHunter != poolElementScript._isHunter;
                     // Then populate the pool element with the player data
-                    poolElement.GetComponent<UIPlayerListTemplate>().Populate(PlayerData.sessionId);
+                    poolElement.GetComponent<UIPlayerListTemplate>().Populate(PlayerData.sessionId, teamChanged);
                 }
             });
         });
@@ -135,6 +176,38 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.catchedText.gameObject.SetActive(false);
     }
 
+    // Coroutine to show the prop list
+    *ShowPropListCoroutine(show: bool) {
+        // Set the variables
+        let counter: number = 0;
+        let maxCounter: number = 0.15;
+        let width: number = this.rectPropList.sizeDelta.x;
+
+        // Set the start and final positions
+        let startingPos: Vector3 = this.rectPropList.position;
+        let finalPos: Vector3;
+
+        // Move to the right or the left
+        if (show) finalPos = this.limitIn;
+        else finalPos = this.limitOut;
+
+        // Loop
+        while (true) {
+            yield null;
+            // Add the time to the counter
+            counter += Time.deltaTime;
+
+            // Save the percentage of the movement
+            let percentage: number = counter / maxCounter;
+            // Get the new position by the percentage
+            let newPosition: Vector3 = Vector3.Lerp(startingPos, finalPos, percentage);
+            // Set the rect position to the new position
+            this.rectPropList.position = newPosition;
+            // Check if the counter is greater than the max counter stop the loop
+            if (counter > maxCounter) return;
+        }
+    }
+
     // This function switchs the canvas showed for the player
     SwitchGameUI(isHunter: boolean = false) {
         // If is not hunter then activate the non hunter canvas
@@ -159,6 +232,45 @@ export default class UIManager extends ZepetoScriptBehaviour {
     HideWinnerScreen() {
         this.propsAmount = 0;
         this.winnerScreen.SetActive(false);
+    }
+
+    // This functions updates the counters on the lobby
+    UpdateCountersInLobby(isHunter: bool) {
+        // Check if the new one is hunter and then add one or rest one 
+        if (isHunter) {
+            this.propsCounter--;
+            this.huntersCounter++;
+        } else {
+            this.propsCounter++;
+            this.huntersCounter--;
+        }
+
+        // Limit the minimal number to zero for the two teams
+        this.huntersCounter = this.LimitToZero(this.huntersCounter);
+        this.propsCounter = this.LimitToZero(this.propsCounter);
+
+
+        // Update the texts
+        this.txtHunterCounter.text = this.huntersCounter.toString();
+        this.txtPropCounter.text = this.propsCounter.toString();
+    }
+
+    // This function addd one to the corresponding counter
+    AddOneCounterInLobby(isHunter: bool) {
+        // Check if the new one is hunter and then add one
+        if (isHunter) {
+            this.huntersCounter++;
+        } else {
+            this.propsCounter++;
+        }
+
+        // Update the texts
+        this.txtHunterCounter.text = this.huntersCounter.toString();
+        this.txtPropCounter.text = this.propsCounter.toString();
+    }
+    private LimitToZero(amount: number): number {
+        if (amount < 0) amount = 0;
+        return amount;
     }
 
     // This function returns the hunter parent variable
