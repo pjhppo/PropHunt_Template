@@ -1,0 +1,50 @@
+fileFormatVersion: 2
+guid: 1632fbbb2c632ed40bbae5ff8202da20
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.PlayerThumb = void 0;\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nclass ThumbnailsCreator extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n        super(...arguments);\r\n       
+    this.playerThumbs = [];\r\n    }\r\n    Start() {\r\n        this.CreateNewThumbnail();\r\n   
+    }\r\n    CreateNewThumbnail() {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedPlayer.AddListener((playerAdded)
+    => {\r\n            const player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(playerAdded);\r\n           
+    UnityEngine_1.Debug.LogError(\"Player getted: \" + player.userId);\r\n           
+    if (!player)\r\n                return;\r\n            UnityEngine_1.Debug.LogError(\"Creating
+    thumbnail\");\r\n            const userId = player.userId;\r\n            this.GetProfileTexture(userId);\r\n       
+    });\r\n    }\r\n    GetSprite(texture) {\r\n        let rect = new UnityEngine_1.Rect(0,
+    0, texture.width, texture.height);\r\n        return UnityEngine_1.Sprite.Create(texture,
+    rect, new UnityEngine_1.Vector2(0.5, 0.5));\r\n    }\r\n    GetProfileTexture(userId)
+    {\r\n        ZEPETO_World_1.ZepetoWorldHelper.GetProfileTexture(userId, (texture)
+    => {\r\n            UnityEngine_1.Debug.LogError(\"Thumbnail obtained\");\r\n           
+    const sprite = this.GetSprite(texture);\r\n            const newThumbnail = UnityEngine_1.GameObject.Instantiate(this.thumbnailPrefab,
+    this.thumbnailParent);\r\n            const thumbImage = newThumbnail.GetComponent($typeof(UnityEngine_UI_1.Image));\r\n           
+    thumbImage.sprite = sprite;\r\n            const newPlayerThumb = new PlayerThumb();\r\n           
+    newPlayerThumb.userId = userId;\r\n            newPlayerThumb.thumbSprite = sprite;\r\n           
+    newPlayerThumb.thumbTexture = texture;\r\n            newPlayerThumb.thumbPrefab
+    = newThumbnail;\r\n            this.playerThumbs.push(newPlayerThumb);\r\n           
+    //Debug.LogError(\"PlayerThumb added \\n UserId: \" + newPlayerThumb.userId +
+    \"\\n thumbPrefab: \" + newPlayerThumb.thumbPrefab.name + \"\\n isHunter: \"
+    + newPlayerThumb.isHunter);\r\n        }, (error) => {\r\n            console.log(error);\r\n       
+    });\r\n        return null;\r\n    }\r\n}\r\nexports.default = ThumbnailsCreator;\r\nclass
+    PlayerThumb {\r\n}\r\nexports.PlayerThumb = PlayerThumb;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGh1bWJuYWlsc0NyZWF0b3IuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUaHVtYm5haWxzQ3JlYXRvci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSw2Q0FBc0c7QUFDdEcsbURBQXVDO0FBQ3ZDLDZFQUE0RDtBQUM1RCxpREFBcUQ7QUFDckQsK0NBQXdEO0FBRXhELE1BQXFCLGlCQUFrQixTQUFRLHFDQUFxQjtJQUFwRTs7UUFJVyxpQkFBWSxHQUFrQixFQUFFLENBQUM7SUE0QzVDLENBQUM7SUExQ0csS0FBSztRQUNELElBQUksQ0FBQyxrQkFBa0IsRUFBRSxDQUFDO0lBQzlCLENBQUM7SUFFRCxrQkFBa0I7UUFDZCwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxhQUFhLENBQUMsV0FBVyxDQUFDLENBQUMsV0FBVyxFQUFFLEVBQUU7WUFDN0QsTUFBTSxNQUFNLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLFdBQVcsQ0FBQyxDQUFDO1lBQzdELG1CQUFLLENBQUMsUUFBUSxDQUFDLGlCQUFpQixHQUFHLE1BQU0sQ0FBQyxNQUFNLENBQUMsQ0FBQztZQUNsRCxJQUFJLENBQUMsTUFBTTtnQkFBRSxPQUFPO1lBQ3BCLG1CQUFLLENBQUMsUUFBUSxDQUFDLG9CQUFvQixDQUFDLENBQUM7WUFDckMsTUFBTSxNQUFNLEdBQUcsTUFBTSxDQUFDLE1BQU0sQ0FBQztZQUM3QixJQUFJLENBQUMsaUJBQWlCLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDbkMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRUQsU0FBUyxDQUFDLE9BQWdCO1FBQ3RCLElBQUksSUFBSSxHQUFTLElBQUksa0JBQUksQ0FBQyxDQUFDLEVBQUUsQ0FBQyxFQUFFLE9BQU8sQ0FBQyxLQUFLLEVBQUUsT0FBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBQy9ELE9BQU8sb0JBQU0sQ0FBQyxNQUFNLENBQUMsT0FBb0IsRUFBRSxJQUFJLEVBQUUsSUFBSSxxQkFBTyxDQUFDLEdBQUcsRUFBRSxHQUFHLENBQUMsQ0FBQyxDQUFDO0lBQzVFLENBQUM7SUFFRCxpQkFBaUIsQ0FBQyxNQUFjO1FBQzVCLGdDQUFpQixDQUFDLGlCQUFpQixDQUFDLE1BQU0sRUFBRSxDQUFDLE9BQWdCLEVBQUUsRUFBRTtZQUM3RCxtQkFBSyxDQUFDLFFBQVEsQ0FBQyxvQkFBb0IsQ0FBQyxDQUFDO1lBQ3JDLE1BQU0sTUFBTSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsT0FBTyxDQUFDLENBQUM7WUFDdkMsTUFBTSxZQUFZLEdBQWUsd0JBQVUsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLGVBQWUsRUFBRSxJQUFJLENBQUMsZUFBZSxDQUFlLENBQUM7WUFDbEgsTUFBTSxVQUFVLEdBQVUsWUFBWSxDQUFDLFlBQVksU0FBQyxzQkFBSyxFQUFHLENBQUM7WUFDN0QsVUFBVSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUM7WUFFM0IsTUFBTSxjQUFjLEdBQUcsSUFBSSxXQUFXLEVBQUUsQ0FBQztZQUN6QyxjQUFjLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztZQUMvQixjQUFjLENBQUMsV0FBVyxHQUFHLE1BQU0sQ0FBQztZQUNwQyxjQUFjLENBQUMsWUFBWSxHQUFHLE9BQU8sQ0FBQztZQUN0QyxjQUFjLENBQUMsV0FBVyxHQUFHLFlBQVksQ0FBQztZQUUxQyxJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsQ0FBQztZQUV2Qyw2S0FBNks7UUFDakwsQ0FBQyxFQUFFLENBQUMsS0FBSyxFQUFFLEVBQUU7WUFDVCxPQUFPLENBQUMsR0FBRyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ3ZCLENBQUMsQ0FBQyxDQUFDO1FBQ0gsT0FBTyxJQUFJLENBQUM7SUFDaEIsQ0FBQztDQUNKO0FBaERELG9DQWdEQztBQUVELE1BQWEsV0FBVztDQUt2QjtBQUxELGtDQUtDIn0=","assetPath":"Assets/PropHunt_Template/_Scripts/Thumbnails/ThumbnailsCreator.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"thumbnailPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"thumbnailParent","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"","name":"playerThumbs","type":"P:/Work/Captivatar/ZEPETO/zepeto-prop-hunt/Prop_Hunt_Template/Assets/PropHunt_Template/_Scripts/Thumbnails/ThumbnailsCreator.PlayerThumb","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ThumbnailsCreator","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: a004ca0ab4ad757f1ebea5c46e449e0a
+  onlyWriteTrigger: 0

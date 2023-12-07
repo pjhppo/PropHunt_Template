@@ -8,6 +8,7 @@ import WinnerScreen from '../UI/WinnerScreen';
 import LobbyElementPool from '../UI/LobbyElementPool';
 import { RectTransform } from 'UnityEngine';
 import UITransformableButton from '../UI/UITransformableButton';
+import ThumbnailsCreator from '../Thumbnails/ThumbnailsCreator';
 
 // This function is responsible for all the tasks that need to be displayed on the UI
 export default class UIManager extends ZepetoScriptBehaviour {
@@ -36,6 +37,8 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     @Header("General")
     @SerializeField() private winnerScreen: GameObject; // Reference to the winner screen GO
+    @SerializeField() private thumbnailsCreatorObj: GameObject;
+    @HideInInspector() public thumbnailsCreator: ThumbnailsCreator;
 
     @SerializeField() private txtPropsCounter: ZepetoText;
     @HideInInspector() public propsAmount: number = 0;
@@ -81,6 +84,8 @@ export default class UIManager extends ZepetoScriptBehaviour {
         let _limitOut = this.rectPropList.position;
         _limitOut.x = Screen.width;
         this.limitOut = _limitOut;
+
+        this.thumbnailsCreator = this.thumbnailsCreatorObj.GetComponent<ThumbnailsCreator>();
     }
 
     // This functions is called when one player is added to the game

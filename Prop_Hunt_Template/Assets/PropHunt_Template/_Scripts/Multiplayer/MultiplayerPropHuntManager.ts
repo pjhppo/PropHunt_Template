@@ -1,8 +1,8 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import {GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources} from 'UnityEngine';
-import {ZepetoWorldMultiplay} from "ZEPETO.World";
-import {Room, RoomData} from "ZEPETO.Multiplay";
-import TransformSyncHelper, { UpdateOwner }  from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper';
+import { GameObject, Object, Quaternion, Transform, Vector3, WaitForSeconds, WaitUntil, Resources, Debug } from 'UnityEngine';
+import { ZepetoWorldMultiplay } from "ZEPETO.World";
+import { Room, RoomData } from "ZEPETO.Multiplay";
+import TransformSyncHelper, { UpdateOwner } from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper';
 import DOTWeenSyncHelper from '../../../Zepeto Multiplay Component/ZepetoScript/DOTween/DOTWeenSyncHelper';
 import AnimatorSyncHelper from '../../../Zepeto Multiplay Component/ZepetoScript/Transform/AnimatorSyncHelper';
 import UIManager from '../../../PropHunt_Template/_Scripts/Managers/UIManager';
@@ -13,28 +13,28 @@ import TransformableItemsManager from '../Managers/TransformableItemsManager';
 export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     public multiplay: ZepetoWorldMultiplay;
     public room: Room;
-    
+
     @Header("Server connection status (View Only)")
-    @SerializeField() private _pingCheckCount:number = 0;
-    @SerializeField() private _latency:number = 0;
-    @SerializeField() private _diffServerTime:number = 0;
-    
-    private _masterSessionId:string;
+    @SerializeField() private _pingCheckCount: number = 0;
+    @SerializeField() private _latency: number = 0;
+    @SerializeField() private _diffServerTime: number = 0;
+
+    private _masterSessionId: string;
     private _tfHelpers: TransformSyncHelper[] = [];
     private _dtHelpers: DOTWeenSyncHelper[] = [];
     private _animHelper: AnimatorSyncHelper[] = [];
-    
-    private readonly pingInterval:number = 1;
+
+    private readonly pingInterval: number = 1;
 
     // USER START
 
-    private localPlayerModel : PlayerModel = new PlayerModel(); // Saves a player model with the local player
+    private localPlayerModel: PlayerModel = new PlayerModel(); // Saves a player model with the local player
     public playersData: PlayerDataModel[] = []; // Save the data of the players in the game
 
     // USER END
 
-    get pingCheckCount(){ return this._pingCheckCount; }
-    get latency(){ return this._latency; }
+    get pingCheckCount() { return this._pingCheckCount; }
+    get latency() { return this._latency; }
     /* Singleton */
     private static m_instance: MultiplayerPropHuntManager = null;
     public static get instance(): MultiplayerPropHuntManager {
@@ -46,7 +46,7 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         }
         return this.m_instance;
     }
-    
+
     private Awake() {
         if (MultiplayerPropHuntManager.m_instance !== null && MultiplayerPropHuntManager.m_instance !== this) {
             GameObject.Destroy(this.gameObject);
@@ -57,30 +57,30 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
 
         this.SetInitialPlayerData();
     }
-    
-    private Start() {
-        if(!this.multiplay)
-            this.multiplay = this.GetComponent<ZepetoWorldMultiplay>();
-        if(!this.multiplay) console.warn("Add ZepetoWorldMultiplay First");
-            this.multiplay.RoomJoined += (room: Room) => {
-                this.room = room;
-                this.StartCoroutine(this.SendPing());
-                this.CheckMaster();
-                this.GetInstantiate();
-                
-                // We add the message handlers
-                this.AddMessagesHandlers();
 
-                this.room.Send(GAME_MESSAGE.RequestPlayersCache, "");
+    private Start() {
+        if (!this.multiplay)
+            this.multiplay = this.GetComponent<ZepetoWorldMultiplay>();
+        if (!this.multiplay) console.warn("Add ZepetoWorldMultiplay First");
+        this.multiplay.RoomJoined += (room: Room) => {
+            this.room = room;
+            this.StartCoroutine(this.SendPing());
+            this.CheckMaster();
+            this.GetInstantiate();
+
+            // We add the message handlers
+            this.AddMessagesHandlers();
+
+            this.room.Send(GAME_MESSAGE.RequestPlayersCache, "");
         }
         this._dtHelpers = Object.FindObjectsOfType<DOTWeenSyncHelper>();
         this._animHelper = Object.FindObjectsOfType<AnimatorSyncHelper>();
+
     }
 
     // USER START - - - - - - 
 
-    private AddMessagesHandlers()
-    {
+    private AddMessagesHandlers() {
         this.room.AddMessageHandler(GAME_MESSAGE.OnResetPlayerCache, (message) => {
             this.playersData = [];
         });
@@ -93,20 +93,18 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             UIManager.instance.OnZepetoRemovePlayer(playerData.sessionId);
         });
 
-        this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (playerData: PlayerDataModel) => 
-        {
+        this.room.AddMessageHandler(GAME_MESSAGE.OnDataModelArrived, (playerData: PlayerDataModel) => {
             this.playersData.forEach(pd => {
-                if (playerData.sessionId == pd.sessionId)
-                {
+                if (playerData.sessionId == pd.sessionId) {
                     if (playerData.isHunter == true) { pd.isHunter = true; } else { pd.isHunter = false; }
                     if (playerData.isReady == true) { pd.isReady = true; } else { pd.isReady = false; }
                     pd.itemId = playerData.itemId;
                 }
             });
-            
+
             UIManager.instance.RefreshLobby();
-            
-            if(!playerData.isHunter) TransformableItemsManager.instance.TransformPlayer(playerData.itemId, playerData.sessionId);
+
+            if (!playerData.isHunter) TransformableItemsManager.instance.TransformPlayer(playerData.itemId, playerData.sessionId);
         });
 
         this.room.AddMessageHandler(GAME_MESSAGE.OnStartGameArrived, (message) => {
@@ -118,10 +116,10 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             if (message == "True") { result = true; } else { result = false; }
             GameManager.instance.SelectTeamWins(result);
         });
+
     }
 
-    private SetInitialPlayerData()
-    {
+    private SetInitialPlayerData() {
         this.localPlayerModel = new PlayerModel;
         this.localPlayerModel.sessionId = "";
         this.localPlayerModel.isHunter = false;
@@ -129,30 +127,27 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         this.localPlayerModel.itemId = "";
     }
 
-    public SwitchTeam()
-    {
+    public SwitchTeam() {
         this.localPlayerModel.isHunter = !this.localPlayerModel.isHunter;
         UIManager.instance.SwitchGameUI(this.localPlayerModel.isHunter);
         this.SetPlayerDataModel();
-    }   
+    }
 
-    public ChangeItem(itemId: string){
+    public ChangeItem(itemId: string) {
         this.localPlayerModel.itemId = itemId;
         this.SetPlayerDataModel();
     }
 
-    public SwitchReady()
-    {
+    public SwitchReady() {
         this.localPlayerModel.isReady = !this.localPlayerModel.isReady;
         this.SetPlayerDataModel();
         this.room.Send(GAME_MESSAGE.Request_StartGame);
     }
 
-    SetPlayerDataModel() 
-    {
+    SetPlayerDataModel() {
         const data = new RoomData();
-        data.Add("sessionId",  this.localPlayerModel.sessionId);
-        data.Add("playerName",  this.localPlayerModel.playerName);
+        data.Add("sessionId", this.localPlayerModel.sessionId);
+        data.Add("playerName", this.localPlayerModel.playerName);
         data.Add("isHunter", this.localPlayerModel.isHunter);
         data.Add("isReady", this.localPlayerModel.isReady);
         data.Add("itemId", this.localPlayerModel.itemId);
@@ -160,12 +155,11 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         this.room.Send(GAME_MESSAGE.EditDataModel, data.GetObject());
     }
 
-    public GetLocalSessionId(): string{
+    public GetLocalSessionId(): string {
         return this.localPlayerModel.sessionId;
     }
 
-    public GetPlayerData(sessionId: string) : PlayerDataModel
-    {
+    public GetPlayerData(sessionId: string): PlayerDataModel {
         let result = this.playersData[0];
         this.playersData.forEach((pd) => {
             if (pd.sessionId == sessionId) {
@@ -175,29 +169,28 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         return result;
     }
 
-    public GetRoom() : Room
-    {
+    public GetRoom(): Room {
         return this.room;
     }
-        
+
     // USER END - - - - - - 
-    
+
     /**Util**/
-    private CheckMaster(){
+    private CheckMaster() {
         this.StartCoroutine(this.WaitPingCheck());
 
-        this.room.AddMessageHandler(MESSAGE.MasterResponse, (masterSessionId :string) => {
+        this.room.AddMessageHandler(MESSAGE.MasterResponse, (masterSessionId: string) => {
             this._masterSessionId = masterSessionId;
             this._tfHelpers = Object.FindObjectsOfType<TransformSyncHelper>();
-            this._tfHelpers.forEach((tf)=>{
-                if(tf.UpdateOwnerType == UpdateOwner.Master){
+            this._tfHelpers.forEach((tf) => {
+                if (tf.UpdateOwnerType == UpdateOwner.Master) {
                     tf.ChangeOwner(this._masterSessionId);
                 }
             });
-            this._dtHelpers.forEach((dt)=>{
+            this._dtHelpers.forEach((dt) => {
                 dt.ChangeOwner(this._masterSessionId);
             });
-            this._animHelper.forEach((anim)=>{
+            this._animHelper.forEach((anim) => {
                 anim.ChangeOwner(this._masterSessionId);
             });
         });
@@ -205,46 +198,46 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
 
     // This function is used to instantiate a new object in the game. It sends a message to the server requesting the creation of the object, 
     // and waits for the server to respond with the necessary information to create it.
-    private GetInstantiate(){
+    private GetInstantiate() {
         this.room.Send(MESSAGE.RequestInstantiateCache);
-        this.room.AddMessageHandler(MESSAGE.Instantiate, (message:InstantiateObj) => {
+        this.room.AddMessageHandler(MESSAGE.Instantiate, (message: InstantiateObj) => {
             const prefabObj = Resources.Load(message.prefabName) as GameObject;
-            if(null === prefabObj){
+            if (null === prefabObj) {
                 console.warn(`${message.prefabName} is null, Add Prefab in the Resources folder.`);
                 return;
             }
             const spawnPosition = message.spawnPosition ? new Vector3(message.spawnPosition.x, message.spawnPosition.y, message.spawnPosition.z) : prefabObj.transform.position;
-            const spawnRotation= message.spawnRotation ? new Quaternion(message.spawnRotation.x, message.spawnRotation.y, message.spawnRotation.z, message.spawnRotation.w) : prefabObj.transform.rotation
+            const spawnRotation = message.spawnRotation ? new Quaternion(message.spawnRotation.x, message.spawnRotation.y, message.spawnRotation.z, message.spawnRotation.w) : prefabObj.transform.rotation
 
-            const newObj:GameObject = Object.Instantiate(prefabObj, spawnPosition, spawnRotation) as GameObject;
-            
+            const newObj: GameObject = Object.Instantiate(prefabObj, spawnPosition, spawnRotation) as GameObject;
+
             // If the object has a TransformSyncHelper script attached to it, it sets the script's ID and owner information. 
             // If the object does not have a TransformSyncHelper script, a warning is logged to the console.
             const tf = newObj?.GetComponent<TransformSyncHelper>();
-            if(null === tf) { //Creates an none-sync object.
+            if (null === tf) { //Creates an none-sync object.
                 console.warn(`${tf.name} does not have a TransformSyncHelper script.`);
                 return;
             }
 
             tf.Id = message.Id;
-            if(tf.UpdateOwnerType === UpdateOwner.Master) {
+            if (tf.UpdateOwnerType === UpdateOwner.Master) {
                 tf.ChangeOwner(this._masterSessionId);
             }
-            else if(message.ownerSessionId){
+            else if (message.ownerSessionId) {
                 tf.ChangeOwner(message.ownerSessionId);
             }
         });
     }
 
     /** Destroy synchronization objects */
-    public Destroy(DestroyObject: GameObject){
+    public Destroy(DestroyObject: GameObject) {
         const tf = DestroyObject.GetComponent<TransformSyncHelper>();
         const objId = tf?.Id;
-        if(null === objId) {
+        if (null === objId) {
             console.warn("Only objects that contain TransformSyncHelper scripts can be deleted.");
             return;
         }
-        this.SendStatus(objId,GameObjectStatus.Destroyed);
+        this.SendStatus(objId, GameObjectStatus.Destroyed);
         Object.Destroy(DestroyObject);
     }
 
@@ -252,33 +245,33 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
      @param prefabName The name or path of the prefab on the resource folder ( ex) Monsters/zombie)
      @param ownerSessionId Inject owner into objects whose transform sync type is Undefine
      */
-    public Instantiate(prefabName: string, ownerSessionId? : string, spawnPosition?: Vector3, spawnRotation?: Quaternion){
+    public Instantiate(prefabName: string, ownerSessionId?: string, spawnPosition?: Vector3, spawnRotation?: Quaternion) {
         const newObjId = MultiplayerPropHuntManager.instance.GetServerTime().toString();
 
         const data = new RoomData();
         data.Add("Id", newObjId);
         data.Add("prefabName", prefabName);
         data.Add("ownerSessionId", ownerSessionId);
-        if(undefined != spawnPosition) {
+        if (undefined != spawnPosition) {
             const position = new RoomData();
-            position.Add("x",spawnPosition.x);
-            position.Add("y",spawnPosition.y);
-            position.Add("z",spawnPosition.z);
+            position.Add("x", spawnPosition.x);
+            position.Add("y", spawnPosition.y);
+            position.Add("z", spawnPosition.z);
             data.Add("spawnPosition", position.GetObject());
         }
 
-        if(undefined != spawnRotation) {
+        if (undefined != spawnRotation) {
             const rotation = new RoomData();
-            rotation.Add("x",spawnRotation.x);
-            rotation.Add("y",spawnRotation.y);
-            rotation.Add("z",spawnRotation.z);
-            rotation.Add("w",spawnRotation.w);
+            rotation.Add("x", spawnRotation.x);
+            rotation.Add("y", spawnRotation.y);
+            rotation.Add("z", spawnRotation.z);
+            rotation.Add("w", spawnRotation.w);
             data.Add("spawnRotation", rotation.GetObject());
         }
 
         this.room.Send(MESSAGE.Instantiate, data.GetObject());
     }
-    
+
     // When the application is paused (e.g. when the screen is closed or the home screen is opened)
     private bPaused: boolean = false;
     private OnApplicationPause(pause: boolean) {
@@ -290,43 +283,43 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
         }
     }
 
-    private PauseUser(){
+    private PauseUser() {
         this.room?.Send(MESSAGE.PauseUser);
 
         this.bPaused = true;
         this._pingCheckCount = 0;
         this._tfHelpers = Object.FindObjectsOfType<TransformSyncHelper>();
         // While paused, no information is received.
-        this._tfHelpers?.forEach((tf)=> {
-            if(tf.UpdateOwnerType === UpdateOwner.Master) {
+        this._tfHelpers?.forEach((tf) => {
+            if (tf.UpdateOwnerType === UpdateOwner.Master) {
                 tf.ChangeOwner(null);
             }
-            else if(tf.isOwner){
-                this.SendStatus(tf.Id,GameObjectStatus.Pause);
+            else if (tf.isOwner) {
+                this.SendStatus(tf.Id, GameObjectStatus.Pause);
             }
         });
-        this._dtHelpers?.forEach((dt)=> {
+        this._dtHelpers?.forEach((dt) => {
             dt.ChangeOwner(null);
         });
     }
 
-    private UnPauseUser(){
+    private UnPauseUser() {
         this.room?.Send(MESSAGE.UnPauseUser);
 
         this.bPaused = false;
         this._tfHelpers = Object.FindObjectsOfType<TransformSyncHelper>();
-        this._tfHelpers?.forEach((tf)=>{
-            if(tf.isOwner){
-                this.SendStatus(tf.Id,GameObjectStatus.Enable);
+        this._tfHelpers?.forEach((tf) => {
+            if (tf.isOwner) {
+                this.SendStatus(tf.Id, GameObjectStatus.Enable);
             }
-            else{
+            else {
                 tf.ForceTarget();
             }
         });
     }
 
     // Ping every 1 second to check latency with the server *
-    private *SendPing(){
+    private *SendPing() {
         let RequestTime = Number(+new Date());
         let ResponseTime = Number(+new Date());
         let isResponseDone = false;
@@ -339,8 +332,8 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
             isResponseDone = true;
         });
 
-        while(true) {
-            if(!this.bPaused) {
+        while (true) {
+            if (!this.bPaused) {
                 this.room.Send(MESSAGE.CheckServerTimeRequest);
                 RequestTime = Number(+new Date());
                 yield new WaitUntil(() => isResponseDone == true);
@@ -351,39 +344,38 @@ export default class MultiplayerPropHuntManager extends ZepetoScriptBehaviour {
     }
 
     // After checking the connection with the server once, request the master information.
-    private * WaitPingCheck(){
-        if(this.pingCheckCount == 0)
-            yield new WaitUntil(()=> this.pingCheckCount > 0)
+    private * WaitPingCheck() {
+        if (this.pingCheckCount == 0)
+            yield new WaitUntil(() => this.pingCheckCount > 0)
         this.room.Send(MESSAGE.CheckMaster);
     }
 
     //Returns the current server time.
-    public GetServerTime(){
+    public GetServerTime() {
         return this._diffServerTime + Number(+new Date());
     }
 
-    private SendStatus(id:string, status:GameObjectStatus){
+    private SendStatus(id: string, status: GameObjectStatus) {
         const data = new RoomData();
         data.Add("Id", id);
         data.Add("Status", status);
         this.room.Send(MESSAGE.SyncTransformStatus, data.GetObject());
     }
 
-    public GetReady()
-    {
+    public GetReady() {
         return this.localPlayerModel.isReady;
     }
 }
 
-interface InstantiateObj{
-    Id:string;
-    prefabName:string;
-    ownerSessionId?:string;
-    spawnPosition?:Vector3;
-    spawnRotation?:Quaternion;
+interface InstantiateObj {
+    Id: string;
+    prefabName: string;
+    ownerSessionId?: string;
+    spawnPosition?: Vector3;
+    spawnRotation?: Quaternion;
 }
 
-export enum GameObjectStatus{
+export enum GameObjectStatus {
     Destroyed = -1,
     Disable, //does not yet supported
     Enable,
@@ -406,7 +398,7 @@ enum GAME_MESSAGE {
     EditDataModel = "EditDataModel",
     Request_StartGame = "Request_StartGame",
     RequestPlayersCache = "RequestPlayersCache",
-    
+
     OnResetPlayerCache = "OnResetPlayerCache",
     OnPlayerJoin = "OnPlayerJoin",
     OnPlayerLeave = "OnPlayerLeave",

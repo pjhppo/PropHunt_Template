@@ -1,10 +1,10 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import { ZepetoText } from 'ZEPETO.World.Gui'
+import { RoundedRectangle, ZepetoText } from 'ZEPETO.World.Gui'
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
 import { GameObject, Transform } from 'UnityEngine';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
-import GameManager from '../Managers/GameManager';
 import UIManager from '../Managers/UIManager';
+import { PlayerThumb } from '../Thumbnails/ThumbnailsCreator';
 
 // This class controls the winner screen
 export default class WinnerScreen extends ZepetoScriptBehaviour {
@@ -36,19 +36,34 @@ export default class WinnerScreen extends ZepetoScriptBehaviour {
     public ShowWinners(hunterWins: boolean) {
         // Delete winners if they are there
         this.DeleteWinners();
-        
+
         // For each player saved on the multiplayer manager
         MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
             // Check if the player is part of the winner team
             if (player.isHunter == hunterWins) {
                 // Instance the winner
                 let winnerObj: GameObject = GameObject.Instantiate(this.winnerPrefab, this.winnerParent) as GameObject;
+                // Save a reference of the player
+                let zepPlayer = ZepetoPlayers.instance.GetPlayer(player.sessionId);
                 // Save the name of the player
-                let playerName = ZepetoPlayers.instance.GetPlayer(player.sessionId).name;
+                let playerName = zepPlayer.name;
+                // Set the thumbnail for the player
+                this.SetWinnerThumbnail(zepPlayer.userId, winnerObj);
                 // Set the name of the player
                 winnerObj.GetComponentInChildren<ZepetoText>().text = playerName;
                 // Add the player to the array of winners
                 this.winnersList.push(winnerObj);
+            }
+        });
+    }
+
+    // This function set a thumbnail to a winner object prefab
+    SetWinnerThumbnail(userId: string, winnerObj: GameObject) {
+        const thumbs: PlayerThumb[] = UIManager.instance.thumbnailsCreator.playerThumbs;
+        thumbs.forEach(thumb => {
+            if (thumb.userId == userId) {
+                let image = winnerObj.GetComponentInChildren<RoundedRectangle>();
+                image.Texture = thumb.thumbTexture;
             }
         });
     }
