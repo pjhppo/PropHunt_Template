@@ -17,9 +17,9 @@ export default class ThumbnailsCreator extends ZepetoScriptBehaviour {
     CreateNewThumbnail() {
         ZepetoPlayers.instance.OnAddedPlayer.AddListener((playerAdded) => {
             const player = ZepetoPlayers.instance.GetPlayer(playerAdded);
-            Debug.LogError("Player getted: " + player.userId);
+            // Debug.LogError("Player getted: " + player.userId);
             if (!player) return;
-            Debug.LogError("Creating thumbnail");
+            // Debug.LogError("Creating thumbnail");
             const userId = player.userId;
             this.GetProfileTexture(userId);
         });
@@ -32,7 +32,7 @@ export default class ThumbnailsCreator extends ZepetoScriptBehaviour {
 
     GetProfileTexture(userId: string) {
         ZepetoWorldHelper.GetProfileTexture(userId, (texture: Texture) => {
-            Debug.LogError("Thumbnail obtained");
+            // Debug.LogError("Thumbnail obtained");
             const sprite = this.GetSprite(texture);
             const newThumbnail: GameObject = GameObject.Instantiate(this.thumbnailPrefab, this.thumbnailParent) as GameObject;
             const thumbImage: Image = newThumbnail.GetComponent<Image>();

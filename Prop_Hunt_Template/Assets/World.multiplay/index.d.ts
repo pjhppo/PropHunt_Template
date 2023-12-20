@@ -718,16 +718,9 @@ declare module "ZEPETO.Multiplay" {
     interface SandboxPlayer {
         readonly sessionId: string;
         readonly userId: string;
-        readonly hashCode?: string;
         
         send<T>(type: string | number, message?: T): void;
         send(message: Schema): void;
-    }
-
-    class BroadcastMessage {
-        sender: string;
-        data: any;
-        constructor(sender: string, data: any);
     }
 
     interface IBroadcastOptions {
@@ -735,24 +728,15 @@ declare module "ZEPETO.Multiplay" {
     }
 
     interface SandboxOptions {
-        readonly applicationId: string;
         readonly isSandbox: boolean;
-        readonly tickInterval: number;
-        readonly isPrivate: boolean;
         readonly matchMakingValue: {[key: string]: any};
     }
     
     abstract class Sandbox {
-        readonly applicationId: string;
         readonly locked: boolean;
-        readonly metadata: any;
-        readonly clock: any;
         readonly roomId: string;
-        readonly roomType: string;
         readonly uniqueId?: string;
         readonly maxClients: number;
-        readonly patchRate: number;
-        readonly autoDispose: boolean;
         readonly state: State;
         readonly clients: IterableIterator<SandboxPlayer>;
         readonly allowReconnectionTime: number;
@@ -844,37 +828,6 @@ declare module "ZEPETO.Multiplay.HttpService" {
         postAsync(url: string, body: HttpBodyType, httpContentType: HttpContentType, headers?: HttpHeader): Promise<HttpResponse>;
     }
     const HttpService: HttpService;
-}
-
-/**
- * @deprecated The module should not be used
- */
-declare module "ZEPETO.Multiplay.IWP" {
-    import { SandboxPlayer } from "ZEPETO.Multiplay";
-
-    /**
-     * @deprecated The interface should not be used
-     */
-    interface IReceiptMessage {
-        receiptId: string;
-        itemId: string;
-        worldId: string;
-        purchasePrice: number;
-        status: string;
-        purchasedAt: string;
-        createdAt: string;
-        updatedAt: string;
-    }
-
-    /**
-     * @deprecated The interface should not be used
-     */
-    interface IWP {
-        /**
-         * @deprecated The function should not be used
-         */
-        onPurchased(client: SandboxPlayer, receipt: IReceiptMessage): void | Promise<void>;
-    }
 }
 
 declare module "ZEPETO.Multiplay.Inventory" {
