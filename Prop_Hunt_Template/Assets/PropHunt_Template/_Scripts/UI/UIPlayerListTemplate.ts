@@ -8,8 +8,12 @@ import UIManager from '../Managers/UIManager';
 
 // This class controls each player tab of the player list on the lobby
 export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
+    @SerializeField() private propColor: Color;
+    @SerializeField() private hunterColor: Color;
 
     @SerializeField() private txtName: ZepetoText; // Reference to the text of the name
+    @SerializeField() private readyTextImg: Image; // Reference to the ready text image
+    @SerializeField() private checkmarkImg: Image; // Reference to the checkmark image
     @SerializeField() private readyIcon: Image; // Reference to the ready icon
 
     public _isHunter: bool;
@@ -47,6 +51,7 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
 
         // Set the scale of this on one (1,1,1)
         this.transform.localScale = Vector3.one;
+        this.SetHunter(this._isHunter);
     }
 
     public RefreshData() {
@@ -66,6 +71,19 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
     // This function sets the displayed name
     SetDisplayName(text: string) {
         this.txtName.text = text;
+    }
+
+    // This function set the color of the label if it is hunter or not
+    public SetHunter(isHunter: bool) {
+        if (isHunter) {
+            this.txtName.color = this.hunterColor;
+            this.readyTextImg.color = this.hunterColor;
+            this.checkmarkImg.color = this.hunterColor;
+        } else {
+            this.txtName.color = this.propColor;
+            this.readyTextImg.color = this.propColor;
+            this.checkmarkImg.color = this.propColor;
+        }
     }
 
     // This function sets the ready state

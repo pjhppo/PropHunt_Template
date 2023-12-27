@@ -15,7 +15,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
     public static instance: UIManager; // Is used for the singleton pattern
 
     public icon: GameObject; // Reference to the GO of the charging icon of the hunter
-    public iconCharge: Image; // Reference to the Image of the chargin icon of the hunte
+    public iconCharge: Slider; // Reference to the Image of the chargin icon of the hunte
 
     public txtTime: ZepetoText; // Reference to the text that shows the timer
     public teamSelectorObj: GameObject; // Reference to the team selector screen GO
@@ -42,7 +42,9 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     @SerializeField() private txtPropsCounter: ZepetoText;
     @HideInInspector() public propsAmount: number = 0;
-
+    public readyBtnObj: GameObject;
+    public counterObj: GameObject;
+    public lobbyStartCounter: ZepetoText;
     public txtPropCounter: ZepetoText;
     public txtHunterCounter: ZepetoText;
     public propsCounter: number = 0;
@@ -103,7 +105,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
     }
 
     public SetPropSelectedButton(btnScript: UITransformableButton) {
-        if (this.buttonSelected) this.buttonSelected.selected.SetActive(false);
+        if (this.buttonSelected && this.buttonSelected != btnScript) this.buttonSelected.selected.SetActive(false);
         this.buttonSelected = btnScript;
     }
 
@@ -154,7 +156,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     // This functions updates the fill amount of the charging icon image
     UpdateChargeFillAmount(percentage: number) {
-        this.iconCharge.fillAmount = percentage;
+        this.iconCharge.value = percentage;
     }
 
     // This function shows or hide the icon of the charging image and position it by parameters

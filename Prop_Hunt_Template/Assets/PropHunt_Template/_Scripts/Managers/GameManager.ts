@@ -1,4 +1,4 @@
-import { GameObject, LayerMask, Quaternion, Transform } from 'UnityEngine';
+import { GameObject, LayerMask, Quaternion, Transform, WaitForSeconds } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import NonHunterController from '../Player/NonHunterController';
 import { Time } from 'UnityEngine';
@@ -88,6 +88,24 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     // This function set all the start of the game
     StartGame() {
+        this.StartCoroutine(this.StartGameCoroutine());
+    }
+
+    *StartGameCoroutine() {
+        UIManager.instance.readyBtnObj.SetActive(false);
+        UIManager.instance.counterObj.SetActive(true);
+
+        let counter = 3;
+        UIManager.instance.lobbyStartCounter.text = counter.toString();
+        while (counter > 0) {
+            yield new WaitForSeconds(1);
+            counter--;
+            UIManager.instance.lobbyStartCounter.text = counter.toString();
+        }
+
+        UIManager.instance.readyBtnObj.SetActive(true);
+        UIManager.instance.counterObj.SetActive(false);
+
         // For each player in playerData of MultiplayerPropHuntManager
         MultiplayerPropHuntManager.instance.playersData.forEach((player) => {
             // Get a zepetoPlayer by the player.sessionId
@@ -119,6 +137,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         // Activate the control ui
         this.ActiveControls(true);
+        yield null;
     }
 
     // This function change the gameStarted to false
@@ -191,7 +210,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     // This function select wich team is the winner
     SelectTeamWins(huntersWins: boolean) {
         if (!GameManager.gameStarted) return;
-        
+
         // Call to the function to set the player ready state
         MultiplayerPropHuntManager.instance.SwitchReady();
         // Call to the function to stop the game

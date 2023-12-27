@@ -9,6 +9,7 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
     public icon: Image; // Reference to the property image of the icon
     public selected: GameObject; // Reference to the selected game object
     public checkMark: GameObject; // Reference to the checkmark game object
+    public transformed: GameObject; // Reference to the transformed game object
 
     private button: Button; // Reference to the button
 
@@ -39,17 +40,20 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
     SetSelected() {
         this.selected.SetActive(true);
         this.checkMark.SetActive(false);
+        this.transformed.SetActive(false);
     }
 
     // This function actives the transformed state
     SetTransformed() {
         this.selected.SetActive(false);
         this.checkMark.SetActive(true);
+        this.transformed.SetActive(true);
     }
 
     // This function actives the default state
     SetDefault() {
         this.selected.SetActive(false);
         this.checkMark.SetActive(false);
+        this.transformed.SetActive(false);
     }
 }
