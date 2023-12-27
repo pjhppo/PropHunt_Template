@@ -1,6 +1,6 @@
-import { Color, Debug, Transform, Vector3 } from 'UnityEngine';
+import { Color, Coroutine, Debug, Sprite, Transform, Vector3, WaitForSeconds } from 'UnityEngine';
 import { Image } from 'UnityEngine.UI';
-import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import { ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoText } from 'ZEPETO.World.Gui'
 import MultiplayerPropHuntManager from '../Multiplayer/MultiplayerPropHuntManager';
@@ -16,22 +16,24 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
     @SerializeField() private checkmarkImg: Image; // Reference to the checkmark image
     @SerializeField() private readyIcon: Image; // Reference to the ready icon
 
-    public _isHunter: bool;
+    public _isHunter: bool; // Saves if is hunter or prop
     public _user: string; // Saves the name of the user
 
-    Start() {
-        // Set the color of the ready icon
-        this.readyIcon.color = Color.yellow
-    }
+    coroutineWaiting: Coroutine;
 
     // This function populates the tab for the player passed as parameter
     public Populate(sessionId: string, teamChanged: bool = false, isFirstCharge: bool = false) {
         // Save the session id
         this._user = sessionId;
+
+        const player: ZepetoPlayer = ZepetoPlayers.instance.GetPlayer(sessionId);
+        const thumb: Sprite = UIManager.instance.thumbnailsCreator.GetPlayerThumb(player.userId);
+
+        if (thumb) this.readyIcon.sprite = thumb;
+        else if (!this.coroutineWaiting) this.coroutineWaiting = this.StartCoroutine(this.WaitForSprite(player.userId));
+
         // Change the name text by getting the player name with the session id
-        this.txtName.text = ZepetoPlayers.instance.GetPlayer(sessionId).name;
-        // Call to the function to set ready the player created
-        this.SetReady(MultiplayerPropHuntManager.instance.GetPlayerData(sessionId).isReady);
+        this.txtName.text = player.name;
 
         // Check if the player is hunter
         if (MultiplayerPropHuntManager.instance.GetPlayerData(sessionId).isHunter) {
@@ -52,10 +54,6 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
         // Set the scale of this on one (1,1,1)
         this.transform.localScale = Vector3.one;
         this.SetHunter(this._isHunter);
-    }
-
-    public RefreshData() {
-
     }
 
     // This function returns the user
@@ -86,21 +84,18 @@ export default class UIPlayerListTemplate extends ZepetoScriptBehaviour {
         }
     }
 
-    // This function sets the ready state
-    public SetReady(isReady: boolean) {
-        // Check if is ready
-        if (isReady) {
-            // Change the ready icon color to green
-            this.readyIcon.color = Color.green;
-        }
-        else {
-            // Change the ready icon color to green
-            this.readyIcon.color = Color.yellow;
-        }
-    }
-
     // This function changes the parent of this to the transform sended as parameter
     public ChangeParent(newParent: Transform) {
         this.transform.SetParent(newParent);
+    }
+
+    *WaitForSprite(userId: string) {
+        let thumb: Sprite = UIManager.instance.thumbnailsCreator.GetPlayerThumb(userId);
+        while (thumb == null) {
+            yield new WaitForSeconds(3);
+            thumb = UIManager.instance.thumbnailsCreator.GetPlayerThumb(userId);
+        }
+        this.readyIcon.sprite = thumb;
+        yield null;
     }
 }

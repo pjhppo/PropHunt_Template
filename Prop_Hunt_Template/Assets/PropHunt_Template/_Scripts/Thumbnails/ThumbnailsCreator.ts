@@ -10,6 +10,14 @@ export default class ThumbnailsCreator extends ZepetoScriptBehaviour {
 
     public playerThumbs: PlayerThumb[] = [];
 
+    public GetPlayerThumb(userId: string): Sprite {
+        let thumbToReturn: Sprite = null;
+        this.playerThumbs.forEach(thumb => {
+            if (thumb.userId == userId) thumbToReturn = thumb.thumbSprite;
+        });
+        return thumbToReturn;
+    }
+
     Start() {
         this.CreateNewThumbnail();
     }
