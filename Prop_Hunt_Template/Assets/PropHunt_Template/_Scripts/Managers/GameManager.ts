@@ -210,7 +210,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
     // This function select wich team is the winner
     SelectTeamWins(huntersWins: boolean) {
         if (!GameManager.gameStarted) return;
-
+        // Call to the funtion to deactivate the controls
+        this.ActiveControls(false);
         // Call to the function to set the player ready state
         MultiplayerPropHuntManager.instance.SwitchReady();
         // Call to the function to stop the game

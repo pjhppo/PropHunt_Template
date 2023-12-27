@@ -9,6 +9,7 @@ import LobbyElementPool from '../UI/LobbyElementPool';
 import { RectTransform } from 'UnityEngine';
 import UITransformableButton from '../UI/UITransformableButton';
 import ThumbnailsCreator from '../Thumbnails/ThumbnailsCreator';
+import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 
 // This function is responsible for all the tasks that need to be displayed on the UI
 export default class UIManager extends ZepetoScriptBehaviour {
@@ -88,6 +89,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.limitOut = _limitOut;
 
         this.thumbnailsCreator = this.thumbnailsCreatorObj.GetComponent<ThumbnailsCreator>();
+        this.hunterCanvas.SetActive(false);
     }
 
     // This functions is called when one player is added to the game
@@ -160,11 +162,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
     }
 
     // This function shows or hide the icon of the charging image and position it by parameters
-    ShowIconPercentage(show: bool, pointerPos: Vector3) {
+    ShowIconPercentage(show: bool) {
         // Activate the icon by the passed parameter
         this.icon.SetActive(show);
-        // Positioning the icon by the parameter
-        this.icon.transform.position = pointerPos;
+        this.iconCharge.value = 0;
     }
 
     // This function shows the catched text for the hunter

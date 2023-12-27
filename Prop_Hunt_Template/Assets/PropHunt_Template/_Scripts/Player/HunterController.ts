@@ -20,7 +20,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
     Start() {
         // Get the reference of the zepeto camera
         this.mainCamera = ZepetoPlayers.instance.ZepetoCamera.camera;
-        
+
         // Get the time to catch from the game manager
         this.timeToCatch = GameManager.instance.timeToCatch;
     }
@@ -60,7 +60,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
         // https://docs.unity3d.com/ScriptReference/Camera.WorldToScreenPoint.html
         let position = this.mainCamera.WorldToScreenPoint(nonHunter.transform.position);
         // Show the icon charging calling at the function in UIManager passing as parameter if you want to show it, and the position to show it
-        UIManager.instance.ShowIconPercentage(true, position);
+        UIManager.instance.ShowIconPercentage(true);
         // Call to the function to update the catch percentage
         this.UpdateCatchPercentage();
 
@@ -76,7 +76,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
         // Call to the functions to hide te player and set the spectator
         nonHunter.HidePlayer();
         nonHunter.Spectate(this.transform);
-        
+
         // Call to the function to show the catched text in the UIManager
         UIManager.instance.ShowCatchedText();
         // Rest one non hunter of the game calling at the function in the GameManager
@@ -90,7 +90,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
         // Rest the real time to the remaining time
         this.remainingTimeToCatch -= Time.deltaTime;
         // Get a percentage of the remaining time
-        let timePercentage = this.remainingTimeToCatch / this.timeToCatch;
+        let timePercentage = (this.timeToCatch - this.remainingTimeToCatch) / this.timeToCatch;
         // Updates the UI calling at the function in UIManager
         UIManager.instance.UpdateChargeFillAmount(timePercentage);
     }
@@ -100,7 +100,7 @@ export default class HunterController extends ZepetoScriptBehaviour {
         // Set the remainig time to the total time to catch someone
         this.remainingTimeToCatch = this.timeToCatch;
         // Hide the icon charging calling at the function in the UIManager
-        UIManager.instance.ShowIconPercentage(false, Vector3.zero);
+        UIManager.instance.ShowIconPercentage(false);
     }
 
     // This function shows ONLY IN EDITOR the catching zone of the hunter by a red sphere
