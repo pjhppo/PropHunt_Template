@@ -10,8 +10,8 @@ import { GameObject } from 'UnityEngine';
 // This class asign the button listeners commands
 export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     @SerializeField() private readyButton: Button; // Reference to the ready button
-    @SerializeField() private readyBtn_Active: GameObject; // Reference to the ready button active
-    @SerializeField() private readyBtn_Unactive: GameObject; // Reference to the ready button unactive
+    @SerializeField() private readyBtn_Pressed: GameObject; // Reference to the ready button active
+    @SerializeField() private readyBtn_NonPressed: GameObject; // Reference to the ready button unactive
     @SerializeField() private switchTeamButton: Button; // Reference to the switch team button
     @SerializeField() private resetButton: Button; // Reference to the reset button
 
@@ -42,8 +42,8 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
             // Set the interactable setting of the switch team button in the inverse of the activeButtons
             this.switchTeamButton.interactable = !activeButtons;
 
-            this.readyBtn_Active.SetActive(activeButtons);
-            this.readyBtn_Unactive.SetActive(!activeButtons);
+            this.readyBtn_Pressed.SetActive(activeButtons);
+            this.readyBtn_NonPressed.SetActive(!activeButtons);
         });
 
         // Add the listener of the reset button
@@ -76,5 +76,8 @@ export default class UIButtonsListeners extends ZepetoScriptBehaviour {
     OnReset() {
         // Set the interactable button of the switch teams in true
         this.switchTeamButton.interactable = true;
+        // Set the ready btn in the default state
+        this.readyBtn_Pressed.SetActive(false);
+        this.readyBtn_NonPressed.SetActive(true);
     }
 }

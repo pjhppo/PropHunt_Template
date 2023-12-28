@@ -10,6 +10,7 @@ import { RectTransform } from 'UnityEngine';
 import UITransformableButton from '../UI/UITransformableButton';
 import ThumbnailsCreator from '../Thumbnails/ThumbnailsCreator';
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import GameManager from './GameManager';
 
 // This function is responsible for all the tasks that need to be displayed on the UI
 export default class UIManager extends ZepetoScriptBehaviour {
@@ -41,7 +42,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
     @SerializeField() private thumbnailsCreatorObj: GameObject;
     @HideInInspector() public thumbnailsCreator: ThumbnailsCreator;
 
-    @SerializeField() private txtPropsCounter: ZepetoText;
+    @SerializeField() private txtPropsCounterInGame: ZepetoText;
     @HideInInspector() public propsAmount: number = 0;
     public readyBtnObj: GameObject;
     public counterObj: GameObject;
@@ -92,6 +93,12 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.hunterCanvas.SetActive(false);
     }
 
+    Start() {
+        GameManager.instance.OnReset.AddListener(() => {
+            this.sliderRot.value = 0;
+        });
+    }
+
     // This functions is called when one player is added to the game
     public OnZepetoAddPlayer(sessionId: string) {
         // Get a reference of an element of the pool calling to the function of the script
@@ -135,7 +142,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     // This function updates the txt of the props amount receiving the actual amount by parameter
     UpdatePropsCounter(amount: number) {
-        this.txtPropsCounter.text = amount.toString() + "/" + this.propsAmount.toString();
+        this.txtPropsCounterInGame.text = amount.toString() + "/" + this.propsAmount.toString();
     }
 
     // This method controls the visual of the timer, normalizing the time to mins and secs

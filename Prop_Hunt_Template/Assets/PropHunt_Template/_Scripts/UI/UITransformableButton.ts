@@ -4,6 +4,7 @@ import TransformableItemsManager from '../Managers/TransformableItemsManager';
 import Itemtransformable from '../Player/Itemtransformable';
 import { GameObject } from 'UnityEngine';
 import UIManager from '../Managers/UIManager';
+import GameManager from '../Managers/GameManager';
 // This class is responsible for the operation of the UI buttons for transformation
 export default class UITransformableButton extends ZepetoScriptBehaviour {
     public icon: Image; // Reference to the property image of the icon
@@ -19,6 +20,12 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
         // Get the component button and save it
         this.button = this.GetComponent<Button>();
         this.SetDefault();
+    }
+
+    Start() {
+        GameManager.instance.OnReset.AddListener(()=>{
+            this.SetDefault();
+        });
     }
 
     // This function set the behaviour of the button

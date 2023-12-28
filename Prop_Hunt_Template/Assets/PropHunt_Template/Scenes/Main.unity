@@ -22517,8 +22517,8 @@ MonoBehaviour:
     - resetButton
     - releaseButton
     - transformButton
-    - readyBtn_Active
-    - readyBtn_Unactive
+    - readyBtn_Pressed
+    - readyBtn_NonPressed
     unityValues:
     - {fileID: 1197121631}
     - {fileID: 1300173636}
@@ -22567,7 +22567,6 @@ MonoBehaviour:
     - huntersBlackoutScreen
     - winnerScreen
     - lobbyElementPool
-    - txtPropsCounter
     - btnpropList
     - propList
     - txtPropCounter
@@ -22578,6 +22577,7 @@ MonoBehaviour:
     - readyBtnObj
     - counterObj
     - lobbyStartCounter
+    - txtPropsCounterInGame
     unityValues:
     - {fileID: 1869235046}
     - {fileID: 1478241559}
@@ -22592,7 +22592,6 @@ MonoBehaviour:
     - {fileID: 86221117}
     - {fileID: 430323297}
     - {fileID: 1601604464}
-    - {fileID: 1936981935}
     - {fileID: 1649421549}
     - {fileID: 669190235}
     - {fileID: 1251653543}
@@ -22603,6 +22602,7 @@ MonoBehaviour:
     - {fileID: 1300173634}
     - {fileID: 427985608}
     - {fileID: 1622260011}
+    - {fileID: 851831802}
     values:
     - 
     - 
@@ -22621,9 +22621,9 @@ MonoBehaviour:
     - 
     - 
     - 
+    - '{"type":"System.Single, mscorlib","value":"0"}'
+    - '{"type":"System.Single, mscorlib","value":"0"}'
     - 
-    - '{"type":"System.Single, mscorlib","value":"0"}'
-    - '{"type":"System.Single, mscorlib","value":"0"}'
     - 
     - 
     - 
