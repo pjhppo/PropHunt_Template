@@ -3,11 +3,11 @@
 
 ## 📢 About
 
-Nice to meet you Creators! 👋 Welcome to Prop Hunt template guide!
+Nice to meet you Creators! 👋 Welcome to Prop Hunt template guide! <br> 
 
-With Prop Hunt you can create amazing worlds to play with your friends!
+With Prop Hunt you can create amazing worlds to play with your friends! <br>
 
-Now, are you ready to start?
+Now, are you ready to start? <br>
 
   
 
@@ -21,6 +21,9 @@ Now, are you ready to start?
   - [Cloning it](#cloning-the-project)
   - [Downloading it](#downloading-the-project)
   - [By Unitypackage](#getting-it-from-the-releases-section)
+
+  <br>
+
 
 ### Cloning the project
 
@@ -41,6 +44,7 @@ Here we fill the URL tab and set the folder where you want to save it and press 
 <br><img src = "docs/images/download/04.png" alt = "cloning settings img"></img><br>
 
 Once it clones the project you can open it from Unity Hub.
+<br>
 
 ### Downloading the project
 
@@ -49,6 +53,7 @@ Click on the same [Code] button but instead of clicking on the link, click on do
 <br><img src = "docs/images/download/05.png" alt = "download zip img"></img><br>
 
 Then extract the files and open it with Unity.
+<br>
 
 ### Getting it from the releases section
 
@@ -60,10 +65,10 @@ Then click on the file ".unitypackage" and import it in a new project of Unity!
 
 <br><img src = "docs/images/download/07.png" alt = "unitypackage img"></img><br>
 
-
-  
-
 > 💡 Enjoy and start creating with the Template! :tada:
+<br>
+
+
 
 ## ❓ FAQ
 <h3> How to open the project</h3>
@@ -106,9 +111,9 @@ If you have an error showing that some component is missing, you have to go to t
 ><br><img src = "docs/images/worldsettings.png" alt = "unitypackage img"></img><br>
 >- Click on open world settings and change the orientation to horizontal
 ><br><img src = "docs/images/horizontalmode.png" alt = "unitypackage img"></img><br>
+<br>
 
-
-<h3> **GameManager** </h3>
+- **GameManager:**
 
 The GameManager shows the basic settings for the game
 
@@ -119,15 +124,15 @@ The GameManager shows the basic settings for the game
 | Time To Catch | The time amount that the hunter will took to catch a prop     |
 | Player Layer  | The hunter will catch the players that has the selected layer |
 
-<br><img src = "docs/images/gamemanager.png" alt = "gamemanager img"></img><br>
+<br><img src = "docs/images/gamemanager.png" alt = "gamemanager img"></img><br><br>
 
-<h3> **UIManager** </h3>
+- **UIManager:** 
 The ui manager has a lot of references, all of them have to be like in the image to work well, but if you click one of them it will show you wich is the object that they reference.
 
-<br><img src = "docs/images/uimanager.png" alt = "uimanager img"></img><br>
+<br><img src = "docs/images/uimanager.png" alt = "uimanager img"></img><br><br>
 
 
-<h3> **Random Spawner** </h3>
+- **Random Spawner:** 
 The random spawner generates spawn areas where you want to.
 
 | Variable     | Utility                                                 |
@@ -145,16 +150,16 @@ To create an spawnpoint you have to create an empty object and position it where
 
 The spawn areas will be created on the start method of unity so, whe you click the play button this areas in the editor will show you the size of the areas visually
 
-<br><img src = "docs/images/spawnareas.png" alt = "spawn areas img" width="400"></img><br>
+<br><img src = "docs/images/spawnareas.png" alt = "spawn areas img" width="400"></img><br><br>
 
-<h3> **Multiplayer Manager** </h3>
+- **Multiplayer Manager:**
 This class is included into the multiplay component of the <a href="https://github.com/JasperGame/zepeto-modules"> Module importer</a> you can learn more about multiplayer <a href="https://docs.zepeto.me/studio/reference/multiplay">here</a>.
 
 
 <br><img src = "docs/images/multiplayermanager.png" alt = "module importer img"></img><br>
-<br><img src = "docs/images/moduleimporter.png" alt = "module importer img" width="500"></img><br>
+<br><img src = "docs/images/moduleimporter.png" alt = "module importer img" width="500"></img><br><br>
 
-<h3> **Transformable item Manager** </h3>
+- **Transformable item Manager:**
 
 This class controls the spawn of the buttons and the items which the player can transform in.
 You can create a new item and drag and drop it on the list of items and it will create a new button automatically.
@@ -182,10 +187,11 @@ Every scriptable object will need some references to create a new object.
 | Item Prefab | The object to transform in (IMPORTANT NOTE: read after this board)                |
 | Icon Sprite | The sprite that will be shown in the button on the UI                             |
 
-<h4> ITEM PREFAB WARNING: </h4v>
+<h4> ITEM PREFAB WARNING: </h4>
  It **HAS** to have a **boxcollider**, it **cannot** be other type. It also has to have a mesh filter.
+<br>
 
-<h3> **Lobby Element Pool** </h3>
+- **Lobby Element Pool:**
 This is a pool of items to create in the ui of the lobby, the first variable **Ui Prefab** saves the prefab that will be created for the pool, and the **Parent Transform** saves the transform that will be the parent for those items.
 To learn about the pool pattern you <a href="https://en.wikipedia.org/wiki/Object_pool_pattern">check it here.</a>
 
