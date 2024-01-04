@@ -32,7 +32,7 @@ Then click on the icon to copy the link of the repository (make sure that you ar
 
 <br><img src = "docs/images/download/02.png" alt = "copy github link img"></img><br>
 
-Once you have it, using your your preferred software (in this case we are using <a href="https://git-fork.com/" target="_blank"> Fork</a>) click on "File->Clone" or press "Ctrl + N" to clone.
+Once you have it, using your preferred software (in this case we are using <a href="https://git-fork.com/" target="_blank"> Fork</a>) click on "File->Clone" or press "Ctrl + N" to clone.
 
 <br><img src = "docs/images/download/03.png" alt = "clone project img"></img><br>
 
@@ -40,7 +40,7 @@ Here we fill the URL tab and set the folder where you want to save it and press 
 
 <br><img src = "docs/images/download/04.png" alt = "cloning settings img"></img><br>
 
-Once it clones the project you can open it from unity hub.
+Once it clones the project you can open it from Unity Hub.
 
 ### Downloading the project
 
@@ -48,7 +48,7 @@ Click on the same [Code] button but instead of clicking on the link, click on do
 
 <br><img src = "docs/images/download/05.png" alt = "download zip img"></img><br>
 
-Then extract the files and open it with unity.
+Then extract the files and open it with Unity.
 
 ### Getting it from the releases section
 
@@ -101,14 +101,15 @@ If you have an error showing that some component is missing, you have to go to t
 
 ## 🔨 Tools
 
->**Tooltip <span>&#8594;</span>**  The project was made to be used on horizontal mode, if you >have it in portrait make sure to change it from Unity.
+>**Tooltip <span>&#8594;</span>**  The project was made to be used on horizontal mode, if you have it in portrait make sure to change it from Unity.
 >- Open the menu from the down arrow just right of the publish button.
 ><br><img src = "docs/images/worldsettings.png" alt = "unitypackage img"></img><br>
 >- Click on open world settings and change the orientation to horizontal
 ><br><img src = "docs/images/horizontalmode.png" alt = "unitypackage img"></img><br>
 
 
-**GameManager**
+<h3> **GameManager** </h3>
+
 The GameManager shows the basic settings for the game
 
 | Variable      | Utility                                                       |
@@ -120,13 +121,13 @@ The GameManager shows the basic settings for the game
 
 <br><img src = "docs/images/gamemanager.png" alt = "gamemanager img"></img><br>
 
-**UIManager**
+<h3> **UIManager** </h3>
 The ui manager has a lot of references, all of them have to be like in the image to work well, but if you click one of them it will show you wich is the object that they reference.
 
 <br><img src = "docs/images/uimanager.png" alt = "uimanager img"></img><br>
 
 
-**Random Spawner**
+<h3> **Random Spawner** </h3>
 The random spawner generates spawn areas where you want to.
 
 | Variable     | Utility                                                 |
@@ -137,7 +138,7 @@ The random spawner generates spawn areas where you want to.
 
 <br><img src = "docs/images/randomspawner.png" alt = "random spawner img"></img><br>
 
-<h4>spawn point creation</h4>
+<h4> Spawn Point Creation</h4>
 To create an spawnpoint you have to create an empty object and position it where you want to create an spawn area.
 
 <br><img src = "docs/images/spawnpoints.png" alt = "spawn points img"></img><br>
@@ -146,14 +147,14 @@ The spawn areas will be created on the start method of unity so, whe you click t
 
 <br><img src = "docs/images/spawnareas.png" alt = "spawn areas img" width="400"></img><br>
 
-**Mutliplayer Manager**
+<h3> **Multiplayer Manager** </h3>
 This class is included into the multiplay component of the <a href="https://github.com/JasperGame/zepeto-modules"> Module importer</a> you can learn more about multiplayer <a href="https://docs.zepeto.me/studio/reference/multiplay">here</a>.
 
 
 <br><img src = "docs/images/multiplayermanager.png" alt = "module importer img"></img><br>
 <br><img src = "docs/images/moduleimporter.png" alt = "module importer img" width="500"></img><br>
 
-**Transformable item Manager**
+<h3> **Transformable item Manager** </h3>
 
 This class controls the spawn of the buttons and the items which the player can transform in.
 You can create a new item and drag and drop it on the list of items and it will create a new button automatically.
@@ -166,7 +167,7 @@ You can create a new item and drag and drop it on the list of items and it will 
 
 <br><img src = "docs/images/transformableitemsmanager.png" alt = "transformable item manager img"></img><br>
 
-#####Item creation
+<h4> Item creation </h4>
 To create a new item for the props we need to create a new item scriptable object (you can duplicate one of the existent)
 
 <br><img src = "docs/images/scriptables.png" alt = "transformable item manager img"></img><br>
@@ -181,10 +182,10 @@ Every scriptable object will need some references to create a new object.
 | Item Prefab | The object to transform in (IMPORTANT NOTE: read after this board)                |
 | Icon Sprite | The sprite that will be shown in the button on the UI                             |
 
-######ITEM PREFAB WARNING:
+<h4> ITEM PREFAB WARNING: </h4v>
  It **HAS** to have a **boxcollider**, it **cannot** be other type. It also has to have a mesh filter.
 
-**Lobby Element Pool**
+<h3> **Lobby Element Pool** </h3>
 This is a pool of items to create in the ui of the lobby, the first variable **Ui Prefab** saves the prefab that will be created for the pool, and the **Parent Transform** saves the transform that will be the parent for those items.
 To learn about the pool pattern you <a href="https://en.wikipedia.org/wiki/Object_pool_pattern">check it here.</a>
 
