@@ -57,7 +57,7 @@ Then extract the files and open it with Unity.
 
 ### Getting it from the releases section
 
-Go to the releases section or click in the lastest release
+Go to the releases section or click in the latest release.
 
 <br><img src = "docs/images/download/06.png" alt = "releases section img"></img><br>
 
@@ -92,7 +92,7 @@ Then first press the [Start Server Button(green)] and then you can press [Play] 
 
 <h3> How to change variables</h3>
 
-To make changes in the game you can go in the Hierachy and select the "Managers" folder there are the most customizables settings for the template.
+To make changes in the game you can go in the Hierarchy and select the "Managers" folder there are the most customizables settings for the template.
 
 <br><img src = "docs/images/howto/wherearevariables.png" alt = "variables img" width="600"></img><br>
 
@@ -127,7 +127,7 @@ The GameManager shows the basic settings for the game
 <br><img src = "docs/images/gamemanager.png" alt = "gamemanager img"></img><br><br>
 
 - **UIManager:** 
-The ui manager has a lot of references, all of them have to be like in the image to work well, but if you click one of them it will show you wich is the object that they reference.
+The UI manager has a lot of references, all of them have to be like in the image to work well, but if you click one of them it will show you wich is the object that they reference.
 
 <br><img src = "docs/images/uimanager.png" alt = "uimanager img"></img><br><br>
 
@@ -148,7 +148,7 @@ To create an spawnpoint you have to create an empty object and position it where
 
 <br><img src = "docs/images/spawnpoints.png" alt = "spawn points img"></img><br>
 
-The spawn areas will be created on the start method of unity so, whe you click the play button this areas in the editor will show you the size of the areas visually
+The spawn areas will be created on the start method of Unity so, when you click the play button this areas in the editor will show you the size of the areas visually
 
 <br><img src = "docs/images/spawnareas.png" alt = "spawn areas img" width="400"></img><br><br>
 
@@ -192,7 +192,7 @@ Every scriptable object will need some references to create a new object.
 <br>
 
 - **Lobby Element Pool:**
-This is a pool of items to create in the ui of the lobby, the first variable **Ui Prefab** saves the prefab that will be created for the pool, and the **Parent Transform** saves the transform that will be the parent for those items.
+This is a pool of items to create in the UI of the lobby, the first variable **UI Prefab** saves the prefab that will be created for the pool, and the **Parent Transform** saves the transform that will be the parent for those items.
 To learn about the pool pattern you <a href="https://en.wikipedia.org/wiki/Object_pool_pattern">check it here.</a>
 
 <br><img src = "docs/images/lobbypool.png" alt = "transformable item manager img"></img><br>
