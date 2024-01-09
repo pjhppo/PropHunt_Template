@@ -11,7 +11,7 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
     public selected: GameObject; // Reference to the selected game object
     public checkMark: GameObject; // Reference to the checkmark game object
     public transformed: GameObject; // Reference to the transformed game object
-
+    private isTransformedInThis: bool; // Flag to know if the player is transformed in this item
     private button: Button; // Reference to the button
 
     @HideInInspector() public _myItemTransformable: Itemtransformable; // Saves the item for transform the player
@@ -23,7 +23,7 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
     }
 
     Start() {
-        GameManager.instance.OnReset.AddListener(()=>{
+        GameManager.instance.OnReset.AddListener(() => {
             this.SetDefault();
         });
     }
@@ -45,6 +45,7 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
 
     // This function actives the selected state
     SetSelected() {
+        if (this.isTransformedInThis) return;
         this.selected.SetActive(true);
         this.checkMark.SetActive(false);
         this.transformed.SetActive(false);
@@ -55,6 +56,7 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
         this.selected.SetActive(false);
         this.checkMark.SetActive(true);
         this.transformed.SetActive(true);
+        this.isTransformedInThis = true;
     }
 
     // This function actives the default state
@@ -62,5 +64,6 @@ export default class UITransformableButton extends ZepetoScriptBehaviour {
         this.selected.SetActive(false);
         this.checkMark.SetActive(false);
         this.transformed.SetActive(false);
+        this.isTransformedInThis = false;
     }
 }
