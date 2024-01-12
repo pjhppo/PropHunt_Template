@@ -6802,7 +6802,7 @@ GameObject:
   - component: {fileID: 389456744}
   - component: {fileID: 389456743}
   - component: {fileID: 389456742}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6823,8 +6823,8 @@ Transform:
   m_Father: {fileID: 232345316}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
---- !u!64 &389456742
-MeshCollider:
+--- !u!65 &389456742
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6833,10 +6833,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10.000001}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &389456743
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11392,7 +11391,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 375276445}
   m_HandleRect: {fileID: 375276444}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -21407,7 +21406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 155.67813, y: 0}
+  m_AnchoredPosition: {x: 156.14743, y: 0}
   m_SizeDelta: {x: 0, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266176417
@@ -25070,7 +25069,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 55.376072, y: 0}
+  m_AnchoredPosition: {x: 55.32882, y: 0}
   m_SizeDelta: {x: 0, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1494967475
